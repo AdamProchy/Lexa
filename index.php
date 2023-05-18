@@ -57,7 +57,9 @@ mysqli_close($conn);
 
         <!--Error zpráva, která se zobrazí, pokud je uživatel mladší než 18 let-->
         <?php if ($isAdult == false) : ?>
-            <span>Bohužel nejsi starší 18ti let</span>
+            <div class="alert alert-danger text-center" role="alert">
+                Registrace se nezdařila! Uživatel musí být starší 18 let.
+            </div>
         <?php endif; ?>
 
 
@@ -123,14 +125,14 @@ mysqli_close($conn);
                                         <div class="col-md-6 mb-4 pb-2">
 
                                             <div class="form-outline">
-                                                <input type="email" id="emailAddress" name="email" class="form-control form-control-lg" />
+                                                <input type="email" id="emailAddress" name="email" class="form-control form-control-lg" required/>
                                                 <label class="form-label" for="emailAddress">Email</label>
                                             </div>
 
                                         </div>
                                         <div class="col-md-6 mb-4 pb-2">
                                             <div class="form-outline">
-                                                <input type="password" id="psw" name="psw" class="form-control form-control-lg" />
+                                                <input type="password" id="psw" name="psw" class="form-control form-control-lg" required/>
                                                 <label class="form-label" for="psw">Heslo</label>
                                             </div>
                                         </div>

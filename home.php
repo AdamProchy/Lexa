@@ -35,6 +35,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="index.css">
     <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
     <title>🖤 Moje Rande 🧡</title>
@@ -44,24 +45,24 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Moje rande</a>
+            <a class="navbar-brand" href="../Lexa/home.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="../Lexa/index.html">Home</a>
+                        <a class="nav-link active" href="../Lexa/home.php">Domu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../Lexa/date.html">Chci rande!</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/faq.html">FAQ</a>
+                        <a class="nav-link" href="../Lexa/faq.html">Podpora</a>
                     </li>
                 </ul>
                 <span class="navbar-text">
-                    Přihlášen: Adam Prochazka
+                    Přihlášen: karel
                 </span>
             </div>
         </div>

@@ -10,10 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($psw, $db_hash)) {
             header("location: home.php");
         } else {
-            echo "Špatné heslo.";
+            echo "        
+            <div class='alert alert-danger text-center' role='alert'>
+            Špatné heslo!
+        </div>";
         }
     } else {
-        echo "Chyba přihlášení. Kontaktujte administrátora.";
+        echo "
+        <div class='alert alert-danger text-center' role='alert'>
+        Chyba!
+    </div>";
     }
 }
 mysqli_close($conn);
@@ -38,7 +44,10 @@ mysqli_close($conn);
 
         <!--Error zpráva, která se zobrazí, pokud uživatel zadal špatné heslo-->
         <?php if ($isPasswordRight == false) : ?>
-            <span>Špatné heslo</span>
+            <p>karel</p>
+            <div class="alert alert-danger text-center" role="alert">
+                Špatné heslo!
+            </div>
         <?php endif; ?>
 
         <section class="vh-100 gradient-custom">
@@ -49,9 +58,6 @@ mysqli_close($conn);
                             <div class="card-body p-4 p-md-5">
                                 <h1 class="mb-4 pb-2 pb-md-0 mb-md-5">Přihlášení</h1>
                                 <form>
-
-
-
                                     <div class="row">
                                         <div class="col-md-6 mb-4 pb-2">
 
