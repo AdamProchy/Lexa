@@ -34,6 +34,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles/settings.css">
     <title>🖤 Chci rande! 🧡</title>
 </head>
 
@@ -52,7 +53,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         <a class="nav-link" href="../Lexa/home.php">Domu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="../Lexa/date.html">Chci rande!</a>
+                        <a class="nav-link" href="../Lexa/date.html">Chci rande!</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../Lexa/help.html">Podpora</a>
@@ -73,12 +74,78 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
         </div>
     </nav>
 
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti consequuntur ab quibusdam nobis praesentium
-        culpa laboriosam repellat fugiat adipisci aut, necessitatibus optio harum labore asperiores alias velit error.
-        Quae aspernatur animi doloremque ipsum id ex! Ad, impedit? Enim eius modi dolore reiciendis voluptatibus tenetur
-        distinctio quidem! Vitae laboriosam odit alias!</p>
-
-
+    <div class="container mt-5 mb-5">
+        <div class="row gutters">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="account-settings">
+                            <div class="user-profile">
+                                <div class="user-avatar">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile picture">
+                                </div>
+                                <h5 class="user-name">Matyáš Závora</h5>
+                                <h6 class="user-email">zavora@smrdi.com</h6>
+                            </div>
+                            <div class="about">
+                                <h5 class="mb-2 text-light">O mně:</h5>
+                                <p>Já jsem matyáš a tady nemůže být dlouhý text, protože to pak v těch kartách bude
+                                    vypadat blbě</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                fip@jukmuh.al
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Phone</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                (239) 816-9029
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Mobile</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                (320) 380-4539
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Address</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                Bay Area, San Francisco, CA
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a class="btn btn-primary " target="__blank"
+                                    href="../Lexa/settings.html">Upravit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--FOOTER-->
     <footer class="p-5 bg-dark text-white text-center position-relative">

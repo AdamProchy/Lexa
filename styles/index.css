@@ -1,3 +1,7 @@
+body{
+    background-color: grey;
+}
+
 #image{
     width: 75px;
     height: 75px;

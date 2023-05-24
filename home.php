@@ -36,7 +36,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styles/index.css">
     <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
     <title>🖤 Moje Rande 🧡</title>
 </head>
@@ -58,12 +58,21 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         <a class="nav-link" href="../Lexa/date.html">Chci rande!</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/faq.html">Podpora</a>
+                        <a class="nav-link" href="../Lexa/help.html">Podpora</a>
                     </li>
                 </ul>
-                <span class="navbar-text">
-                    Přihlášen: karel
-                </span>
+                <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Lexa/settings.html">Nastavení</a>
+                    </li>
+                    <li class="nav-item">
+                        <p class="navbar-text">Přihlášen:</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Lexa/profile.html">Karel</a>
+                    </li>
+                </ul>
+
             </div>
         </div>
     </nav>
@@ -75,7 +84,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
             <br>
             <div class="row g-4">
                 <div class="col-md-6 col-lg-3">
-                    <div class="card bg-light">
+                    <div class="card bg-dark text-white">
                         <div class="card-body text-center">
                             <div id="card-top">
                                 <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
@@ -92,7 +101,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                 </div>
 
                 <div class="col-md-6 col-lg-3">
-                    <div class="card bg-light">
+                    <div class="card bg-dark text-white">
                         <div class="card-body text-center">
                             <div id="card-top">
                                 <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
@@ -109,7 +118,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                 </div>
 
                 <div class="col-md-6 col-lg-3">
-                    <div class="card bg-light">
+                    <div class="card bg-dark text-white">
                         <div class="card-body text-center">
                             <div id="card-top">
                                 <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
@@ -124,9 +133,8 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-6 col-lg-3">
-                    <div class="card bg-light">
+                    <div class="card bg-dark text-white">
                         <div class="card-body text-center">
                             <div id="card-top">
                                 <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
@@ -141,9 +149,8 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-6 col-lg-3">
-                    <div class="card bg-light">
+                    <div class="card bg-dark text-white">
                         <div class="card-body text-center">
                             <div id="card-top">
                                 <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
@@ -158,9 +165,8 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-6 col-lg-3">
-                    <div class="card bg-light">
+                    <div class="card bg-dark text-white">
                         <div class="card-body text-center">
                             <div id="card-top">
                                 <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
@@ -175,9 +181,8 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-6 col-lg-3">
-                    <div class="card bg-light">
+                    <div class="card bg-dark text-white">
                         <div class="card-body text-center">
                             <div id="card-top">
                                 <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
@@ -192,7 +197,54 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         </div>
                     </div>
                 </div>
-
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-dark text-white">
+                        <div class="card-body text-center">
+                            <div id="card-top">
+                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
+                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
+                            </div>
+                            <br>
+                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
+                            <p class="rating">⭐⭐⭐⭐⭐</p>
+                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
+                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-dark text-white">
+                        <div class="card-body text-center">
+                            <div id="card-top">
+                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
+                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
+                            </div>
+                            <br>
+                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
+                            <p class="rating">⭐⭐⭐⭐⭐</p>
+                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
+                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-dark text-white">
+                        <div class="card-body text-center">
+                            <div id="card-top">
+                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
+                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
+                            </div>
+                            <br>
+                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
+                            <p class="rating">⭐⭐⭐⭐⭐</p>
+                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
+                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
+                        </div>
+                    </div>
+                </div>
 
 
     </section>
