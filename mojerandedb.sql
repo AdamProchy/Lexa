@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2023 at 08:24 AM
+-- Generation Time: May 24, 2023 at 01:36 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -33,9 +33,11 @@ CREATE TABLE `credentials` (
   `lastName` varchar(80) NOT NULL,
   `gender` varchar(3) NOT NULL COMMENT 'M(ale)\r\nF(emale)\r\nMtF (Trans female)\r\nFtM (Trans male)',
   `sexuality` varchar(1) NOT NULL COMMENT 'S(traight)\r\nG(ay)\r\nL(esbian)\r\nB(isexual)\r\nA(sexual)\r\nD(emisexual)\r\nP(ansexual)\r\nQ(ueer)\r\n?(Questioning)',
-  `birthDate` date DEFAULT NULL,
+  `birthDate` date NOT NULL,
   `email` varchar(80) NOT NULL,
   `psw` char(255) NOT NULL,
+  `profilePicture` varchar(100) NOT NULL DEFAULT './profilePictures/default.png',
+  `aboutMe` varchar(100) DEFAULT NULL,
   `reg_date` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registration date (automatic)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
@@ -43,8 +45,9 @@ CREATE TABLE `credentials` (
 -- Dumping data for table `credentials`
 --
 
-INSERT INTO `credentials` (`ID`, `firstName`, `lastName`, `gender`, `sexuality`, `birthDate`, `email`, `psw`, `reg_date`) VALUES
-(1, 'Admin', 'Admin', 'M', 'S', '2004-11-13', 'admin@admin.com', '$2y$10$bJxEGMf4NsVaU9fP1RR5C.M/O55Dl3dzsjQpw0caKATKAWUPb4776', '2023-04-26 16:47:53');
+INSERT INTO `credentials` (`ID`, `firstName`, `lastName`, `gender`, `sexuality`, `birthDate`, `email`, `psw`, `profilePicture`, `aboutMe`, `reg_date`) VALUES
+(1, 'Admin', 'Admin', 'M', 'S', '2004-11-13', 'admin@admin.com', '$2y$10$bJxEGMf4NsVaU9fP1RR5C.M/O55Dl3dzsjQpw0caKATKAWUPb4776', './profilePictures/default.png', NULL, '2023-04-26 16:47:53'),
+(16, 'Matyáš', 'Závora', 'M', 'S', '2004-11-13', 'matyaszavora@outlook.com', '$2y$10$cCfkS1CTLp4paxh8ovxWoOWHtCfE2XKROwRE3Vrh5B4C2lvUd0lYi', '646df2ef9ddb8.png', NULL, '2023-05-24 08:44:02');
 
 --
 -- Indexes for dumped tables
@@ -65,7 +68,7 @@ ALTER TABLE `credentials`
 -- AUTO_INCREMENT for table `credentials`
 --
 ALTER TABLE `credentials`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

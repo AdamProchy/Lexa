@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (isset($_SESSION["email"])) {
+    header("location: home.php");
+    exit();
+}
+
 include("config.php");
 $isAdult = true;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

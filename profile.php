@@ -42,7 +42,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../Lexa/home.php"><img src="../Lexa/img/logo.png" width="200px"
+            <a class="navbar-brand" href="../Lexa/index.php"><img src="../Lexa/img/logo.png" width="200px"
                     height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
@@ -53,21 +53,21 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         <a class="nav-link" href="../Lexa/home.php">Domu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/date.html">Chci rande!</a>
+                        <a class="nav-link" href="../Lexa/date.php">Chci rande!</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/help.html">Podpora</a>
+                        <a class="nav-link" href="../Lexa/help.php">Podpora</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/settings.html">Nastavení</a>
+                        <a class="nav-link" href="../Lexa/settings.php">Nastavení</a>
                     </li>
                     <li class="nav-item">
                         <p class="navbar-text">Přihlášen:</p>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/profile.html">Karel</a>
+                        <a class="nav-link" href="../Lexa/profile.php">Karel</a>
                     </li>
                 </ul>
             </div>
@@ -82,7 +82,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
                         <div class="account-settings">
                             <div class="user-profile">
                                 <div class="user-avatar">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile picture">
+                                    <img src="" alt="Profile picture">
                                 </div>
                                 <h5 class="user-name">Matyáš Závora</h5>
                                 <h6 class="user-email">zavora@smrdi.com</h6>

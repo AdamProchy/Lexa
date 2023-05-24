@@ -24,7 +24,9 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 -->
 
 <?php
-//
+session_start();
+$firstName = $_SESSION['firstName'];
+$lastName = $_SESSION['lastName'];
 ?>
 
 <!DOCTYPE html>
@@ -45,34 +47,36 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../Lexa/home.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
+            <a class="navbar-brand" href="../Lexa/index.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="../Lexa/home.php">Domu</a>
+                        <a class="nav-link" href="../Lexa/home.php">Domu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/date.html">Chci rande!</a>
+                        <a class="nav-link" href="../Lexa/date.php">Chci rande!</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/help.html">Podpora</a>
+                        <a class="nav-link" href="../Lexa/help.php">Podpora</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/settings.html">Nastavení</a>
+                        <a class="nav-link" href="../Lexa/settings.php">Nastavení</a>
                     </li>
                     <li class="nav-item">
                         <p class="navbar-text">Přihlášen:</p>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/profile.html">Karel</a>
+                        <a class="nav-link" href="../Lexa/profile.php"><?php echo $firstName . " " . $lastName ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Lexa/logout.php">Odhlásit se</a>
                     </li>
                 </ul>
-
             </div>
         </div>
     </nav>

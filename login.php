@@ -8,20 +8,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_num_rows(mysqli_query($conn, $sql)) == 1) {
         $db_hash = mysqli_fetch_array(mysqli_query($conn, $sql))["psw"];
         if (password_verify($psw, $db_hash)) {
+            session_start();
+            $_SESSION["firstName"] = mysqli_fetch_array(mysqli_query($conn, $sql))["firstName"];
+            $_SESSION["email"] = $email;
+            $_SESSION["lastName"] = mysqli_fetch_array(mysqli_query($conn, $sql))["lastName"];
+            $_SESSION["aboutMe"] = mysqli_fetch_array(mysqli_query($conn, $sql))["aboutMe"];
+            $_SESSION["profilePicture"] = "./profilePictures/" . mysqli_fetch_array(mysqli_query($conn, $sql))["profilePicture"];
             header("location: home.php");
         } else {
             echo "        
             <div class='alert alert-danger text-center' role='alert'>
             Špatné heslo!
-        </div>";
+            </div>";
         }
     } else {
         echo "
         <div class='alert alert-danger text-center' role='alert'>
         Chyba!
-    </div>";
+        </div>";
     }
 }
+
 mysqli_close($conn);
 ?>
 
