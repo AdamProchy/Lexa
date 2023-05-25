@@ -146,7 +146,7 @@ mysqli_close($conn);
 
                                     <div class="row">
                                         <div class="col-12">
-                                            <select class="select form-control-lg" name="sexuality">
+                                            <select class="select form-control-lg" name="sexuality" required>
                                                 <option value="S">Heterosexuál</option>
                                                 <option value="G">Homosexuál</option>
                                                 <option value="L">Lesba</option>

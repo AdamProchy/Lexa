@@ -228,7 +228,7 @@ function checkEmail(string $newEmail)
     <div class="container mt-5 mb-5">
         <div class="row gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                <div class="card h-100">
+                <div class="card">
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile">
@@ -253,7 +253,7 @@ function checkEmail(string $newEmail)
                         <form method="POST" action="" enctype="multipart/form-data">
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <h6 class="mb-3 text-light">Změnit osobní informace</h6>
+                                    <h4 class="mb-3 text-light">Změnit osobní informace</h6>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
@@ -267,11 +267,11 @@ function checkEmail(string $newEmail)
                                         <input type="text" class="form-control" id="about_me" placeholder="Napište něco o sobě" name="aboutMe">
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="newPassword">Nové heslo</label>
-                                        <input type="password" class="form-control" id="newPassword" placeholder="Zadejte nové heslo" name="newPassword">
-                                    </div>
+                            </div>
+                            <hr>
+                            <div class="row gutters mt-3">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h4 class="mb-3 text-light">Změnit heslo</h6>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
@@ -279,45 +279,24 @@ function checkEmail(string $newEmail)
                                         <input type="password" class="form-control" id="oldPassword" placeholder="Zadejte staré heslo" name="oldPassword">
                                     </div>
                                 </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="newPassword">Nové heslo</label>
+                                        <input type="password" class="form-control" id="newPassword" placeholder="Zadejte nové heslo" name="newPassword">
+                                    </div>
+                                </div>
                             </div>
-                            <br>
-                            <div class="row gutters">
+                            <hr>
+                            <div class="row gutters mt-3">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <h6 class="mb-3 text-light">Další</h6>
+                                    <h4 class="mb-3 text-light">Změnit profilový obrázek</h6>
                                 </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="Street">random</label>
-                                        <input type="name" class="form-control" id="Street" placeholder="Enter Street">
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="ciTy">random</label>
-                                        <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="sTate">random</label>
-                                        <input type="text" class="form-control" id="sTate" placeholder="Enter State">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="zIp">random</label>
-                                        <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
-                                    </div>
-                                </div>
-
                                 <div class="form-group">
                                     <input class="form-control" type="file" name="profilePicture" />
                                 </div>
-
                             </div>
                             <br>
-                            <div class="row gutters">
+                            <div class="row gutters mt-3">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <button class="btn btn-primary" type="submit" name="submit">Potvrdit</button>
                                     <a type="button" class="btn btn-danger">Smazat účet</a>

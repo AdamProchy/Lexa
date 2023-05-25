@@ -42,7 +42,6 @@ $users = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $users[] = $row;
 }
-echo mysqli_num_rows($result)
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +53,7 @@ echo mysqli_num_rows($result)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles/index.css">
     <title>🖤 Chci rande! 🧡</title>
 </head>
 
@@ -114,7 +114,7 @@ echo mysqli_num_rows($result)
                     echo '<div class="card-body text-center">';
                     echo '<div id="card-top">';
                     echo '<img src="' . $profilePictureDB . '" class="rounded-circle" id="image" alt="">';
-                    echo '<h3 class="card-title"><span style="font-weight: 600;">' . $firstNameDB . '</span><span style="font-size: large;"> ' . $lastNameDB . '</span></h3>';
+                    echo '<h3 class="card-title"><span style="font-weight: 600;">' . $firstNameDB . '</span> <br> <span style="font-size: large;"> ' . $lastNameDB . '</span></h3>';
                     echo '</div>';
                     echo '<br>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">Věk: </h6>';
