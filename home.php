@@ -27,6 +27,10 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 session_start();
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
+if (!isset($_SESSION['email'])) {
+    header("Location: ./");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
