@@ -22,6 +22,15 @@ kdy se s ženou naposledy viděl/psal si (nejstarší/nejnovější interakce).
 Samozřejmě Lexa nechce, aby měl k jeho aplikaci přístup někdo jiný, 
 proto se k datům dostane pouze skrze své přihlašovací údaje.
 -->
+<?php
+session_start();
+$firstName = $_SESSION['firstName'];
+$lastName = $_SESSION['lastName'];
+if (!isset($_SESSION['email'])) {
+    header("Location: ./");
+    exit();
+}
+?>
 
 
 <!DOCTYPE html>
@@ -38,40 +47,42 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
   <title>🖤 Podpora 🧡</title>
 </head>
 
-<body>
-  <!--NAVBAR-->
-  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="../Lexa/home.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="../Lexa/home.php">Domu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../Lexa/date.html">Chci rande!</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="../Lexa/help.html">Podpora</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="../Lexa/settings.html">Nastavení</a>
-          </li>
-          <li class="nav-item">
-            <p class="navbar-text">Přihlášen:</p>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../Lexa/profile.html">Karel</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<body class="d-flex flex-column min-vh-100">
+<!--NAVBAR-->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../Lexa/index.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Lexa/home.php">Domu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Lexa/date.php">Chci rande!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../Lexa/help.php">Podpora</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <p class="navbar-text text-white">Přihlášen: </p>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link text-warning" href="../Lexa/settings.php"><?php echo $firstName . " " . $lastName ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="../Lexa/logout.php">Odhlásit se</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
 
 
   <!--BOXES-->
@@ -175,14 +186,13 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
     </div>
   </div>
 
-
-  <!--FOOTER-->
-  <footer class="p-5 bg-dark text-white text-center position-relative">
-    <div class="container">
-      <p class="lead">Copyright &copy; PROCHY</p>
-      <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
-    </div>
-  </footer>
+    <!--FOOTER-->
+    <footer class="p-5 bg-dark text-white text-center position-relative mt-auto">
+        <div class="container">
+            <p class="lead">Copyright &copy; PROCHY</p>
+            <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
+        </div>
+    </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
     crossorigin="anonymous"></script>

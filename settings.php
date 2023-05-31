@@ -138,7 +138,7 @@ function checkEmail(string $newEmail)
     <title>🖤 Chci rande! 🧡</title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
@@ -160,22 +160,18 @@ function checkEmail(string $newEmail)
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/settings.php">Nastavení</a>
+                        <p class="navbar-text text-white">Přihlášen: </p>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link text-warning" href="../Lexa/settings.php"><?php echo $firstName . " " . $lastName ?></a>
                     </li>
                     <li class="nav-item">
-                        <p class="navbar-text">Přihlášen:</p>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/profile.php"><?php echo $firstName . " " . $lastName ?></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/logout.php">Odhlásit se</a>
+                        <a class="nav-link text-danger" href="../Lexa/logout.php">Odhlásit se</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!--NAVBAR END-->
 
     <!--ERROR: Not an image-->
     <?php if ($isImage == false) : ?>
@@ -309,7 +305,7 @@ function checkEmail(string $newEmail)
         </div>
     </div>
     <!--FOOTER-->
-    <footer class="p-5 bg-dark text-white text-center position-relative">
+    <footer class="p-5 bg-dark text-white text-center position-relative mt-auto">
         <div class="container">
             <p class="lead">Copyright &copy; PROCHY</p>
             <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
