@@ -1,29 +1,11 @@
-<!-- 
-    Lexa hledá ženu ❤️
-
-Protože je Lexa žádaný a fešný chlapík, pravidelně chodí na randíčka. 
-Bohužel se v nich ztrácí a má v tom obecně velký nepořádek. 
-Potřebuje proto evidovat ženy, se kterými randí. 
-Vytvořte webovou aplikaci a pomozte tak Lexovi najít znovu smysl a naději na lepší zítřky plné lásky.
-
-Vaše aplikace bude obsahovat následující:
-
-    jméno a příjmení ženy, věk ženy, popis ženy
-    rande s danou ženou (popis toho, jak rande šlo, datum, kdy na rande byli, a kde).
-
-Aplikace bude také umět:
-
-    přidat novou ženu a přidat nové rande
-    smazat záznam o ženě a smazat záznam o randíčku
-    upravit záznam o ženě a upravit záznam o randíčku.
-
-Lexa bude mít možnost si ženy seřadit v abecedním pořadí a zároveň i podle toho, 
-kdy se s ženou naposledy viděl/psal si (nejstarší/nejnovější interakce). 
-Samozřejmě Lexa nechce, aby měl k jeho aplikaci přístup někdo jiný, 
-proto se k datům dostane pouze skrze své přihlašovací údaje.
--->
-
 <?php
+/*
+ _____                                  
+/ _  / __ ___   _____  _ __ __ _  /\/\  
+\// / / _` \ \ / / _ \| '__/ _` |/    \ 
+ / //\ (_| |\ V / (_) | | | (_| / /\/\ \
+/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
+*/
 
 use function PHPSTORM_META\elementType;
 
@@ -42,6 +24,8 @@ $updated = false;
 $emailError = false;
 $oldPasswordEmpty = false;
 $wrongPassword = false;
+$now = date("Y-m-d");
+$diff = date_diff(date_create(getBirthDate()), date_create($now));
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (count($_FILES) == 1 && $_FILES['profilePicture']['name'] != "") {
         if (@is_array(getimagesize($_FILES['profilePicture']['tmp_name']))) {
@@ -121,6 +105,13 @@ function checkEmail(string $newEmail)
     } else {
         return false; //email already exists
     }
+}
+function getBirthDate()
+{
+    global $conn, $email;
+    $sql = "SELECT birthDate FROM credentials WHERE email = '$email'";
+    $birthDate = mysqli_fetch_array(mysqli_query($conn, $sql))["birthDate"];
+    return $birthDate;
 }
 ?>
 
@@ -243,6 +234,10 @@ function checkEmail(string $newEmail)
                                 <p><?php echo $aboutMe;
                                     $isImage = true; ?></p>
                             </div>
+                            <div class="age">
+                                <h5 class="mb-2 text-light">Věk:</h5>
+                                <p><?php echo $diff->format('%y'); ?></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -299,7 +294,6 @@ function checkEmail(string $newEmail)
                             <div class="row gutters mt-3">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <button class="btn btn-primary" type="submit" name="submit">Potvrdit</button>
-                                    <a type="button" class="btn btn-danger">Smazat účet</a>
                                 </div>
                             </div>
                         </form>
@@ -309,7 +303,7 @@ function checkEmail(string $newEmail)
         </div>
     </div>
     <!--FOOTER-->
-    <footer class="p-5 bg-dark text-white text-center position-relative">
+    <footer class="p-5 bg-dark text-white text-center position-relative fixed-bottom">
         <div class="container">
             <p class="lead">Copyright &copy; PROCHY</p>
             <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>

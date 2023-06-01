@@ -1,4 +1,11 @@
 <?php
+/*
+ _____                                  
+/ _  / __ ___   _____  _ __ __ _  /\/\  
+\// / / _` \ \ / / _ \| '__/ _` |/    \ 
+ / //\ (_| |\ V / (_) | | | (_| / /\/\ \
+/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
+*/
 session_start();
 if (isset($_SESSION['email'])) {
     header("Location: home.php");
@@ -20,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["aboutMe"] = mysqli_fetch_array(mysqli_query($conn, $sql))["aboutMe"];
             $_SESSION["profilePicture"] = "./profilePictures/" . mysqli_fetch_array(mysqli_query($conn, $sql))["profilePicture"];
             $_SESSION["sexuality"] = mysqli_fetch_array(mysqli_query($conn, $sql))["sexuality"];
+            $_SESSION["dateSent"] = false;
             header("location: home.php");
         } else {
             echo "        
@@ -109,3 +117,7 @@ mysqli_close($conn);
 </body>
 
 </html>
+
+<?php
+mysqli_close($conn);
+?>

@@ -1,35 +1,27 @@
-<!-- 
-    Lexa hledá ženu ❤️
-
-Protože je Lexa žádaný a fešný chlapík, pravidelně chodí na randíčka. 
-Bohužel se v nich ztrácí a má v tom obecně velký nepořádek. 
-Potřebuje proto evidovat ženy, se kterými randí. 
-Vytvořte webovou aplikaci a pomozte tak Lexovi najít znovu smysl a naději na lepší zítřky plné lásky.
-
-Vaše aplikace bude obsahovat následující:
-
-    jméno a příjmení ženy, věk ženy, popis ženy
-    rande s danou ženou (popis toho, jak rande šlo, datum, kdy na rande byli, a kde).
-
-Aplikace bude také umět:
-
-    přidat novou ženu a přidat nové rande
-    smazat záznam o ženě a smazat záznam o randíčku
-    upravit záznam o ženě a upravit záznam o randíčku.
-
-Lexa bude mít možnost si ženy seřadit v abecedním pořadí a zároveň i podle toho, 
-kdy se s ženou naposledy viděl/psal si (nejstarší/nejnovější interakce). 
-Samozřejmě Lexa nechce, aby měl k jeho aplikaci přístup někdo jiný, 
-proto se k datům dostane pouze skrze své přihlašovací údaje.
--->
-
 <?php
+/*
+ _____                                  
+/ _  / __ ___   _____  _ __ __ _  /\/\  
+\// / / _` \ \ / / _ \| '__/ _` |/    \ 
+ / //\ (_| |\ V / (_) | | | (_| / /\/\ \
+/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
+*/
 session_start();
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
+$email = $_SESSION['email'];
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
     exit();
+}
+include "config.php";
+
+$sql = "SELECT * FROM `dates` WHERE `senderEmail` = '$email' OR `recipientEmail` = '$email'";
+$result = mysqli_query($conn, $sql);
+
+$dates = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $dates[] = $row;
 }
 ?>
 
@@ -85,175 +77,110 @@ if (!isset($_SESSION['email'])) {
         </div>
     </nav>
 
+    <?php if (isset($_POST['cancel'])) { ?>
+        <?php
+        $sql = "DELETE FROM `dates` WHERE `dates`.`ID` = '" . $_POST['dateID'] . "'";
+        mysqli_query($conn, $sql);
+        ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Rande bylo úspěšně zrušeno!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                window.location.href = "../Lexa/home.php";
+            }, 2500);
+        </script>
+    <?php } ?>
+
+    <?php if (isset($_POST['submit'])) { ?>
+        <?php
+        $sql = "UPDATE `dates` SET `confirmed` = '1' WHERE `dates`.`ID` = '" . $_POST['dateID'] . "'";
+        mysqli_query($conn, $sql);
+        ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Rande bylo úspěšně potvrzeno!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                window.location.href = "../Lexa/home.php";
+            }, 2500);
+        </script>
+    <?php } ?>
+
+
     <!--DATES IN MAIN-->
     <section id="dates" class="p-5">
         <div class="container">
-            <h2 class="text-center text-dark">Domluvené schůzky:</h2>
-            <br>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
+            <?php
+            if (empty($dates)) {
+                echo "<h2 class='text-center text-dark'>Nemáte žádné domluvené schůzky.</h2>";
+            } else {
+            ?>
+                <h2 class="text-center text-dark">Domluvené schůzky:</h2>
+                <br>
+                <div class="row g-4">
 
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
+                    <?php for ($i = 0; $i < sizeof($dates); $i++) { ?>
 
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body text-center">
-                            <div id="card-top">
-                                <img src="https://randomuser.me/api/portraits/women/69.jpg" class="rounded-circle" id="image" alt="">
-                                <h3 class="card-title"><span style="font-weight: 600;">Karolína </span><span style="font-size: large;"> Noribmergovád</span></h3>
-                            </div>
-                            <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Místo: Praha</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Čas: 14:00</h6>
-                            <p class="rating">⭐⭐⭐⭐⭐</p>
-                            <a href="#" class="btn btn-primary mr-2 mt-3">Upravit</a>
-                            <a href="#" class="btn btn-danger mt-3">Zrušit</a>
-                        </div>
-                    </div>
-                </div>
+                        <?php
+                        if ($email != $dates[$i]['senderEmail']) {
+                            $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['senderEmail'] . "'";
+                        }
+                        if ($email != $dates[$i]['recipientEmail']) {
+                            $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['recipientEmail'] . "'";
+                        }
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_assoc($result);
+                        $firstNameDB = $row['firstName'];
+                        $lastNameDB = $row['lastName'];
+                        $profilePictureDB = $row['profilePicture'];
+                        $placeDB = $dates[$i]['place'];
+                        $dateInvitationDB = $dates[$i]['dateInvitation'];
+                        $dateInvitationDB = date("d.m.Y", strtotime($dateInvitationDB));
+                        $dateID = $dates[$i]['ID'];
+                        $messageDB = $dates[$i]['message'];
+                        ?>
 
+                        <div class="col-md-6 col-lg-3">
+                            <?php if ($dates[$i]['confirmed']) { ?>
+                                <div class="card bg-success text-dark">
+                                <?php }
+                            if (!$dates[$i]['confirmed']) { ?>
+                                    <div class="card bg-dark text-dark">
+                                    <?php } ?>
+                                    <?php
+                                    if ($email == $dates[$i]['recipientEmail']) { ?>
+                                        <div class="card bg-warning text-dark">
+                                        <?php } ?>
+                                        <?php if ($dates[$i]["confirmed"]) { ?>
+                                            <div class="card bg-success text-dark">
+                                            <?php } ?>
+                                            <div class="card-body text-center">
+                                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                                    <div id="card-top">
+                                                        <img src="./profilePictures/<?php echo $profilePictureDB; ?>" class="rounded-circle" id="image" alt="">
+                                                        <h3 class="card-title"><span style="font-weight: 600;"><?php echo $firstNameDB; ?> </span><span style="font-size: large;"> <?php echo $lastNameDB; ?></span></h3>
+                                                    </div>
+                                                    <br>
+                                                    <input type="hidden" name="dateID" value="<?php echo $dateID; ?>">
+                                                    <h6 class="card-subtitle mb-2 text-muted">Místo: <?php echo $placeDB; ?></h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Datum: <?php echo $dateInvitationDB; ?></h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Čas: <?php echo date("h:i", strtotime($dateInvitationDB)); ?></h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Zpráva: <?php echo $messageDB; ?></h6>
+                                                    <?php if ($dates[$i]['senderEmail'] == $_SESSION["email"] || $dates[$i]['confirmed']) { ?>
+                                                        <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
+                                                    <?php } else if ($dates[$i]['senderEmail'] != $_SESSION["email"]) { ?>
+                                                        <button href="#" class="btn btn-success mr-2 mt-3" name="submit">Potvrdit</button>
+                                                        <button href="#" class="btn btn-danger mt-3" name="cancel">Odmítnout</button>
+                                                    <?php } ?>
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                <?php }
+                        } ?>
 
     </section>
 
@@ -266,7 +193,12 @@ if (!isset($_SESSION['email'])) {
             <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 
 </html>
+
+<?php
+mysqli_close($conn);
+?>

@@ -1,5 +1,12 @@
 <?php
-    session_start();
-    session_destroy();
-    header("Location: ./");
-    exit;
+/*
+ _____                                  
+/ _  / __ ___   _____  _ __ __ _  /\/\  
+\// / / _` \ \ / / _ \| '__/ _` |/    \ 
+ / //\ (_| |\ V / (_) | | | (_| / /\/\ \
+/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
+*/
+session_start();
+session_destroy();
+header("Location: ./");
+exit;

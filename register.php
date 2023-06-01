@@ -1,4 +1,11 @@
 <?php
+/*
+ _____                                  
+/ _  / __ ___   _____  _ __ __ _  /\/\  
+\// / / _` \ \ / / _ \| '__/ _` |/    \ 
+ / //\ (_| |\ V / (_) | | | (_| / /\/\ \
+/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
+*/
 session_start();
 if (isset($_SESSION["email"])) {
     header("location: ./");
@@ -37,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
-        echo "Jsi v databázi";
     }
 }
 
@@ -76,7 +82,7 @@ mysqli_close($conn);
                         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                             <div class="card-body p-4 p-md-5">
                                 <h1 class="mb-4 pb-2 pb-md-0 mb-md-5">Registrace</h1>
-                                <form>
+                                <form method="post">
 
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
@@ -183,5 +189,5 @@ mysqli_close($conn);
 <!---------------------------------------------------->
 
 <?php
-
+mysqli_close($conn);
 ?>

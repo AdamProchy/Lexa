@@ -7,3 +7,7 @@ body{
     height: 75px;
     float: left;
 }
+
+#cardbg{
+    background-color: grey;
+}

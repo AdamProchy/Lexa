@@ -1,29 +1,11 @@
-<!-- 
-    Lexa hledá ženu ❤️
-
-Protože je Lexa žádaný a fešný chlapík, pravidelně chodí na randíčka. 
-Bohužel se v nich ztrácí a má v tom obecně velký nepořádek. 
-Potřebuje proto evidovat ženy, se kterými randí. 
-Vytvořte webovou aplikaci a pomozte tak Lexovi najít znovu smysl a naději na lepší zítřky plné lásky.
-
-Vaše aplikace bude obsahovat následující:
-
-    jméno a příjmení ženy, věk ženy, popis ženy
-    rande s danou ženou (popis toho, jak rande šlo, datum, kdy na rande byli, a kde).
-
-Aplikace bude také umět:
-
-    přidat novou ženu a přidat nové rande
-    smazat záznam o ženě a smazat záznam o randíčku
-    upravit záznam o ženě a upravit záznam o randíčku.
-
-Lexa bude mít možnost si ženy seřadit v abecedním pořadí a zároveň i podle toho, 
-kdy se s ženou naposledy viděl/psal si (nejstarší/nejnovější interakce). 
-Samozřejmě Lexa nechce, aby měl k jeho aplikaci přístup někdo jiný, 
-proto se k datům dostane pouze skrze své přihlašovací údaje.
--->
-
 <?php
+/*
+ _____                                  
+/ _  / __ ___   _____  _ __ __ _  /\/\  
+\// / / _` \ \ / / _ \| '__/ _` |/    \ 
+ / //\ (_| |\ V / (_) | | | (_| / /\/\ \
+/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
+*/
 session_start();
 if (!isset($_SESSION['firstName']) || !isset($_SESSION['lastName'])) {
     header("location: ./");
@@ -32,7 +14,7 @@ if (!isset($_SESSION['firstName']) || !isset($_SESSION['lastName'])) {
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
 $sexuality = $_SESSION['sexuality'];
-
+$dateSent = false;
 include "config.php";
 
 $sql = "SELECT * FROM credentials";
@@ -42,6 +24,79 @@ $users = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $users[] = $row;
 }
+
+function sexuality($sexuality)
+{
+    switch ($sexuality) {
+        case "S":
+            return "Heterosexuál";
+            break;
+        case "G":
+            return "Homosexuál";
+            break;
+        case "L":
+            return "Lesba";
+            break;
+        case "B":
+            return "Bisexuál";
+            break;
+        case "A":
+            return "Asexuál";
+            break;
+        case "D":
+            return "Demisexuál";
+            break;
+        case "P":
+            return "Pansexuál";
+            break;
+        case "Q":
+            return "Queer";
+            break;
+        case "?":
+            return "Nejisté";
+            break;
+    }
+}
+
+function gender($gender)
+{
+    switch ($gender) {
+        case "M":
+            return "Muž";
+            break;
+        case "F":
+            return "Žena";
+            break;
+        case "MtF":
+            return "Trans žena";
+            break;
+        case "FtM":
+            return "Trans muž";
+            break;
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    for ($i = 0; $i < count($users); $i++) {
+        if (isset($_POST["send-date-$i"])) {
+            $dateSent = true;
+            $senderEmail = $_SESSION['email'];
+            $date = filter_input(INPUT_POST, 'sender-date');
+            $time = filter_input(INPUT_POST, 'sender-time');
+            $message = filter_input(INPUT_POST, 'sender-message');
+            $place = filter_input(INPUT_POST, 'sender-place');
+            $recipientEmail = $users[$i]['email'];
+
+            $datetime = $date . ' ' . $time;
+            $sql = "INSERT INTO dates (senderEmail, recipientEmail, dateInvitation, message, place)
+            VALUES ('$senderEmail', '$recipientEmail', '$datetime', '$message', '$place')";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -95,37 +150,98 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
     </nav>
 
+    <!--Date was sent successfully-->
+    <?php if ($dateSent) { ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Úspěch!</strong> Žádost o rande byla úspěšně odeslána.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <script>
+            setTimeout(function() {
+                window.location.href = "../Lexa/date.php";
+            }, 2500);
+        </script>
+    <?php } ?>
+
     <section id="dates" class="p-5">
         <div class="container">
             <h2 class="text-center text-dark">Nabídka:</h2>
             <br>
             <div class="row g-4">
                 <?php for ($i = 0; $i < sizeof($users); $i++) {
-                    $firstNameDB = $users[$i]['firstName'];
-                    $lastNameDB = $users[$i]['lastName'];
-                    $aboutMeDB = $users[$i]['aboutMe'];
-                    $sexualityDB = $users[$i]['sexuality'];
-                    $birthDateDB = $users[$i]['birthDate'];
-                    $now = date("Y-m-d");
-                    $diff = date_diff(date_create($birthDateDB), date_create($now));
-                    $profilePictureDB = "./profilePictures/" . $users[$i]['profilePicture'];
-                    echo '<div class="col-md-6 col-lg-3">';
-                    echo '<div class="card bg-dark text-white">';
-                    echo '<div class="card-body text-center">';
-                    echo '<div id="card-top">';
-                    echo '<img src="' . $profilePictureDB . '" class="rounded-circle" id="image" alt="">';
-                    echo '<h3 class="card-title"><span style="font-weight: 600;">' . $firstNameDB . '</span> <br> <span style="font-size: large;"> ' . $lastNameDB . '</span></h3>';
-                    echo '</div>';
-                    echo '<br>';
-                    echo '<h6 class="card-subtitle mb-2 text-muted">Věk: </h6>';
-                    echo '<p class="card-text">' . $diff->format('%y') . '</p>';
-                    echo '<h6 class="card-subtitle mb-2 text-muted">O mně: </h6>';
-                    echo '<p class="card-text">' . $aboutMeDB . '</p>';
-                    echo '<a href="#" class="btn btn-primary mr-2 mt-3">Požádat o rande</a>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
+                    if ($users[$i]['email'] != "admin@admin.com" && $users[$i]['email'] != $_SESSION['email']) {
+                        $firstNameDB = $users[$i]['firstName'];
+                        $lastNameDB = $users[$i]['lastName'];
+                        $aboutMeDB = $users[$i]['aboutMe'];
+                        $sexualityDB = $users[$i]['sexuality'];
+                        $gender = $users[$i]['gender'];
+                        $birthDateDB = $users[$i]['birthDate'];
+                        $now = date("Y-m-d");
+                        $diff = date_diff(date_create($birthDateDB), date_create($now));
+                        $profilePictureDB = "./profilePictures/" . $users[$i]['profilePicture'];
+                        echo '<div class="col-md-6 col-lg-3">';
+                        echo '<div class="card bg-dark text-white">';
+                        echo '<div class="card-body text-center">';
+                        echo '<div id="card-top">';
+                        echo '<img src="' . $profilePictureDB . '" class="rounded-circle" id="image" alt="">';
+                        echo '<h3 class="card-title"><span style="font-weight: 600;">' . $firstNameDB . '</span> <br> <span style="font-size: large;"> ' . $lastNameDB . '</span></h3>';
+                        echo '</div>';
+                        echo '<br>';
+                        echo '<h6 class="card-subtitle mb-2 text-muted">Věk: </h6>';
+                        echo '<p class="card-text">' . $diff->format('%y') . '</p>';
+                        echo '<h6 class="card-subtitle mb-2 text-muted">Pohlaví: </h6>';
+                        echo '<p class="card-text">' . gender($gender) . '</p>';
+                        echo '<h6 class="card-subtitle mb-2 text-muted">Sexualita: </h6>';
+                        echo '<p class="card-text">' . sexuality($sexualityDB) . '</p>';
+                        echo '<h6 class="card-subtitle mb-2 text-muted">O mně: </h6>';
+                        echo '<p class="card-text">' . $aboutMeDB . '</p>';
+                        echo '<button type="button" class="btn btn-primary mr-2 mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal' . $i . '">Požádat o rande</button>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+
+                        echo '<div class="modal fade" id="exampleModal' . $i . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+                        echo '<div class="modal-dialog">';
+                        echo '<div class="modal-content" id="cardbg">';
+                        echo '<div class="modal-header">';
+                        echo '<h5 class="modal-title" id="exampleModalLabel">Požádat o rande</h5>';
+                        echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+                        echo '</div>';
+                        echo '<div class="modal-body">';
+                        echo '<form method="post">';
+                        echo '<div class="mb-3">';
+                        echo '<label for="sender-name" class="col-form-label">Jméno:</label>';
+                        echo '<input type="text" class="form-control" id="sender-name" name="sender-name" value="' . $firstNameDB . ' ' . $lastNameDB . '" disabled>';
+                        echo '</div>';
+                        echo '<div class="mb-3">';
+                        echo '<label for="sender-date" class="col-form-label">Datum:</label>';
+                        echo '<input type="date" class="form-control" id="sender-date" name="sender-date" required>';
+                        echo '</div>';
+                        echo '<div class="mb-3">';
+                        echo '<label for="sender-time" class="col-form-label">Čas:</label>';
+                        echo '<input type="time" class="form-control" id="sender-time" name="sender-time" required>';
+                        echo '</div>';
+                        echo '<div class="mb-3">';
+                        echo '<label for="sender-place" class="col-form-label">Místo:</label>';
+                        echo '<input type="text" class="form-control" id="sender-place" name="sender-place" required>';
+                        echo '</div>';
+                        echo '<div class="mb-3">';
+                        echo '<label for="sender-message" class="col-form-label">Zpráva:</label>';
+                        echo '<textarea class="form-control" id="sender-message" name="sender-message"></textarea>';
+                        echo '</div>';
+                        echo '<div class="modal-footer">';
+                        echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>';
+                        echo '<button type="submit" class="btn btn-primary" name="send-date-' . $i . '">Odeslat</button>';
+                        echo '</div>';
+                        echo '</form>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
                 } ?>
+
             </div>
         </div>
     </section>
@@ -139,7 +255,12 @@ while ($row = mysqli_fetch_assoc($result)) {
             <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
+
+<?php
+mysqli_close($conn);
+?>
