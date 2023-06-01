@@ -30,9 +30,12 @@ body {
     font-weight: 400;
 }
 
-.account-settings .about {
+.account-settings .about{
     margin: 1rem 0 0 0;
     font-size: 0.8rem;
+    text-align: center;
+}
+.age{
     text-align: center;
 }
 

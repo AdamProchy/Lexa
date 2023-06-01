@@ -112,7 +112,7 @@ mysqli_close($conn);
                                             <h6 class="mb-2 pb-1">Pohlaví: </h6>
 
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="F" />
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="F" required/>
                                                 <label class="form-check-label" for="femaleGender">Žena</label>
                                             </div>
 
@@ -186,8 +186,3 @@ mysqli_close($conn);
 
 </html>
 
-<!---------------------------------------------------->
-
-<?php
-mysqli_close($conn);
-?>

@@ -74,22 +74,21 @@ if (!isset($_SESSION['email'])) {
         <div class="col-md">
           <div class="card bg-dark text-light p-2">
             <div class="class-body text-center">
-              <p class="card-text">Děláme tohle tamto a toto, funguje to jednoduše pokud nejsi ťululum a tak to prostě
-                bude jo super fakt to funguje</p>
+              <p class="card-text">Moje rande je webová stránka, která slouží pro domluvení schůzek s lidmi, kteří se taktéž registrovali na Moje rande, stejně jako ty!</p>
             </div>
           </div>
         </div>
         <div class="col-md">
           <div class="card bg-dark text-light p-2">
             <div class="class-body text-center">
-              <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore, atque.</p>
+              <p class="card-text">Schůzky si můžete naplánovat s kýmkoliv, kdykoliv, kdekoliv a odkudkoliv!</p>
             </div>
           </div>
         </div>
         <div class="col-md">
           <div class="card bg-dark text-light p-2">
             <div class="class-body text-center">
-              <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore, atque.</p>
+              <p class="card-text">Zde je prostor pro VAŠI reklamu! Zavolejte na číslo 420 696 777!</p>
             </div>
           </div>
         </div>
@@ -109,24 +108,21 @@ if (!isset($_SESSION['email'])) {
           </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Uděláš to tak že uděláš tohle a tamto a taky tohlecto protože nejsi ťulpas tak to
-            zvládneš ne?</div>
+          <div class="accordion-body">Klikněte v horní části stránky na "Chci rande!", vyberte si správného člověka na rande a klikněte na "Požádat o rande". Nyní stačí pouze vyčkat, zda protějšek rande přijme nebo ne.</div>
         </div>
       </div>
       <!--ITEM 2-->
       <div class="accordion-item bg-dark text-white">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-            Accordion Item #2
+            Kde si změním heslo, email, fotku nebo popisek?
           </button>
         </h2>
         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-            .accordion-flush class. This is the second item's accordion body. Let's imagine this being filled with some
-            actual content.</div>
+          <div class="accordion-body">V pravé horní části obrazovky stačí kliknout na své žluté jméno. Zobrazí se vám stránka, na které můžete všechny tyto akce provést.</div>
         </div>
       </div>
-      <!--ITEM 3-->
+      <!--ITEM 3--> <!--
       <div class="accordion-item bg-dark text-white">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
@@ -139,7 +135,7 @@ if (!isset($_SESSION['email'])) {
             terms of content, but just filling up the space to make it look, at least at first glance, a bit more
             representative of how this would look in a real-world application.</div>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 
@@ -147,7 +143,13 @@ if (!isset($_SESSION['email'])) {
 
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-3">
+        <h2 class="text-warning">Front-end</h2>
+        <h4>Adam Procházka<br><a href="https://www.linkedin.com/in/adamprochazkacz" target="_blank"><i class="bi bi-linkedin"></i></a></h4>
+        <h2 class="text-warning">Back-end</h2>
+        <h4>Matyáš Závora <br><a href="https://www.linkedin.com/in/matyas-zavora/" target="_blank"><i class="bi bi-linkedin"></i></a></h4>
+      </div>
+      <div class="col-md-3 text-end">
         <h2>Adresa</h2>
         <p>Pražská 123<br>120 00 Praha</p>
       </div>

@@ -142,17 +142,17 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                         <div class="col-md-6 col-lg-3">
                             <?php if ($dates[$i]['confirmed']) { ?>
-                                <div class="card bg-success text-dark">
+                                <div class="card bg-success text-white">
                                 <?php }
                             if (!$dates[$i]['confirmed']) { ?>
-                                    <div class="card bg-dark text-dark">
+                                    <div class="card bg-dark text-white">
                                     <?php } ?>
                                     <?php
                                     if ($email == $dates[$i]['recipientEmail']) { ?>
                                         <div class="card bg-warning text-dark">
                                         <?php } ?>
                                         <?php if ($dates[$i]["confirmed"]) { ?>
-                                            <div class="card bg-success text-dark">
+                                            <div class="card bg-success text-white">
                                             <?php } ?>
                                             <div class="card-body text-center">
                                                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -162,10 +162,10 @@ while ($row = mysqli_fetch_assoc($result)) {
                                                     </div>
                                                     <br>
                                                     <input type="hidden" name="dateID" value="<?php echo $dateID; ?>">
-                                                    <h6 class="card-subtitle mb-2 text-muted">Místo: <?php echo $placeDB; ?></h6>
-                                                    <h6 class="card-subtitle mb-2 text-muted">Datum: <?php echo $dateInvitationDB; ?></h6>
-                                                    <h6 class="card-subtitle mb-2 text-muted">Čas: <?php echo date("h:i", strtotime($dateInvitationDB)); ?></h6>
-                                                    <h6 class="card-subtitle mb-2 text-muted">Zpráva: <?php echo $messageDB; ?></h6>
+                                                    <h6 class="card-subtitle mb-2 text-white">Místo: <?php echo $placeDB; ?></h6>
+                                                    <h6 class="card-subtitle mb-2 text-white">Datum: <?php echo $dateInvitationDB; ?></h6>
+                                                    <h6 class="card-subtitle mb-2 text-white">Čas: <?php echo date("h:i", strtotime($dateInvitationDB)); ?></h6>
+                                                    <h6 class="card-subtitle mb-2 text-white">Zpráva: <?php echo $messageDB; ?></h6>
                                                     <?php if ($dates[$i]['senderEmail'] == $_SESSION["email"] || $dates[$i]['confirmed']) { ?>
                                                         <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
                                                     <?php } else if ($dates[$i]['senderEmail'] != $_SESSION["email"]) { ?>
