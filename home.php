@@ -40,7 +40,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="../Lexa/index.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>

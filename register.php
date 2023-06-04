@@ -14,6 +14,7 @@ if (isset($_SESSION["email"])) {
 
 include("config.php");
 $isAdult = true;
+$isEmailAvailable = true;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ageErr = "";
     $firstName = $lastName = $birthdayDate = $gender = $email = $psw = $sexuality = $isAdult = "";
@@ -25,16 +26,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $psw = filter_input(INPUT_POST, "psw", FILTER_SANITIZE_SPECIAL_CHARS);
     $psw = password_hash($psw, PASSWORD_DEFAULT);
     $sexuality = filter_input(INPUT_POST, "sexuality", FILTER_SANITIZE_SPECIAL_CHARS);
+    $isEmailAvailable = checkIfEmailAvalible($email, $conn);
 
     $now = date("Y-m-d");
     $diff = date_diff(date_create($birthdayDate), date_create($now));
+
 
     if ($diff->format('%y') >= 18) {
         $isAdult = true;
     } else {
         $isAdult = false;
     }
-    if ($isAdult) {
+    if ($isAdult && $isEmailAvailable) {
         $sql = "INSERT INTO credentials (firstName, lastName, gender, sexuality, birthDate, email, psw)
                 VALUES ('$firstName', '$lastName', '$gender', '$sexuality', '$birthdayDate', '$email', '$psw')";
 
@@ -48,10 +51,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 mysqli_close($conn);
+
+function checkIfEmailAvalible($email, $conn)
+{
+    $sql = "SELECT email FROM credentials WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
 ?>
-
-<!---------------------------------------------------->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,11 +77,14 @@ mysqli_close($conn);
 
 <body>
     <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-
-        <!--Error zpráva, která se zobrazí, pokud je uživatel mladší než 18 let-->
-        <?php if ($isAdult == false) : ?>
+        <?php if (!$isAdult) : ?>
             <div class="alert alert-danger text-center" role="alert">
                 Registrace se nezdařila! Uživatel musí být starší 18 let.
+            </div>
+        <?php endif; ?>
+        <?php if (!$isEmailAvailable) : ?>
+            <div class="alert alert-danger text-center" role="alert">
+                Registrace se nezdařila! Email je již použitý.
             </div>
         <?php endif; ?>
 
@@ -112,7 +126,7 @@ mysqli_close($conn);
                                             <h6 class="mb-2 pb-1">Pohlaví: </h6>
 
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="F" required/>
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="F" required />
                                                 <label class="form-check-label" for="femaleGender">Žena</label>
                                             </div>
 
@@ -185,4 +199,3 @@ mysqli_close($conn);
 </body>
 
 </html>
-
