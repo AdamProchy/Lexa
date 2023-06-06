@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2023 at 06:02 PM
+-- Generation Time: Jun 06, 2023 at 03:50 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -47,13 +47,14 @@ CREATE TABLE `credentials` (
 
 INSERT INTO `credentials` (`ID`, `firstName`, `lastName`, `gender`, `sexuality`, `birthDate`, `email`, `psw`, `profilePicture`, `aboutMe`, `reg_date`) VALUES
 (1, 'Admin', 'Admin', 'M', 'S', '2004-11-13', 'admin@admin.com', '$2y$10$bJxEGMf4NsVaU9fP1RR5C.M/O55Dl3dzsjQpw0caKATKAWUPb4776', '646f244e6f9f6.png', NULL, '2023-04-26 16:47:53'),
-(16, 'Matyáš', 'Závora', 'M', 'S', '2004-11-13', 'matyaszavora@outlook.com', '$2y$10$0WGJwGBkJNaMLdWSpy6YrObHTfK.9wO35Nnrb3m9h6vD8NMRM4X06', '6476f92b0cd8e.png', '0338471751481638655214972767799865764327158409418558460276033209280157148388857633936772339926572984', '2023-05-24 08:44:02'),
+(16, 'Matyáš', 'Závora', 'M', 'S', '2004-11-13', 'matyaszavora@outlook.com', '$2y$10$1Q.Fm4aMz.QWz2QSv58pW.tQgfGeY1DYR9E.ZP8cEI1FncOJ1UKZS', '6476f92b0cd8e.png', 'Sem frajer 💪', '2023-05-24 08:44:02'),
 (19, 'Lexa', 'Bůček', 'M', 'S', '1984-07-26', 'leksa@seznam.cz', '$2y$10$lpelvmgnxlpXpAMrvAzYs.rcN9TA/5JTaTaUe0Zl0aafMaJZqu8gi', '646f2590577c1.jpg', NULL, '2023-05-25 11:00:41'),
 (20, 'Ozzák', 'Pacovský', 'M', 'S', '1984-02-14', 'ozzak@seznam.cz', '$2y$10$jKSpmU4SMXiUXwj/8qTes.F47PZANxQHolNGun0YBZrfBwjeZTjuK', '646f26025991e.png', NULL, '2023-05-25 11:09:41'),
 (21, 'Tomáš ', 'Pacovský', 'M', 'S', '1962-12-07', 'tomipaci@centrum.cz', '$2y$10$jLgDcjpRfX2WjZERQiIQweEROmW1NhLu2pAOY9BP4MSIGAw2znueK', '646f27341befb.png', NULL, '2023-05-25 11:13:27'),
 (22, 'Iva', 'Pacovská', 'F', 'S', '1999-03-07', 'ivuska@gmail.com', '$2y$10$qkYYa3owFSqF38uOrGDGT.idV.leQj47Bi6mlnMstcrcNfPqvjvJC', '646f27d0f2854.png', NULL, '2023-05-25 11:17:18'),
 (23, 'Saša', 'Bůčková', 'F', 'S', '1984-05-09', 'sasa@seznam.cz', '$2y$10$D/pgCANQUat1qXop0uNl9uY/djyjX2nmGd.JjnGXCECBuaN0YpPSS', '646f286525551.png', NULL, '2023-05-25 11:19:59'),
-(24, 'Marcelka', 'Divićová', 'F', 'S', '1984-04-07', 'marcelka@centrum.cz', '$2y$10$G6FG2Q.DhRoDq.YpXQ9JYuTggzWZyPnCsljno1K2ddchSLMbnKmEi', '646f28c44170d.png', NULL, '2023-05-25 11:21:36');
+(24, 'Marcelka', 'Divićová', 'F', 'S', '1984-04-07', 'marcelka@centrum.cz', '$2y$10$G6FG2Q.DhRoDq.YpXQ9JYuTggzWZyPnCsljno1K2ddchSLMbnKmEi', '646f28c44170d.png', NULL, '2023-05-25 11:21:36'),
+(28, 'Adam', 'Procházka', 'M', 'S', '2005-04-25', 'adam@prochazka.cz', '$2y$10$/KVcVOIvju82Wc9.5mZa5u4/e9QbDRjFHcktWrVVbZZ4aQpgLYf7e', '647ccf99efdb5.jpg', NULL, '2023-06-04 19:44:30');
 
 -- --------------------------------------------------------
 
@@ -97,13 +98,13 @@ ALTER TABLE `dates`
 -- AUTO_INCREMENT for table `credentials`
 --
 ALTER TABLE `credentials`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `dates`
 --
 ALTER TABLE `dates`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
