@@ -49,6 +49,9 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 - **Marcela Divićová** (**email**: marcelka@centrum.cz | **heslo**: zoran15)
 - **Adam Procházka** (**email**: adam@prochazka.cz | **heslo**:frajer)
 - **Matyáš Závora** (**email**:matyaszavora@outlook.com | **heslo**:matyas)
+- **Tadeáš Petránek** (**email**:tadeas.petranek@gmail.com | **heslo**:tadeas)
+- **Jakub Svoboda** (**email**:jakub@svoboda.cz | **heslo**:svoboda)
+- **Jan Semerák** (**email**:jan@semerak.cz | **heslo**:semerak)
 
 ## Instalace
 
