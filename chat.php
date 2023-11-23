@@ -40,7 +40,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="../Lexa/index.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
@@ -49,13 +49,16 @@ while ($row = mysqli_fetch_assoc($result)) {
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="../Lexa/home.php">Domu</a>
+                        <a class="nav-link" href="../Lexa/home.php">Domu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../Lexa/date.php">Chci rande!</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../Lexa/help.php">Podpora</a>
+                    </li>
+                    <li>
+                        <a class="nav-link active" href="../Lexa/chat.php">Chat</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
@@ -73,11 +76,11 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
     </nav>
 
-<div class="container py-5 px-4">
+<div class="">
 
   <div class="row rounded-lg overflow-hidden shadow">
     <!-- Users box-->
-    <div class="col-3 p-0 bg-dark">
+    <div class="col-3 p-2 bg-dark">
 
         <div class="px-4 py-2 text-white">
           <p class="h5 mb-0 py-1">Chat</p>
@@ -86,7 +89,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <div class="messages-box bg-dark">
           <div class="list-group rounded-0">
 
-            <a class="list-group-item list-group-item-action active text-white rounded-0">
+            <a class="list-group-item list-group-item-action text-white rounded-0" style=" background-color: #FF9900;">
               <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
                 <div class="media-body ml-4">
                   <div class="d-flex align-items-center justify-content-between mb-0">
@@ -182,30 +185,30 @@ while ($row = mysqli_fetch_assoc($result)) {
     </div>
     <!-- Chat Box-->
     <div class="col-9 px-0">
-      <div class="px-4 py-5 chat-box bg-dark">
-        <!-- Sender Message on right side-->
-        <div class="media mb-3">
-            <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-3">
-                <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block" style="max-width: 600px; word-wrap: break-word;">
-                    <p class="text-light mb-0">Toto je ODESÍLATEL testghghhggghgghhghgfhgfhjgjhghjghjgjhggfhgfdhnfdhjgbhfdjgbjhfdbhgkdjfhgkfdjhgjkfdghkfdjghkfdjhgfdkjghfdkjghdjhgkjfdghjhgjghjgjhgfghjhgfdfghjhgfdsfghjkjztrertzjkjhgfdfg </p>
-                </div>
-                <p class="small text-muted">12:00 PM | Aug 13</p>
+    <div class="px-4 py-5 chat-box bg-dark">
+    <!-- Sender Message on right side-->
+    <div class="media mb-3">
+        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+        <div class="media-body ml-3">
+            <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100" style="overflow-wrap: break-word;">
+                <p class="text-light mb-0">Toto je ODESÍLATEL testghghhggghgghhghgfhgfhjgjhghjghjgjhggfhgfdhnfdhjgbhfdjgbjhfdbhgkdjfhgkfdjhgjkfdghkfdjghkfdjhgfdkjghfdkjghdjhgkjfdghjhgjghjgjhgfghjhgfdfghjhgfdsfghjkjztrertzjkjhgfdfg</p>
             </div>
+            <p class="small text-muted">12:00 PM | Aug 13</p>
         </div>
+    </div>
 
-
-        <!-- Receiver Message on Left Side-->
-        <div class="media mb-3 text-end"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-3">
-                <div class="bg-primary rounded py-2 px-3 mb-1 mt-1 d-inline-block" style="max-width: 600px; word-wrap: break-word;">
-                    <p class="text-small mb-0 text-light text-start">Toto je Lorem ipsu</p>
-                </div>
-                <p class="small text-muted">12:00 PM | Aug 13</p>
+    <!-- Receiver Message on Left Side-->
+    <div class="media mb-3 text-end">
+        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+        <div class="media-body ml-3">
+            <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 " style="overflow-wrap: break-word; background-color: #FF9900;">
+                <p class="text-small mb-0 text-light text-start">Toto je Lorenfbhdjshgjkdhglkjdhgkjfdshgfdhgjkdfshgfdsjgldsfhkgfdhskgjhfdslkjghfdslkjghfdslkjhglkfdsjhglkjfdshglkjfdshgdjhglkjfdshgkfjdbjfhglkfjdshgkfdshghůlfdjglfdhgkjfdhglkjfdghlfdkhglkfdjhglkjm ipsu</p>
             </div>
-        </div>      
+            <p class="small text-muted">12:00 PM | Aug 13</p>
+        </div>
+    </div>
+</div>
 
-      </div>
 
       <!-- Typing area -->
       <form action="#" class="bg-dark">

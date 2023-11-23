@@ -132,6 +132,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li class="nav-item">
                         <a class="nav-link" href="../Lexa/help.php">Podpora</a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="../Lexa/chat.php">Chat</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
                     <li class="nav-item">
