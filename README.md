@@ -123,3 +123,7 @@ HTML, CSS, PHP, phpMyAdmin, SQL, JavaScript, jQuery, Bootstrap
 
 - Adam Procházka [GitHub](https://www.github.com/AdamProchy) [LinkedIn](https://cz.linkedin.com/in/adamprochazkacz) (Frontend)
 - Matyáš Závora [GitHub](https://github.com/matyas-zavora) [LinkedIn](https://cz.linkedin.com/in/matyáš-závora-8b9086269) (Backend)
+
+## Work distribution
+
+- Check commmits
