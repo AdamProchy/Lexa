@@ -52,6 +52,10 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 - **Tadeáš Petránek** (**email**:tadeas.petranek@gmail.com | **heslo**:tadeas)
 - **Jakub Svoboda** (**email**:jakub@svoboda.cz | **heslo**:svoboda)
 - **Jan Semerák** (**email**:jan@semerak.cz | **heslo**:semerak)
+- **Richard Malý** (**email**:adamko@niggman.cz | **heslo**:prdelka)
+- **Valerie Morsteinova** (**email**:valerie@kokoska.cz | **heslo**:petr)
+
+
 
 ## Instalace
 

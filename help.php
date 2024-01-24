@@ -70,27 +70,27 @@ if (!isset($_SESSION['email'])) {
 
 
   <!--BOXES-->
-  <section id="project" class="p-5">
+  <section id="project" class="p-5 text-white bg-dark">
     <h2 class="text-center">Základní informace</h2>
     <br>
     <div class="container">
       <div class="row text-center">
         <div class="col-md">
-          <div class="card bg-dark text-light p-2">
+          <div class="card bg-secondary text-light p-2">
             <div class="class-body text-center">
               <p class="card-text">Moje rande je webová stránka, která slouží pro domluvení schůzek s lidmi, kteří se taktéž registrovali na Moje rande, stejně jako ty!</p>
             </div>
           </div>
         </div>
         <div class="col-md">
-          <div class="card bg-dark text-light p-2">
+          <div class="card bg-secondary text-light p-2">
             <div class="class-body text-center">
               <p class="card-text">Schůzky si můžete naplánovat s kýmkoliv, kdykoliv, kdekoliv a odkudkoliv!</p>
             </div>
           </div>
         </div>
         <div class="col-md">
-          <div class="card bg-dark text-light p-2">
+          <div class="card bg-secondary text-light p-2">
             <div class="class-body text-center">
               <p class="card-text">Zde je prostor pro VAŠI reklamu! Zavolejte na číslo 420 696 777!</p>
             </div>
@@ -101,13 +101,13 @@ if (!isset($_SESSION['email'])) {
   </section>
 
 
-  <section id="faq" class="p-5">
+  <section id="faq" class="p-5 text-white bg-dark">
     <h2 class="text-center">Často kladené dotazy</h2>
-    <div class="accordion accordion-flush bg-danger" id="faqid">
+    <div class="accordion accordion-flush" id="faqid">
       <!--ITEM 1-->
-      <div class="accordion-item bg-dark text-white">
+      <div class="accordion-item bg-secondary text-white">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          <button class="accordion-button collapsed bg-secondary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
             Jak si mám naplánovat rande?
           </button>
         </h2>
@@ -116,9 +116,9 @@ if (!isset($_SESSION['email'])) {
         </div>
       </div>
       <!--ITEM 2-->
-      <div class="accordion-item bg-dark text-white">
+      <div class="accordion-item bg-secondary text-white">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+          <button class="accordion-button collapsed bg-secondary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
             Kde si změním heslo, email, fotku nebo popisek?
           </button>
         </h2>
@@ -145,7 +145,7 @@ if (!isset($_SESSION['email'])) {
 
 
 
-  <div class="container">
+  <div class="p-5 text-white bg-dark">
     <div class="row">
       <div class="col-md-3">
         <h2 class="text-warning">Front-end</h2>

@@ -193,12 +193,32 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
     </div>
 
+    <div class="media mb-3">
+        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+        <div class="media-body ml-3">
+            <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100" style="overflow-wrap: break-word;">
+                <p class="text-light mb-0">Toto je ODESÍLATEL </p>
+            </div>
+            <p class="small text-muted">12:00 PM | Aug 13</p>
+        </div>
+    </div>
+
     <!-- Receiver Message on Left Side-->
     <div class="media mb-3 text-end">
         <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
         <div class="media-body ml-3">
             <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 " style="overflow-wrap: break-word; background-color: #FF9900;">
                 <p class="text-small mb-0 text-light text-start">Toto je Lorenfbhdjshgjkdhglkjdhgkjfdshgfdhgjkdfshgfdsjgldsfhkgfdhskgjhfdslkjghfdslkjghfdslkjhglkfdsjhglkjfdshglkjfdshgdjhglkjfdshgkfjdbjfhglkfjdshgkfdshghůlfdjglfdhgkjfdhglkjfdghlfdkhglkfdjhglkjm ipsu</p>
+            </div>
+            <p class="small text-muted">12:00 PM | Aug 13</p>
+        </div>
+    </div>
+
+    <div class="media mb-3 text-end">
+        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+        <div class="media-body ml-3">
+            <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 " style="overflow-wrap: break-word; background-color: #FF9900;">
+                <p class="text-small mb-0 text-light text-start">Toto je gfdjgfdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk ipsu</p>
             </div>
             <p class="small text-muted">12:00 PM | Aug 13</p>
         </div>
