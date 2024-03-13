@@ -183,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $profilePictureDB = "./profilePictures/" . $users[$i]['profilePicture'];
                     echo '<div class="col-md-6 col-lg-3">';
                     echo '<div class="card bg-secondary text-white">';
-                    echo '<img src="' . $profilePictureDB . '" class="card-img-top rounded-circle" alt="User Image" style="width: 100%; height: 90%;">';
+                    echo '<img src="' . $profilePictureDB . '" class="card-img-top rounded text-center" alt="User Image" style="width: 100%; height: 200px;">';
                     echo '<div class="card-body text-center">';
                     echo '<h3 class="card-title"><span style="font-weight: 600;">' . $firstNameDB . '</span></h3>';
                     echo '<p class="card-title" style="font-size: large;">' . $lastNameDB . '</p>';
