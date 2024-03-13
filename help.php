@@ -56,10 +56,10 @@ if (!isset($_SESSION['email'])) {
             <p class="navbar-text text-white">Přihlášen: </p>
           </li>
           <li class="nav-item me-2">
-            <a class="nav-link text-warning" href="../Lexa/settings.php"><?php echo $firstName . " " . $lastName ?></a>
+            <a class="nav-link" style="color: #ff9900;" href="../Lexa/settings.php"><?php echo $firstName . " " . $lastName ?></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-danger" href="../Lexa/logout.php">Odhlásit se</a>
+            <a class="nav-link" style="color: red;" href="../Lexa/logout.php">Odhlásit se</a>
           </li>
         </ul>
       </div>
@@ -78,7 +78,7 @@ if (!isset($_SESSION['email'])) {
         <div class="col-md">
           <div class="card bg-secondary text-light p-2">
             <div class="class-body text-center">
-              <p class="card-text">Moje rande je webová stránka, která slouží pro domluvení schůzek s lidmi, kteří se taktéž registrovali na Moje rande, stejně jako ty!</p>
+              <p class="card-text"><span class="fw-bold">Moje</span><span class="text-dark fw-bold rounded" style="background-color: #ff9900;">Rande</span> je webová stránka, která slouží pro seznámení s lidmi, kteří se taktéž registrovali na tuto seznamku.</p>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@ if (!isset($_SESSION['email'])) {
         <div class="col-md">
           <div class="card bg-secondary text-light p-2">
             <div class="class-body text-center">
-              <p class="card-text">Zde je prostor pro VAŠI reklamu! Zavolejte na číslo 420 696 777!</p>
+              <p class="card-text">Projekt vytvořil <span class="fw-bold">Adam</span> <span class="text-dark fw-bold rounded" style="background-color: #ff9900;">Procházka</span> a <span class="fw-bold">Matyáš</span> <span class="text-dark fw-bold rounded" style="background-color: #ff9900;">Závora</span> ze třídy C4c jako technický projekt pro školu SPŠE Ječná.</p>
             </div>
           </div>
         </div>
@@ -105,9 +105,9 @@ if (!isset($_SESSION['email'])) {
     <h2 class="text-center">Často kladené dotazy</h2>
     <div class="accordion accordion-flush" id="faqid">
       <!--ITEM 1-->
-      <div class="accordion-item bg-secondary text-white">
+      <div class="accordion-item text-dark" style="background-color: #ff9900;">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-secondary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          <button class="accordion-button bg-secondary collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
             Jak si mám naplánovat rande?
           </button>
         </h2>
@@ -116,9 +116,9 @@ if (!isset($_SESSION['email'])) {
         </div>
       </div>
       <!--ITEM 2-->
-      <div class="accordion-item bg-secondary text-white">
+      <div class="accordion-item text-dark" style="background-color: #ff9900;">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-secondary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+          <button class="accordion-button bg-secondary collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
             Kde si změním heslo, email, fotku nebo popisek?
           </button>
         </h2>
@@ -126,10 +126,10 @@ if (!isset($_SESSION['email'])) {
           <div class="accordion-body">V pravé horní části obrazovky stačí kliknout na své žluté jméno. Zobrazí se vám stránka, na které můžete všechny tyto akce provést.</div>
         </div>
       </div>
-      <!--ITEM 3--> <!--
-      <div class="accordion-item bg-dark text-white">
+      <!--ITEM 3-->
+      <div class="accordion-item text-dark" style="background-color: #ff9900;">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          <button class="accordion-button bg-secondary collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
             Accordion Item #3
           </button>
         </h2>
@@ -139,34 +139,34 @@ if (!isset($_SESSION['email'])) {
             terms of content, but just filling up the space to make it look, at least at first glance, a bit more
             representative of how this would look in a real-world application.</div>
         </div>
-      </div> -->
+      </div>
     </div>
   </section>
 
 
 
   <div class="p-5 text-white bg-dark">
-    <div class="row">
-      <div class="col-md-3">
-        <h2 class="text-warning">Front-end</h2>
-        <h4>Adam Procházka<br><a href="https://www.linkedin.com/in/adamprochazkacz" target="_blank"><i class="bi bi-linkedin"></i></a></h4>
-        <h2 class="text-warning">Back-end</h2>
-        <h4>Matyáš Závora <br><a href="https://www.linkedin.com/in/matyas-zavora/" target="_blank"><i class="bi bi-linkedin"></i></a></h4>
-      </div>
-      <div class="col-md-3 text-end">
-        <h2>Adresa</h2>
-        <p>Pražská 123<br>120 00 Praha</p>
-      </div>
-      <div class="col-md-6">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2334.906030440941!2d16.50141970054016!3d49.17466524860596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4712944d4bfef9b1%3A0x500af0f6614cea0!2sBrno-st%C5%99ed!5e0!3m2!1scs!2scz!4v1684431296769!5m2!1scs!2scz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
+  <div class="row">
+    <div class="col-md-3">
+      <h2 style="color: #ff9900;">Front-end</h2>
+      <h4>Adam Procházka<br><a href="https://www.linkedin.com/in/adamprochazkacz" target="_blank"><i class="bi bi-linkedin"></i></a></h4>
+      <h2 style="color: #ff9900;">Back-end</h2>
+      <h4>Matyáš Závora <br><a href="https://www.linkedin.com/in/matyas-zavora/" target="_blank"><i class="bi bi-linkedin"></i></a></h4>
+    </div>
+    <div class="col-md-3 text-end">
+      <h2>Adresa</h2>
+      <p>Pražská 123<br>120 00 Praha</p>
+    </div>
+    <div class="col-md-6 d-none d-md-block">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2334.906030440941!2d16.50141970054016!3d49.17466524860596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4712944d4bfef9b1%3A0x500af0f6614cea0!2sBrno-st%C5%99ed!5e0!3m2!1scs!2scz!4v1684431296769!5m2!1scs!2scz" width="450" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
+</div>
 
   <!--FOOTER-->
-  <footer class="p-5 bg-dark text-white text-center position-relative mt-auto">
+  <footer class="p-1 bg-dark text-white text-center position-relative mt-auto">
     <div class="container">
-      <p class="lead">Copyright &copy; PROCHY</p>
+      <p class="lead">Copyright &copy; PROCHY | SPŠE Ječná</p>
       <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
     </div>
   </footer>
