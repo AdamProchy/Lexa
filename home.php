@@ -109,79 +109,67 @@ while ($row = mysqli_fetch_assoc($result)) {
     <?php } ?>
 
 
-    <!--DATES IN MAIN-->
-    <section id="dates" class="p-5">
-        <div class="container">
-            <?php
-            if (empty($dates)) {
-                echo "<h2 class='text-center text-dark'>Nemáte žádné domluvené schůzky.</h2>";
-            } else {
-            ?>
-                <h2 class="text-center text-dark">Domluvené schůzky:</h2>
-                <br>
-                <div class="row g-4">
+<!--DATES IN MAIN-->
+<section id="dates" class="p-5">
+    <div class="container">
+        <?php
+        if (empty($dates)) {
+            echo "<h2 class='text-center text-dark'>Nemáte žádné domluvené schůzky.</h2>";
+        } else {
+        ?>
+            <h2 class="text-center text-dark">Domluvené schůzky:</h2>
+            <br>
+            <div class="row g-4">
 
-                    <?php for ($i = 0; $i < sizeof($dates); $i++) { ?>
+                <?php for ($i = 0; $i < sizeof($dates); $i++) { ?>
 
-                        <?php
-                        if ($email != $dates[$i]['senderEmail']) {
-                            $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['senderEmail'] . "'";
-                        }
-                        if ($email != $dates[$i]['recipientEmail']) {
-                            $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['recipientEmail'] . "'";
-                        }
-                        $result = mysqli_query($conn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                        $firstNameDB = $row['firstName'];
-                        $lastNameDB = $row['lastName'];
-                        $profilePictureDB = $row['profilePicture'];
-                        $placeDB = $dates[$i]['place'];
-                        $dateInvitationDB = $dates[$i]['dateInvitation'];
-                        $dateInvitationDB = date("d.m.Y", strtotime($dateInvitationDB));
-                        $dateID = $dates[$i]['ID'];
-                        $messageDB = $dates[$i]['message'];
-                        ?>
+                    <?php
+                    if ($email != $dates[$i]['senderEmail']) {
+                        $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['senderEmail'] . "'";
+                    }
+                    if ($email != $dates[$i]['recipientEmail']) {
+                        $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['recipientEmail'] . "'";
+                    }
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    $firstNameDB = $row['firstName'];
+                    $lastNameDB = $row['lastName'];
+                    $profilePictureDB = "./profilePictures/" . $row['profilePicture'];
+                    ?>
 
-                        <div class="col-md-6 col-lg-3">
-                            <?php if ($dates[$i]['confirmed']) { ?>
-                                <div class="card bg-success text-white">
-                                <?php }
-                            if (!$dates[$i]['confirmed']) { ?>
-                                    <div class="card bg-dark text-white">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card" style="background-color: <?php echo $dates[$i]['confirmed'] ? '#00cc00' : '#ffff00'; ?>; color: black;">
+                            <div class="card-body text-center">
+                                <div id="card-top">
+                                    <img src="<?php echo $profilePictureDB; ?>" class="rounded-circle" id="image" alt="">
+                                    <h3 class="card-title"><span style="font-weight: 600;"><?php echo $firstNameDB; ?></span><br><span style="font-size: large;"><?php echo $lastNameDB; ?></span></h3>
+                                </div>
+                                <br>
+                                <h6 class="card-subtitle mb-2 text-white">Místo: <?php echo $dates[$i]['place']; ?></h6>
+                                <h6 class="card-subtitle mb-2 text-white">Datum: <?php echo date("d.m.Y", strtotime($dates[$i]['dateInvitation'])); ?></h6>
+                                <h6 class="card-subtitle mb-2 text-white">Čas: <?php echo date("h:i", strtotime($dates[$i]['dateInvitation'])); ?></h6>
+                                <h6 class="card-subtitle mb-2 text-white">Zpráva: <?php echo $dates[$i]['message']; ?></h6>
+                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                    <input type="hidden" name="dateID" value="<?php echo $dates[$i]['ID']; ?>">
+                                    <?php if ($dates[$i]['senderEmail'] == $_SESSION["email"] || $dates[$i]['confirmed']) { ?>
+                                        <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
+                                    <?php } else if ($dates[$i]['senderEmail'] != $_SESSION["email"]) { ?>
+                                        <button href="#" class="btn btn-success mr-2 mt-3" name="submit">Potvrdit</button>
+                                        <button href="#" class="btn btn-danger mt-3" name="cancel">Odmítnout</button>
                                     <?php } ?>
-                                    <?php
-                                    if ($email == $dates[$i]['recipientEmail']) { ?>
-                                        <div class="card bg-warning text-dark">
-                                        <?php } ?>
-                                        <?php if ($dates[$i]["confirmed"]) { ?>
-                                            <div class="card bg-success text-white">
-                                            <?php } ?>
-                                            <div class="card-body text-center">
-                                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                                                    <div id="card-top">
-                                                        <img src="./profilePictures/<?php echo $profilePictureDB; ?>" class="rounded-circle" id="image" alt="">
-                                                        <h3 class="card-title"><span style="font-weight: 600;"><?php echo $firstNameDB; ?> </span><span style="font-size: large;"> <?php echo $lastNameDB; ?></span></h3>
-                                                    </div>
-                                                    <br>
-                                                    <input type="hidden" name="dateID" value="<?php echo $dateID; ?>">
-                                                    <h6 class="card-subtitle mb-2 text-white">Místo: <?php echo $placeDB; ?></h6>
-                                                    <h6 class="card-subtitle mb-2 text-white">Datum: <?php echo $dateInvitationDB; ?></h6>
-                                                    <h6 class="card-subtitle mb-2 text-white">Čas: <?php echo date("h:i", strtotime($dateInvitationDB)); ?></h6>
-                                                    <h6 class="card-subtitle mb-2 text-white">Zpráva: <?php echo $messageDB; ?></h6>
-                                                    <?php if ($dates[$i]['senderEmail'] == $_SESSION["email"] || $dates[$i]['confirmed']) { ?>
-                                                        <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
-                                                    <?php } else if ($dates[$i]['senderEmail'] != $_SESSION["email"]) { ?>
-                                                        <button href="#" class="btn btn-success mr-2 mt-3" name="submit">Potvrdit</button>
-                                                        <button href="#" class="btn btn-danger mt-3" name="cancel">Odmítnout</button>
-                                                    <?php } ?>
-                                                </form>
-                                            </div>
-                                            </div>
-                                        </div>
-                                <?php }
-                        } ?>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php } ?>
+    </div>
+</section>
 
-    </section>
+
+
+
 
 
     <!--FOOTER-->
