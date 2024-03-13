@@ -45,7 +45,7 @@ if (!isset($_SESSION['email'])) {
             <a class="nav-link" href="../Lexa/date.php">Chci rande!</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="../Lexa/help.php">Podpora</a>
+            <a class="nav-link active" style="color: #ff9900;" href="../Lexa/help.php">Podpora</a>
           </li>
           <li>
             <a class="nav-link" href="../Lexa/chat.php">Chat</a>
@@ -112,7 +112,7 @@ if (!isset($_SESSION['email'])) {
           </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Klikněte v horní části stránky na "Chci rande!", vyberte si správného člověka na rande a klikněte na "Požádat o rande". Nyní stačí pouze vyčkat, zda protějšek rande přijme nebo ne.</div>
+          <div class="accordion-body">Klikněte v horní části stránky na "Chci rande!", vyberte si správného člověka na rande a klikněte na "Požádat o rande". Vyplntě důlezité informace, které se zašlou s pozvánkou na rande dané osobě. Nyní stačí pouze vyčkat, zda protějšek rande přijme nebo ne.</div>
         </div>
       </div>
       <!--ITEM 2-->
@@ -123,7 +123,7 @@ if (!isset($_SESSION['email'])) {
           </button>
         </h2>
         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">V pravé horní části obrazovky stačí kliknout na své žluté jméno. Zobrazí se vám stránka, na které můžete všechny tyto akce provést.</div>
+          <div class="accordion-body">V pravé horní části obrazovky stačí kliknout na své barevně označené jméno. Zobrazí se vám stránka, na které můžete všechny tyto akce provést.</div>
         </div>
       </div>
       <!--ITEM 3-->
@@ -154,11 +154,11 @@ if (!isset($_SESSION['email'])) {
       <h4>Matyáš Závora <br><a href="https://www.linkedin.com/in/matyas-zavora/" target="_blank"><i class="bi bi-linkedin"></i></a></h4>
     </div>
     <div class="col-md-3 text-end">
-      <h2>Adresa</h2>
-      <p>Pražská 123<br>120 00 Praha</p>
+      <h2 style="color: #ff9900;">Adresa</h2>
+      <p>Ječná 30<br>120 00 Praha 2</p>
     </div>
     <div class="col-md-6 d-none d-md-block">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2334.906030440941!2d16.50141970054016!3d49.17466524860596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4712944d4bfef9b1%3A0x500af0f6614cea0!2sBrno-st%C5%99ed!5e0!3m2!1scs!2scz!4v1684431296769!5m2!1scs!2scz" width="450" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3134.2952499145554!2d14.42307158100644!3d50.07530065922398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b948c9f75eabd%3A0x388885305f00cbcf!2zU3TFmWVkbsOtIHByxa9teXNsb3bDoSDFoWtvbGEgZWxla3Ryb3RlY2huaWNrw6EsIFByYWhhIDIsIEplxI1uw6EgMzA!5e0!3m2!1scs!2scz!4v1710326050227!5m2!1scs!2scz" width="450" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
 </div>
@@ -167,9 +167,10 @@ if (!isset($_SESSION['email'])) {
   <footer class="p-1 bg-dark text-white text-center position-relative mt-auto">
     <div class="container">
       <p class="lead">Copyright &copy; PROCHY | SPŠE Ječná</p>
-      <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
+      <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1" style="color: #ff9900;"></i></a>
     </div>
   </footer>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 
