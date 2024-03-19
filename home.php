@@ -25,40 +25,42 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles/index.css">
-    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
-    <title>🖤 Moje Rande 🧡</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="styles/index.css">
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+        <title>🖤 Moje Rande 🧡</title>
+    </head>
 
-<body class="d-flex flex-column min-vh-100">
+    <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../Lexa/index.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
+            <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="../Lexa/home.php">Domu</a>
+                        <a class="nav-link active" href="./home.php">Domu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/date.php">Chci rande!</a>
+                        <a class="nav-link" href="./date.php">Chci rande!</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/help.php">Podpora</a>
+                        <a class="nav-link" href="./help.php">Podpora</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../Lexa/chat.php">Chat</a>
+                        <a class="nav-link" href="./chat.php">Chat</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
@@ -66,10 +68,11 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <p class="navbar-text text-white">Přihlášen: </p>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-warning" href="../Lexa/settings.php"><?php echo $firstName . " " . $lastName ?></a>
+                        <a class="nav-link text-warning"
+                           href="./settings.php"><?php echo $firstName . " " . $lastName ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="../Lexa/logout.php">Odhlásit se</a>
+                        <a class="nav-link text-danger" href="./logout.php">Odhlásit se</a>
                     </li>
                 </ul>
             </div>
@@ -86,8 +89,8 @@ while ($row = mysqli_fetch_assoc($result)) {
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <script>
-            setTimeout(function() {
-                window.location.href = "../Lexa/home.php";
+            setTimeout(function () {
+                window.location.href = "./home.php";
             }, 2500);
         </script>
     <?php } ?>
@@ -102,74 +105,81 @@ while ($row = mysqli_fetch_assoc($result)) {
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <script>
-            setTimeout(function() {
-                window.location.href = "../Lexa/home.php";
+            setTimeout(function () {
+                window.location.href = "./home.php";
             }, 2500);
         </script>
     <?php } ?>
 
 
-<!--DATES IN MAIN-->
-<section id="dates" class="p-5">
-    <div class="container">
-        <?php
-        if (empty($dates)) {
-            echo "<h2 class='text-center text-dark'>Nemáte žádné domluvené schůzky.</h2>";
-        } else {
-        ?>
-            <h2 class="text-center text-dark">Domluvené schůzky:</h2>
-            <br>
-            <div class="row g-4">
+    <!--DATES IN MAIN-->
+    <section id="dates" class="p-5">
+        <div class="container">
+            <?php
+            if (empty($dates)) {
+                echo "<h2 class='text-center text-dark'>Nemáte žádné domluvené schůzky.</h2>";
+            } else {
+                ?>
+                <h2 class="text-center text-dark">Domluvené schůzky:</h2>
+                <br>
+                <div class="row g-4">
 
-                <?php for ($i = 0; $i < sizeof($dates); $i++) { ?>
+                    <?php for ($i = 0; $i < sizeof($dates); $i++) { ?>
 
-                    <?php
-                    if ($email != $dates[$i]['senderEmail']) {
-                        $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['senderEmail'] . "'";
-                    }
-                    if ($email != $dates[$i]['recipientEmail']) {
-                        $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['recipientEmail'] . "'";
-                    }
-                    $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    $firstNameDB = $row['firstName'];
-                    $lastNameDB = $row['lastName'];
-                    $profilePictureDB = "./profilePictures/" . $row['profilePicture'];
-                    ?>
+                        <?php
+                        if ($email != $dates[$i]['senderEmail']) {
+                            $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['senderEmail'] . "'";
+                        }
+                        if ($email != $dates[$i]['recipientEmail']) {
+                            $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['recipientEmail'] . "'";
+                        }
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_assoc($result);
+                        $firstNameDB = $row['firstName'];
+                        $lastNameDB = $row['lastName'];
+                        $profilePictureDB = "./profilePictures/" . $row['profilePicture'];
+                        ?>
 
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card" style="background-color: <?php echo $dates[$i]['confirmed'] ? '#00cc00' : '#ffff00'; ?>; color: black;">
-                            <div class="card-body text-center">
-                                <div id="card-top">
-                                    <img src="<?php echo $profilePictureDB; ?>" class="rounded-circle" id="image" alt="">
-                                    <h3 class="card-title"><span style="font-weight: 600;"><?php echo $firstNameDB; ?></span><br><span style="font-size: large;"><?php echo $lastNameDB; ?></span></h3>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card"
+                                 style="background-color: <?php echo $dates[$i]['confirmed'] ? '#00cc00' : '#ffff00'; ?>; color: black;">
+                                <div class="card-body text-center">
+                                    <div id="card-top">
+                                        <img src="<?php echo $profilePictureDB; ?>" class="rounded-circle" id="image"
+                                             alt="">
+                                        <h3 class="card-title"><span
+                                                    style="font-weight: 600;"><?php echo $firstNameDB; ?></span><br><span
+                                                    style="font-size: large;"><?php echo $lastNameDB; ?></span></h3>
+                                    </div>
+                                    <br>
+                                    <h6 class="card-subtitle mb-2 text-white">
+                                        Místo: <?php echo $dates[$i]['place']; ?></h6>
+                                    <h6 class="card-subtitle mb-2 text-white">
+                                        Datum: <?php echo date("d.m.Y", strtotime($dates[$i]['dateInvitation'])); ?></h6>
+                                    <h6 class="card-subtitle mb-2 text-white">
+                                        Čas: <?php echo date("h:i", strtotime($dates[$i]['dateInvitation'])); ?></h6>
+                                    <h6 class="card-subtitle mb-2 text-white">
+                                        Zpráva: <?php echo $dates[$i]['message']; ?></h6>
+                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                        <input type="hidden" name="dateID" value="<?php echo $dates[$i]['ID']; ?>">
+                                        <?php if ($dates[$i]['senderEmail'] == $_SESSION["email"] || $dates[$i]['confirmed']) { ?>
+                                            <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande
+                                            </button>
+                                        <?php } else if ($dates[$i]['senderEmail'] != $_SESSION["email"]) { ?>
+                                            <button href="#" class="btn btn-success mr-2 mt-3" name="submit">Potvrdit
+                                            </button>
+                                            <button href="#" class="btn btn-danger mt-3" name="cancel">Odmítnout
+                                            </button>
+                                        <?php } ?>
+                                    </form>
                                 </div>
-                                <br>
-                                <h6 class="card-subtitle mb-2 text-white">Místo: <?php echo $dates[$i]['place']; ?></h6>
-                                <h6 class="card-subtitle mb-2 text-white">Datum: <?php echo date("d.m.Y", strtotime($dates[$i]['dateInvitation'])); ?></h6>
-                                <h6 class="card-subtitle mb-2 text-white">Čas: <?php echo date("h:i", strtotime($dates[$i]['dateInvitation'])); ?></h6>
-                                <h6 class="card-subtitle mb-2 text-white">Zpráva: <?php echo $dates[$i]['message']; ?></h6>
-                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                                    <input type="hidden" name="dateID" value="<?php echo $dates[$i]['ID']; ?>">
-                                    <?php if ($dates[$i]['senderEmail'] == $_SESSION["email"] || $dates[$i]['confirmed']) { ?>
-                                        <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
-                                    <?php } else if ($dates[$i]['senderEmail'] != $_SESSION["email"]) { ?>
-                                        <button href="#" class="btn btn-success mr-2 mt-3" name="submit">Potvrdit</button>
-                                        <button href="#" class="btn btn-danger mt-3" name="cancel">Odmítnout</button>
-                                    <?php } ?>
-                                </form>
                             </div>
                         </div>
-                    </div>
-                <?php } ?>
-            </div>
-        <?php } ?>
-    </div>
-</section>
-
-
-
-
+                    <?php } ?>
+                </div>
+            <?php } ?>
+        </div>
+    </section>
 
 
     <!--FOOTER-->
@@ -180,10 +190,12 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    </body>
 
-</html>
+    </html>
 
 <?php
 mysqli_close($conn);

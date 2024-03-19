@@ -25,40 +25,43 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
-    <link rel="stylesheet" href="styles/chat.css">
-    <title>🖤 Moje Rande 🧡</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+        <link rel="stylesheet" href="styles/chat.css">
+        <title>🖤 Moje Rande 🧡</title>
+    </head>
 
-<body class="d-flex flex-column min-vh-100">
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../Lexa/index.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
+            <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px"
+                                                            height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/home.php">Domu</a>
+                        <a class="nav-link" href="./home.php">Domu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/date.php">Chci rande!</a>
+                        <a class="nav-link" href="./date.php">Chci rande!</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/help.php">Podpora</a>
+                        <a class="nav-link" href="./help.php">Podpora</a>
                     </li>
                     <li>
-                        <a class="nav-link active" href="../Lexa/chat.php">Chat</a>
+                        <a class="nav-link active" href="./chat.php">Chat</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
@@ -66,185 +69,127 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <p class="navbar-text text-white">Přihlášen: </p>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-warning" href="../Lexa/settings.php"><?php echo $firstName . " " . $lastName ?></a>
+                        <a class="nav-link text-warning"
+                           href="./settings.php"><?php echo $firstName . " " . $lastName ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="../Lexa/logout.php">Odhlásit se</a>
+                        <a class="nav-link text-danger" href="./logout.php">Odhlásit se</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
-  <div class="row overflow-hidden shadow">
-    <!-- Users box-->
-    <div class="col-3 p-2 bg-dark">
+        <div class="row overflow-hidden shadow">
+            <!-- Users box-->
+            <div class="col-3 p-2 bg-dark">
 
-        <div class="messages-box bg-dark">
-          <div class="list-group rounded-0">
+                <div class="messages-box bg-dark">
+                    <div class="list-group rounded-0">
 
-            <a class="list-group-item list-group-item-action text-white rounded-0" style=" background-color: #FF9900;">
-              <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-0">
-                    <h5 class=" mb-0">Adam Procházka</h5>
-                  </div>
-                  <small class="mt-0">25 Dec</small>
-                </div>
-              </div>
-            </a>
-
-   
-            <a class="list-group-item list-group-item-action bg-dark text-white rounded-0">
-              <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-0">
-                    <h5 class=" mb-0">Adam Procházka</h5>
-                  </div>
-                  <small class="mt-0">25 Dec</small>
-                </div>
-              </div>
-            </a>
-
-               
-            <a class="list-group-item list-group-item-action bg-dark text-white rounded-0">
-              <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-0">
-                    <h5 class=" mb-0">Adam Procházka</h5>
-                  </div>
-                  <small class="mt-0">25 Dec</small>
-                </div>
-              </div>
-            </a>
-               
-            <a class="list-group-item list-group-item-action bg-dark text-white rounded-0">
-              <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-0">
-                    <h5 class=" mb-0">Adam Procházka</h5>
-                  </div>
-                  <small class="mt-0">25 Dec</small>
-                </div>
-              </div>
-            </a>
-               
-            <a class="list-group-item list-group-item-action bg-dark text-white rounded-0">
-              <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-0">
-                    <h5 class=" mb-0">Adam Procházka</h5>
-                  </div>
-                  <small class="mt-0">25 Dec</small>
-                </div>
-              </div>
-            </a>
-               
-            <a class="list-group-item list-group-item-action bg-dark text-white rounded-0">
-              <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-0">
-                    <h5 class=" mb-0">Adam Procházka</h5>
-                  </div>
-                  <small class="mt-0">25 Dec</small>
-                </div>
-              </div>
-            </a>
-               
-            <a class="list-group-item list-group-item-action bg-dark text-white rounded-0">
-              <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-0">
-                    <h5 class=" mb-0">Adam Procházka</h5>
-                  </div>
-                  <small class="mt-0">25 Dec</small>
-                </div>
-              </div>
-            </a>
-               
-            <a class="list-group-item list-group-item-action bg-dark text-white rounded-0">
-              <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="30" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-0">
-                    <h5 class=" mb-0">Adam Procházka</h5>
-                  </div>
-                  <small class="mt-0">25 Dec</small>
-                </div>
-              </div>
-            </a>
+                        <a class="list-group-item list-group-item-action text-white rounded-0"
+                           style=" background-color: #FF9900;">
+                            <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg"
+                                                    alt="user" width="30" class="rounded-circle">
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-0">
+                                        <h5 class=" mb-0">Adam Procházka</h5>
+                                    </div>
+                                    <small class="mt-0">25 Dec</small>
+                                </div>
+                            </div>
+                        </a>
 
 
-          </div>
-        </div>
-    </div>
-    <!-- Chat Box-->
-    <div class="col-9 px-0">
-    <div class="px-4 py-5 chat-box bg-dark">
-    <!-- Sender Message on right side-->
-    <div class="media mb-3">
-        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-        <div class="media-body ml-3">
-            <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100" style="overflow-wrap: break-word;">
-                <p class="text-light mb-0">Toto je ODESÍLATEL testghghhggghgghhghgfhgfhjgjhghjghjgjhggfhgfdhnfdhjgbhfdjgbjhfdbhgkdjfhgkfdjhgjkfdghkfdjghkfdjhgfdkjghfdkjghdjhgkjfdghjhgjghjgjhgfghjhgfdfghjhgfdsfghjkjztrertzjkjhgfdfg</p>
+                    </div>
+                </div>
             </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-        </div>
-    </div>
+            <!-- Chat Box-->
+            <div class="col-9 px-0">
+                <div class="px-4 py-5 chat-box bg-dark">
+                    <!-- Sender Message on right side-->
+                    <div class="media mb-3">
+                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50"
+                             class="rounded-circle">
+                        <div class="media-body ml-3">
+                            <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100"
+                                 style="overflow-wrap: break-word;">
+                                <p class="text-light mb-0">Toto je ODESÍLATEL
+                                    testghghhggghgghhghgfhgfhjgjhghjghjgjhggfhgfdhnfdhjgbhfdjgbjhfdbhgkdjfhgkfdjhgjkfdghkfdjghkfdjhgfdkjghfdkjghdjhgkjfdghjhgjghjgjhgfghjhgfdfghjhgfdsfghjkjztrertzjkjhgfdfg</p>
+                            </div>
+                            <p class="small text-muted">12:00 PM | Aug 13</p>
+                        </div>
+                    </div>
 
-    <div class="media mb-3">
-        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-        <div class="media-body ml-3">
-            <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100" style="overflow-wrap: break-word;">
-                <p class="text-light mb-0">Toto je ODESÍLATEL </p>
+                    <div class="media mb-3">
+                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50"
+                             class="rounded-circle">
+                        <div class="media-body ml-3">
+                            <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100"
+                                 style="overflow-wrap: break-word;">
+                                <p class="text-light mb-0">Toto je ODESÍLATEL </p>
+                            </div>
+                            <p class="small text-muted">12:00 PM | Aug 13</p>
+                        </div>
+                    </div>
+
+                    <!-- Receiver Message on Left Side-->
+                    <div class="media mb-3 text-end">
+                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50"
+                             class="rounded-circle">
+                        <div class="media-body ml-3">
+                            <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 "
+                                 style="overflow-wrap: break-word; background-color: #FF9900;">
+                                <p class="text-small mb-0 text-light text-start">Toto je
+                                    Lorenfbhdjshgjkdhglkjdhgkjfdshgfdhgjkdfshgfdsjgldsfhkgfdhskgjhfdslkjghfdslkjghfdslkjhglkfdsjhglkjfdshglkjfdshgdjhglkjfdshgkfjdbjfhglkfjdshgkfdshghůlfdjglfdhgkjfdhglkjfdghlfdkhglkfdjhglkjm
+                                    ipsu</p>
+                            </div>
+                            <p class="small text-muted">12:00 PM | Aug 13</p>
+                        </div>
+                    </div>
+
+                    <div class="media mb-3 text-end">
+                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50"
+                             class="rounded-circle">
+                        <div class="media-body ml-3">
+                            <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 "
+                                 style="overflow-wrap: break-word; background-color: #FF9900;">
+                                <p class="text-small mb-0 text-light text-start">Toto je
+                                    gfdjgfdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                                    ipsu</p>
+                            </div>
+                            <p class="small text-muted">12:00 PM | Aug 13</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Typing area -->
+                <form action="#" class="bg-dark">
+                    <div class="input-group">
+                        <input type="text" placeholder="Type a message" aria-describedby="button-addon2"
+                               class="form-control rounded-0 border-0 py-4 bg-dark">
+                        <div class="input-group-append">
+                            <button id="button-addon2" type="submit" class="btn btn-link bg-primary text-white p-3 m-2">
+                                Odeslat
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
         </div>
     </div>
 
-    <!-- Receiver Message on Left Side-->
-    <div class="media mb-3 text-end">
-        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-        <div class="media-body ml-3">
-            <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 " style="overflow-wrap: break-word; background-color: #FF9900;">
-                <p class="text-small mb-0 text-light text-start">Toto je Lorenfbhdjshgjkdhglkjdhgkjfdshgfdhgjkdfshgfdsjgldsfhkgfdhskgjhfdslkjghfdslkjghfdslkjhglkfdsjhglkjfdshglkjfdshgdjhglkjfdshgkfjdbjfhglkfjdshgkfdshghůlfdjglfdhgkjfdhglkjfdghlfdkhglkfdjhglkjm ipsu</p>
-            </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-        </div>
-    </div>
 
-    <div class="media mb-3 text-end">
-        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-        <div class="media-body ml-3">
-            <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 " style="overflow-wrap: break-word; background-color: #FF9900;">
-                <p class="text-small mb-0 text-light text-start">Toto je gfdjgfdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk ipsu</p>
-            </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-        </div>
-    </div>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    </body>
 
-
-      <!-- Typing area -->
-      <form action="#" class="bg-dark">
-        <div class="input-group">
-          <input type="text" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-dark">
-          <div class="input-group-append">
-            <button id="button-addon2" type="submit" class="btn btn-link bg-primary text-white p-3 m-2">Odeslat</button>
-          </div>
-        </div>
-      </form>
-
-    </div>
-  </div>
-</div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-</body>
-
-</html>
+    </html>
 
 <?php
 mysqli_close($conn);

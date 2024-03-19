@@ -7,8 +7,6 @@
 /____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
 */
 
-use function PHPSTORM_META\elementType;
-
 include("config.php");
 session_start();
 if (!isset($_SESSION['email'])) {
@@ -95,6 +93,7 @@ function checkPassword(string $email, string $password)
         return false;
     }
 }
+
 function checkEmail(string $newEmail)
 {
     global $conn;
@@ -106,6 +105,7 @@ function checkEmail(string $newEmail)
         return false; //email already exists
     }
 }
+
 function getBirthDate()
 {
     global $conn, $email;
@@ -113,44 +113,47 @@ function getBirthDate()
     $birthDate = mysqli_fetch_array(mysqli_query($conn, $sql))["birthDate"];
     return $birthDate;
 }
+
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles/settings.css">
-    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
-    <title>🖤 Chci rande! 🧡</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="styles/settings.css">
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+        <title>🖤 Chci rande! 🧡</title>
+    </head>
 
-<body class="d-flex flex-column min-vh-100">
+    <body class="d-flex flex-column min-vh-100">
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../Lexa/index.php"><img src="../Lexa/img/logo.png" width="200px" height="50px"></a>
+            <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/home.php">Domu</a>
+                        <a class="nav-link" href="./home.php">Domu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/date.php">Chci rande!</a>
+                        <a class="nav-link" href="./date.php">Chci rande!</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Lexa/help.php">Podpora</a>
+                        <a class="nav-link" href="./help.php">Podpora</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../Lexa/chat.php">Chat</a>
+                        <a class="nav-link" href="./chat.php">Chat</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
@@ -158,10 +161,11 @@ function getBirthDate()
                         <p class="navbar-text text-white">Přihlášen: </p>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-warning" href="../Lexa/settings.php"><?php echo $firstName . " " . $lastName ?></a>
+                        <a class="nav-link text-warning"
+                           href="./settings.php"><?php echo $firstName . " " . $lastName ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="../Lexa/logout.php">Odhlásit se</a>
+                        <a class="nav-link text-danger" href="./logout.php">Odhlásit se</a>
                     </li>
                 </ul>
             </div>
@@ -253,13 +257,15 @@ function getBirthDate()
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Vložte nový email" name="email">
+                                        <input type="email" class="form-control" id="email"
+                                               placeholder="Vložte nový email" name="email">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="text">O mně</label>
-                                        <input type="text" class="form-control" id="about_me" placeholder="Napište něco o sobě" name="aboutMe">
+                                        <input type="text" class="form-control" id="about_me"
+                                               placeholder="Napište něco o sobě" name="aboutMe">
                                     </div>
                                 </div>
                             </div>
@@ -271,13 +277,15 @@ function getBirthDate()
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="oldPassword">Staré heslo</label>
-                                        <input type="password" class="form-control" id="oldPassword" placeholder="Zadejte staré heslo" name="oldPassword">
+                                        <input type="password" class="form-control" id="oldPassword"
+                                               placeholder="Zadejte staré heslo" name="oldPassword">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="newPassword">Nové heslo</label>
-                                        <input type="password" class="form-control" id="newPassword" placeholder="Zadejte nové heslo" name="newPassword">
+                                        <input type="password" class="form-control" id="newPassword"
+                                               placeholder="Zadejte nové heslo" name="newPassword">
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +295,7 @@ function getBirthDate()
                                     <h4 class="mb-3 text-light">Změnit profilový obrázek</h6>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="file" name="profilePicture" />
+                                    <input class="form-control" type="file" name="profilePicture"/>
                                 </div>
                             </div>
                             <br>
@@ -309,10 +317,12 @@ function getBirthDate()
             <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    </body>
 
-</html>
+    </html>
 
 <?php
 mysqli_close($conn);
