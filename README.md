@@ -2,9 +2,7 @@
 
 ## Popis
 
-Tato aplikace slouží k nalezení vhodného partnera pro uživatele. Uživatel si může vytvořit profil, kde vyplní své osobní
-údaje a následně může procházet profily ostatních uživatelů. Pokud se mu nějaký profil líbí, může tuto osobu pozvat na
-rande.
+Tato aplikace slouží k nalezení vhodného partnera pro uživatele. Uživatel si může vytvořit profil, kde vyplní své osobní údaje a následně může procházet profily ostatních uživatelů. Pokud se mu nějaký profil líbí, může tuto osobu pozvat na rande.
 
 ## Funkční požadavky
 
@@ -42,22 +40,22 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 
 ## Registrovaní uživatelé a jejich údaje pro přihlášení
 
-| Name                | Email                     | Password         |
-|---------------------|---------------------------|------------------|
-| Lexa                | leksa@seznam.cz           | leksa            |
-| Admin               | admin@admin.com           | admin            |
-| František Pacovský  | ozzak@seznam.cz           | rollingstones    |
-| Tomáš Pacovský      | tomipaci@centrum.cz       | tomipaci         |
-| Iva Pacovská        | ivuska@gmail.com          | nesnasim_rotoped |
-| Saša Bůčková        | sasa@seznam.cz            | vysivani12       |
-| Marcela Divićová    | marcelka@centrum.cz       | zoran15          |
-| Adam Procházka      | adam@prochazka.cz         | frajer           |
-| Matyáš Závora       | matyaszavora@outlook.com  | matyas           |
-| Tadeáš Petránek     | tadeas.petranek@gmail.com | tadeas           |
-| Jakub Svoboda       | jakub@svoboda.cz          | svoboda          |
-| Jan Semerák         | jan@semerak.cz            | semerak          |
-| Richard Malý        | adamko@niggman.cz         | prdelka          |
-| Valerie Morsteinova | valerie@kokoska.cz        | petr             |
+- **Lexa** (**email**: leksa@seznam.cz | **heslo**:leksa)
+- **Admin** (**email**: admin@admin.com | **heslo**: admin)
+- **František Pacovský** ( **email**:ozzak@seznam.cz | **heslo**:rollingstones)
+- **Tomáš Pacovský** (**email**:tomipaci@centrum.cz | **heslo**:tomipaci)
+- **Iva Pacovská** (**email**:ivuska@gmail.com | **heslo**:nesnasim_rotoped)
+- **Saša Bůčková** (**email**: sasa@seznam.cz | **heslo**: vysivani12)
+- **Marcela Divićová** (**email**: marcelka@centrum.cz | **heslo**: zoran15)
+- **Adam Procházka** (**email**: adam@prochazka.cz | **heslo**:frajer)
+- **Matyáš Závora** (**email**:matyaszavora@outlook.com | **heslo**:matyas)
+- **Tadeáš Petránek** (**email**:tadeas.petranek@gmail.com | **heslo**:tadeas)
+- **Jakub Svoboda** (**email**:jakub@svoboda.cz | **heslo**:svoboda)
+- **Jan Semerák** (**email**:jan@semerak.cz | **heslo**:semerak)
+- **Richard Malý** (**email**:adamko@niggman.cz | **heslo**:prdelka)
+- **Valerie Morsteinova** (**email**:valerie@kokoska.cz | **heslo**:petr)
+
+
 
 ## Instalace
 
@@ -84,19 +82,14 @@ HTML, CSS, PHP, phpMyAdmin, SQL, JavaScript, jQuery, Bootstrap
 
 ## Autoři
 
-- Adam Procházka [GitHub](https://www.github.com/AdamProchy) [LinkedIn](https://cz.linkedin.com/in/adamprochazkacz) (
-  Frontend)
-- Matyáš
-  Závora [GitHub](https://github.com/matyas-zavora) [LinkedIn](https://cz.linkedin.com/in/matyáš-závora-8b9086269) (
-  Backend)
+- Adam Procházka [GitHub](https://www.github.com/AdamProchy) [LinkedIn](https://cz.linkedin.com/in/adamprochazkacz) (Frontend)
+- Matyáš Závora [GitHub](https://github.com/matyas-zavora) [LinkedIn](https://cz.linkedin.com/in/matyáš-závora-8b9086269) (Backend)
 
 # English version
 
 ## Description
 
-This application is used to find a suitable partner for the user. The user can create a profile where he fills in his
-personal data and can then browse the profiles of other users. If he likes a profile, he can invite that person on a
-date.
+This application is used to find a suitable partner for the user. The user can create a profile where he fills in his personal data and can then browse the profiles of other users. If he likes a profile, he can invite that person on a date.
 
 ## Functional requirements
 
@@ -132,11 +125,8 @@ HTML, CSS, PHP, phpMyAdmin, SQL, JavaScript, jQuery, Bootstrap
 
 ## Authors
 
-- Adam Procházka [GitHub](https://www.github.com/AdamProchy) [LinkedIn](https://cz.linkedin.com/in/adamprochazkacz) (
-  Frontend)
-- Matyáš
-  Závora [GitHub](https://github.com/matyas-zavora) [LinkedIn](https://cz.linkedin.com/in/matyáš-závora-8b9086269) (
-  Backend)
+- Adam Procházka [GitHub](https://www.github.com/AdamProchy) [LinkedIn](https://cz.linkedin.com/in/adamprochazkacz) (Frontend)
+- Matyáš Závora [GitHub](https://github.com/matyas-zavora) [LinkedIn](https://cz.linkedin.com/in/matyáš-závora-8b9086269) (Backend)
 
 ## Work distribution
 

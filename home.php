@@ -4,14 +4,8 @@
 / _  / __ ___   _____  _ __ __ _  /\/\  
 \// / / _` \ \ / / _ \| '__/ _` |/    \ 
  / //\ (_| |\ V / (_) | | | (_| / /\/\ \
-/____/\__,_| \_/ \___/|_|  \__,_\/    \/
+/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
 */
-
-//Show errors
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
-
 session_start();
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
@@ -101,51 +95,6 @@ while ($row = mysqli_fetch_assoc($result)) {
         </script>
     <?php } ?>
 
-    <?php if (isset($_POST['send_message'])) { ?>
-        <?php
-        $date_email = "";
-        $sql = "SELECT * FROM `dates` WHERE `ID` = '" . $_POST['dateID'] . "'";
-        $result = mysqli_query($conn, $sql);
-        while ($row = mysqli_fetch_assoc($result)) {
-            if ($row['senderEmail'] == $_SESSION['email']) {
-                $date_email = $row['recipientEmail'];
-            } else {
-                $date_email = $row['senderEmail'];
-            }
-        }
-        $date_id = 0;
-        // Get date id
-        $sql = "SELECT ID FROM `credentials` WHERE `email` = '" . $date_email . "'";
-        $result = mysqli_query($conn, $sql);
-        while ($row = mysqli_fetch_assoc($result)) {
-            $date_id = $row['ID'];
-        }
-        //Get user id
-        $user_id = 0;
-        $sql = "SELECT ID FROM `credentials` WHERE `email` = '" . $_SESSION['email'] . "'";
-        $result = mysqli_query($conn, $sql);
-        while ($row = mysqli_fetch_assoc($result)) {
-            $user_id = $row['ID'];
-        }
-        //Check if chat room already exists
-        $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = '" . $user_id . "' AND `user2_id` = '" . $date_id . "'";
-        $result = mysqli_query($conn, $sql);
-        if (mysqli_num_rows($result) == 0) {
-            $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = '" . $date_id . "' AND `user2_id` = '" . $user_id . "'";
-            $result = mysqli_query($conn, $sql);
-            if (mysqli_num_rows($result) == 0) {
-                // Create chat room
-                $sql = "INSERT INTO `chat_rooms` (`ID`, `user1_id`, `user2_id`) VALUES (NULL, '" . $user_id . "', '" . $date_id . "')";
-                mysqli_query($conn, $sql);
-            }
-        }
-        //Reroute to chat
-        //TODO: Make reroute to the specific chat right away
-        header("Location: ./chat.php");
-        ?>
-    <?php } ?>
-
-
     <?php if (isset($_POST['submit'])) { ?>
         <?php
         $sql = "UPDATE `dates` SET `confirmed` = '1' WHERE `dates`.`ID` = '" . $_POST['dateID'] . "'";
@@ -215,8 +164,6 @@ while ($row = mysqli_fetch_assoc($result)) {
                                         <input type="hidden" name="dateID" value="<?php echo $dates[$i]['ID']; ?>">
                                         <?php if ($dates[$i]['senderEmail'] == $_SESSION["email"] || $dates[$i]['confirmed']) { ?>
                                             <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande
-                                            </button>
-                                            <button href="#" class="btn btn-info mt-3" name="send_message">Napsat zprávu
                                             </button>
                                         <?php } else if ($dates[$i]['senderEmail'] != $_SESSION["email"]) { ?>
                                             <button href="#" class="btn btn-success mr-2 mt-3" name="submit">Potvrdit

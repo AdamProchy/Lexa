@@ -6,8 +6,6 @@
  / //\ (_| |\ V / (_) | | | (_| / /\/\ \
 /____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
 */
-
-
 session_start();
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
@@ -40,7 +38,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
         <link rel="stylesheet" href="styles/chat.css">
-        <title>🖤 Chat 🧡</title>
+        <title>🖤 Moje Rande 🧡</title>
     </head>
 
     <body class="d-flex flex-column min-vh-100">
@@ -83,59 +81,31 @@ while ($row = mysqli_fetch_assoc($result)) {
     </nav>
 
     <div class="container-fluid">
+
         <div class="row overflow-hidden shadow">
+            <!-- Users box-->
             <div class="col-3 p-2 bg-dark">
+
                 <div class="messages-box bg-dark">
                     <div class="list-group rounded-0">
-                        <?php
 
-                        $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = (SELECT ID FROM `credentials` WHERE `email` = '" . $email . "') OR `user2_id` = (SELECT ID FROM `credentials` WHERE `email` = '" . $email . "');";
-                        $result = mysqli_query($conn, $sql);
-                        $chatRooms = array();
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $chatRooms[] = $row;
-                        }
+                        <a class="list-group-item list-group-item-action text-white rounded-0"
+                           style=" background-color: #FF9900;">
+                            <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg"
+                                                    alt="user" width="30" class="rounded-circle">
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-0">
+                                        <h5 class=" mb-0">Adam Procházka</h5>
+                                    </div>
+                                    <small class="mt-0">25 Dec</small>
+                                </div>
+                            </div>
+                        </a>
 
-                        //Print all chat rooms
-                        foreach ($chatRooms as $chatRoom) {
-                            $chatMate_ID = $chatMate_First_Name = $chatMate_Last_Name = $chatMate_Picture = "";
-                            //Decide who is the chatmate
-                            $sql = "SELECT * FROM `credentials` WHERE `ID` = '" . $chatRoom['user1_id'] . "'";
-                            $result = mysqli_query($conn, $sql);
-                            // Compare with email from session
-                            if (mysqli_fetch_array($result)['email'] == $email) {
-                                $sql = "SELECT ID,firstName, lastName, profilePicture FROM `credentials` WHERE `ID` = " . $chatRoom['user2_id'] . ";";
-                                $result = mysqli_query($conn, $sql);
-                            }
 
-                            $chatMate = mysqli_fetch_array($result);
-                            $chatMate_ID = $chatMate['ID'];
-                            $chatMate_First_Name = $chatMate['firstName'];
-                            $chatMate_Last_Name = $chatMate['lastName'];
-                            $chatMate_Picture = './profilePictures/' . $chatMate['profilePicture'];
-
-                            $chatRoomId = $chatRoom['ID'];
-
-                            echo "<a class='list-group-item list-group-item-action bg-dark text-white rounded-0'>";
-                            echo "<div class='media'><img src='" . $chatMate_Picture . "' alt='user' width='30' class='rounded-circle'>";
-                            echo "<div class='media-body ml-4'>";
-                            echo "<div class='d-flex align-items-center justify-content-between mb-0'>";
-                            echo "<h5 class=' mb-0'>" . $chatMate_First_Name . " " . $chatMate_Last_Name . "</h5>";
-                            echo "</div>";
-                            if (!is_null($chatRoom['last_message'])) {
-                                echo "<small class='mt-0'>" . $chatRoom['last_message'] . "</small>";
-                            }
-                            echo "</div>";
-                            echo "</div>";
-                            echo "</a>";
-
-                        }
-                        ?>
                     </div>
                 </div>
             </div>
-
-
             <!-- Chat Box-->
             <div class="col-9 px-0">
                 <div class="px-4 py-5 chat-box bg-dark">
@@ -196,6 +166,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </div>
 
 
+                <!-- Typing area -->
                 <form action="#" class="bg-dark">
                     <div class="input-group">
                         <input type="text" placeholder="Type a message" aria-describedby="button-addon2"
