@@ -6,7 +6,10 @@
  / //\ (_| |\ V / (_) | | | (_| / /\/\ \
 /____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
 */
-
+//Show errors
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 session_start();
 $firstName = $_SESSION['firstName'];
@@ -17,16 +20,14 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 include "config.php";
+include "functions.php";
 
-$sql = "SELECT * FROM `dates` WHERE `senderEmail` = '$email' OR `recipientEmail` = '$email'";
-$result = mysqli_query($conn, $sql);
-
-$dates = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $dates[] = $row;
+if (isset($_GET['chatRoomId'])) {
+    $getChatRoomId = $_GET['chatRoomId'];
+} else {
+    $getChatRoomId = null;
 }
 ?>
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -95,28 +96,21 @@ while ($row = mysqli_fetch_assoc($result)) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             $chatRooms[] = $row;
                         }
-
                         //Print all chat rooms
                         foreach ($chatRooms as $chatRoom) {
-                            $chatMate_ID = $chatMate_First_Name = $chatMate_Last_Name = $chatMate_Picture = "";
-                            //Decide who is the chatmate
-                            $sql = "SELECT * FROM `credentials` WHERE `ID` = '" . $chatRoom['user1_id'] . "'";
-                            $result = mysqli_query($conn, $sql);
-                            // Compare with email from session
-                            if (mysqli_fetch_array($result)['email'] == $email) {
-                                $sql = "SELECT ID,firstName, lastName, profilePicture FROM `credentials` WHERE `ID` = " . $chatRoom['user2_id'] . ";";
-                                $result = mysqli_query($conn, $sql);
-                            }
+                            $chatMate = getChatMate($conn, $email, $chatRoom['user1_id'], $chatRoom['user2_id']);
 
-                            $chatMate = mysqli_fetch_array($result);
                             $chatMate_ID = $chatMate['ID'];
                             $chatMate_First_Name = $chatMate['firstName'];
                             $chatMate_Last_Name = $chatMate['lastName'];
                             $chatMate_Picture = './profilePictures/' . $chatMate['profilePicture'];
 
                             $chatRoomId = $chatRoom['ID'];
-
-                            echo "<a class='list-group-item list-group-item-action bg-dark text-white rounded-0'>";
+                            if ($chatRoomId == $getChatRoomId) {
+                                echo "<a class='list-group-item list-group-item-action text-white rounded-0' href='./chat.php?chatRoomId=" . $chatRoomId . "' style='background-color: #FF9900;'>";
+                            } else {
+                                echo "<a class='list-group-item list-group-item-action bg-dark text-white rounded-0' href='./chat.php?chatRoomId=" . $chatRoomId . "'>";
+                            }
                             echo "<div class='media'><img src='" . $chatMate_Picture . "' alt='user' width='30' class='rounded-circle'>";
                             echo "<div class='media-body ml-4'>";
                             echo "<div class='d-flex align-items-center justify-content-between mb-0'>";
@@ -131,85 +125,97 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                         }
                         ?>
+
                     </div>
                 </div>
             </div>
 
 
             <!-- Chat Box-->
-            <div class="col-9 px-0">
-                <div class="px-4 py-5 chat-box bg-dark">
-                    <!-- Sender Message on right side-->
-                    <div class="media mb-3">
-                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50"
-                             class="rounded-circle">
-                        <div class="media-body ml-3">
-                            <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100"
-                                 style="overflow-wrap: break-word;">
-                                <p class="text-light mb-0">Toto je ODESÍLATEL
-                                    testghghhggghgghhghgfhgfhjgjhghjghjgjhggfhgfdhnfdhjgbhfdjgbjhfdbhgkdjfhgkfdjhgjkfdghkfdjghkfdjhgfdkjghfdkjghdjhgkjfdghjhgjghjgjhgfghjhgfdfghjhgfdsfghjkjztrertzjkjhgfdfg</p>
-                            </div>
-                            <p class="small text-muted">12:00 PM | Aug 13</p>
-                        </div>
-                    </div>
+            <?php
+            // Check if chat room is selected
+            if (is_null($getChatRoomId)) {
+                echo "<div class='col-9 px-0'>";
+                echo "<div class='px-4 py-5 chat-box bg-dark'>";
+                echo "<h3 class='text-center text-light'>Vyberte chat</h3>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+                echo "</body>";
+                echo "</html>";
+                exit();
+            } else {
+                //Firstly load all messages
+                $sql = "SELECT * FROM `messages` WHERE `sender_id` = (SELECT ID FROM `credentials` WHERE `email` = '" . $email . "') OR `receiver_id` = (SELECT ID FROM `credentials` WHERE `email` = '" . $email . "');";
+                $result = mysqli_query($conn, $sql);
+                $messages = array();
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $messages[] = $row;
+                }
+                //Load my ID
+                $sql = "SELECT ID FROM `credentials` WHERE `email` = '" . $email . "';";
+                $result = mysqli_query($conn, $sql);
+                $myID = mysqli_fetch_array($result)['ID'];
 
-                    <div class="media mb-3">
-                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50"
-                             class="rounded-circle">
-                        <div class="media-body ml-3">
-                            <div class="bg-secondary rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100"
-                                 style="overflow-wrap: break-word;">
-                                <p class="text-light mb-0">Toto je ODESÍLATEL </p>
-                            </div>
-                            <p class="small text-muted">12:00 PM | Aug 13</p>
-                        </div>
-                    </div>
+                //Load chatmate ID
+                $sql = "SELECT * FROM `chat_rooms` WHERE `ID` = " . $getChatRoomId . ";";
+                $result = mysqli_query($conn, $sql);
+                $chatRoom = mysqli_fetch_array($result);
+                $chatMate_ID = $chatRoom['user1_id'] == $myID ? $chatRoom['user2_id'] : $chatRoom['user1_id'];
 
-                    <!-- Receiver Message on Left Side-->
-                    <div class="media mb-3 text-end">
-                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50"
-                             class="rounded-circle">
-                        <div class="media-body ml-3">
-                            <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 "
-                                 style="overflow-wrap: break-word; background-color: #FF9900;">
-                                <p class="text-small mb-0 text-light text-start">Toto je
-                                    Lorenfbhdjshgjkdhglkjdhgkjfdshgfdhgjkdfshgfdsjgldsfhkgfdhskgjhfdslkjghfdslkjghfdslkjhglkfdsjhglkjfdshglkjfdshgdjhglkjfdshgkfjdbjfhglkfjdshgkfdshghůlfdjglfdhgkjfdhglkjfdghlfdkhglkfdjhglkjm
-                                    ipsu</p>
-                            </div>
-                            <p class="small text-muted">12:00 PM | Aug 13</p>
-                        </div>
-                    </div>
+                echo "<div class='col-9 px-0'>";
+                echo "<div class='px-4 py-5 chat-box bg-dark'>";
 
-                    <div class="media mb-3 text-end">
-                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50"
-                             class="rounded-circle">
-                        <div class="media-body ml-3">
-                            <div class="rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100 "
-                                 style="overflow-wrap: break-word; background-color: #FF9900;">
-                                <p class="text-small mb-0 text-light text-start">Toto je
-                                    gfdjgfdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-                                    ipsu</p>
-                            </div>
-                            <p class="small text-muted">12:00 PM | Aug 13</p>
-                        </div>
-                    </div>
-                </div>
+                //Print all messages:
+                foreach ($messages as $message) {
+                    $sender_id = $message['sender_id'];
+                    $receiver_id = $message['receiver_id'];
+                    $message_text = $message['message'];
+                    $message_time = date("H:i | d.m", strtotime($message['created_at']));
+                    $message_id = $message['ID'];
 
+                    //Get my profile picture
+                    $sql = "SELECT profilePicture FROM `credentials` WHERE `ID` = " . $myID . ";";
+                    $result = mysqli_query($conn, $sql);
+                    $myPfp = './profilePictures/' . mysqli_fetch_array($result)['profilePicture'];
 
-                <form action="#" class="bg-dark">
-                    <div class="input-group">
-                        <input type="text" placeholder="Type a message" aria-describedby="button-addon2"
-                               class="form-control rounded-0 border-0 py-4 bg-dark">
-                        <div class="input-group-append">
-                            <button id="button-addon2" type="submit" class="btn btn-link bg-primary text-white p-3 m-2">
-                                Odeslat
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    //If i'm the sender, use printMyMessage
+                    if ($sender_id == $myID) {
+                        printMyMessage($message_text, $message_time, $myPfp);
+                    } else {
+                        //If i'm the receiver, use printReceiverMessage
+                        $sql = "SELECT profilePicture FROM `credentials` WHERE `ID` = " . $sender_id . ";";
+                        $result = mysqli_query($conn, $sql);
+                        $sender_pfp = './profilePictures/' . mysqli_fetch_array($result)['profilePicture'];
+                        printReceiverMessage($message_text, $message_time, $sender_pfp);
+                    }
+                }
+                echo "</div>";
+                echo "</div>";
 
-            </div>
+            }
+            ?>
         </div>
+
+
+        <form action="send-message.php" class="bg-dark" method="post">
+            <div class="input-group">
+                <input type="hidden" name="user1_id" value="<?php echo $myID; ?>">
+                <input type="hidden" name="user2_id" value="<?php echo $chatMate_ID; ?>">
+                <input type="hidden" name="chatRoomId" value="<?php echo $getChatRoomId; ?>">
+                <input type="text" placeholder="Type a message" aria-describedby="button-addon2"
+                       class="form-control rounded-0 border-0 py-4 bg-dark text-white" name="message">
+                <div class="input-group-append">
+                    <button id="button-addon2" type="submit" class="btn btn-link bg-primary text-white p-3 m-2">
+                        Odeslat
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    </div>
     </div>
 
 
