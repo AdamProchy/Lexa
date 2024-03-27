@@ -7,9 +7,11 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
+DROP DATABASE IF EXISTS `mojerandedb`;
 CREATE DATABASE `mojerandedb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_czech_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `mojerandedb`;
 
+DROP TABLE IF EXISTS `chat_rooms`;
 CREATE TABLE `chat_rooms` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `user1_id` int NOT NULL,
@@ -22,9 +24,11 @@ CREATE TABLE `chat_rooms` (
   CONSTRAINT `chat_rooms_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `credentials` (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
+TRUNCATE `chat_rooms`;
 INSERT INTO `chat_rooms` (`ID`, `user1_id`, `user2_id`, `last_message`) VALUES
 (5,	2,	4,	'2024-03-27 11:14:47');
 
+DROP TABLE IF EXISTS `credentials`;
 CREATE TABLE `credentials` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `firstName` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_czech_ci NOT NULL,
@@ -41,6 +45,7 @@ CREATE TABLE `credentials` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
+TRUNCATE `credentials`;
 INSERT INTO `credentials` (`ID`, `firstName`, `lastName`, `gender`, `sexuality`, `birthDate`, `email`, `psw`, `profilePicture`, `aboutMe`, `reg_date`) VALUES
 (1,	'Admin',	'Admin',	'M',	'S',	'2004-11-13',	'admin@admin.com',	'$2y$10$bJxEGMf4NsVaU9fP1RR5C.M/O55Dl3dzsjQpw0caKATKAWUPb4776',	'646f244e6f9f6.png',	NULL,	'2023-04-26 16:47:53'),
 (2,	'Matyáš',	'Závora',	'M',	'S',	'2004-11-13',	'matyaszavora@outlook.com',	'$2y$10$1Q.Fm4aMz.QWz2QSv58pW.tQgfGeY1DYR9E.ZP8cEI1FncOJ1UKZS',	'6476f92b0cd8e.png',	'Sem frajer 💪',	'2023-05-24 08:44:02'),
@@ -62,6 +67,7 @@ INSERT INTO `credentials` (`ID`, `firstName`, `lastName`, `gender`, `sexuality`,
 (18,	'Bohdan',	'Rapper',	'MtF',	'A',	'2058-02-11',	'kharchenko@spsejecna.cz',	'$2y$10$6gZmUCUSzMVn3Zr/Lqc2M.ElBPZoFCwgt3p.4Elk0IhSf/VwbcWVG',	'default.png',	NULL,	'2024-01-24 10:20:29'),
 (19,	'Vladimír',	'Mládek',	'M',	'S',	'2005-08-18',	'lukas@masopust.zdarlidi',	'$2y$10$jn8KnKUQUSZ8fLEd/Ydt2euzIhV0ArdR0rYkLE9I2.kJ4MnQj74XS',	'65f17d5e58055.jpg',	'Hledam Honzu Vylitu, prosim odměna párek v rohlíku',	'2024-03-13 11:14:07');
 
+DROP TABLE IF EXISTS `dates`;
 CREATE TABLE `dates` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `senderEmail` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_czech_ci NOT NULL COMMENT 'Email of the person that sends invitation',
@@ -74,9 +80,11 @@ CREATE TABLE `dates` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
+TRUNCATE `dates`;
 INSERT INTO `dates` (`ID`, `senderEmail`, `recipientEmail`, `dateCreated`, `dateInvitation`, `message`, `place`, `confirmed`) VALUES
 (45,	'matyaszavora@outlook.com',	'ozzak@seznam.cz',	'2024-03-25 13:20:07',	'2024-03-25 12:00:00',	'Stav se večer, provedu tě rájem',	'U mě doma <3',	1);
 
+DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `sender_id` int NOT NULL,
@@ -90,6 +98,7 @@ CREATE TABLE `messages` (
   CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `credentials` (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
+TRUNCATE `messages`;
 INSERT INTO `messages` (`ID`, `sender_id`, `receiver_id`, `message`, `created_at`) VALUES
 (1,	2,	4,	'Ahoj! Tohle napsal Matyáš',	'2024-03-27 08:07:30'),
 (2,	4,	2,	'Nazdar bejku!',	'2024-03-27 08:08:16'),
@@ -98,6 +107,7 @@ INSERT INTO `messages` (`ID`, `sender_id`, `receiver_id`, `message`, `created_at
 (5,	4,	2,	'Seš zmrd',	'2024-03-27 10:13:49'),
 (6,	4,	2,	'TEST',	'2024-03-27 10:14:47');
 
+DROP TABLE IF EXISTS `room_messages`;
 CREATE TABLE `room_messages` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `room_id` int NOT NULL,
@@ -109,5 +119,6 @@ CREATE TABLE `room_messages` (
   CONSTRAINT `room_messages_ibfk_2` FOREIGN KEY (`message_id`) REFERENCES `messages` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
+TRUNCATE `room_messages`;
 
--- 2024-03-27 10:30:40
+-- 2024-03-27 10:34:51
