@@ -85,7 +85,7 @@ if (isset($_GET['chatRoomId'])) {
 
     <div class="container-fluid">
         <div class="row overflow-hidden shadow">
-            <div class="col-3 p-2 bg-dark">
+            <div class="col-3 bg-dark">
                 <div class="messages-box bg-dark">
                     <div class="list-group rounded-0">
                         <?php
@@ -107,7 +107,7 @@ if (isset($_GET['chatRoomId'])) {
 
                             $chatRoomId = $chatRoom['ID'];
                             if ($chatRoomId == $getChatRoomId) {
-                                echo "<a class='list-group-item list-group-item-action text-white rounded-0' href='./chat.php?chatRoomId=" . $chatRoomId . "' style='background-color: #FF9900;'>";
+                                echo "<a class='list-group-item list-group-item-action text-dark rounded-0' href='./chat.php?chatRoomId=" . $chatRoomId . "' style='background-color: #FF9900;'>";
                             } else {
                                 echo "<a class='list-group-item list-group-item-action bg-dark text-white rounded-0' href='./chat.php?chatRoomId=" . $chatRoomId . "'>";
                             }
@@ -204,12 +204,12 @@ if (isset($_GET['chatRoomId'])) {
         </div>
 
 
-        <form action="send-message.php" class="bg-dark" method="post">
+        <form action="send-message.php" class="bg-dark row" method="post">
             <div class="input-group">
                 <input type="hidden" name="user1_id" value="<?php echo $myID; ?>">
                 <input type="hidden" name="user2_id" value="<?php echo $chatMate_ID; ?>">
                 <input type="hidden" name="chatRoomId" value="<?php echo $getChatRoomId; ?>">
-                <input type="text" placeholder="Type a message" aria-describedby="button-addon2"
+                <input type="text" placeholder="Napište zprávu" aria-describedby="button-addon2"
                        class="form-control rounded-0 border-0 py-4 bg-dark text-white" name="message">
                 <div class="input-group-append">
                     <button id="button-addon2" type="submit" class="btn btn-link bg-primary text-white p-3 m-2">

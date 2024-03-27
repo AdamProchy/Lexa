@@ -140,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <p class="navbar-text text-white">Přihlášen: </p>
+                        <a class="nav-link" href="./shop.php">Obchod</a>
                     </li>
                     <li class="nav-item me-2">
                         <a class="nav-link" style="color: #ff9900;"

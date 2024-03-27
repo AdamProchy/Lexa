@@ -33,7 +33,7 @@ function printMyMessage(string $message, string $time, string $pfp)
     echo "<img src=" . $pfp . " alt='user' width='50' class='rounded-circle'>";
     echo "<div class='media-body ml-3'>";
     echo "<div class='rounded py-2 px-3 mb-1 mt-1 d-inline-block mw-100' style='overflow-wrap: break-word; background-color: #FF9900;'>";
-    echo "<p class='text-small mb-0 text-light text-start'>" . $message . "</p>";
+    echo "<p class='text-small mb-0 text-dark text-start'>" . $message . "</p>";
     echo "</div>";
     echo "<p class='small text-muted'>" . $time . "</p>";
     echo "</div>";
