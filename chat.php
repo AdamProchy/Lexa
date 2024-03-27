@@ -164,6 +164,11 @@ if (isset($_GET['chatRoomId'])) {
                 $chatRoom = mysqli_fetch_array($result);
                 $chatMate_ID = $chatRoom['user1_id'] == $myID ? $chatRoom['user2_id'] : $chatRoom['user1_id'];
 
+                //Filter out messages that have user1_id as me and user2_id as chat mate or vice versa
+                $messages = array_filter($messages, function ($message) use ($myID, $chatMate_ID) {
+                    return ($message['sender_id'] == $myID && $message['receiver_id'] == $chatMate_ID) || ($message['sender_id'] == $chatMate_ID && $message['receiver_id'] == $myID);
+                });
+
                 echo "<div class='col-9 px-0'>";
                 echo "<div class='px-4 py-5 chat-box bg-dark'>";
 
