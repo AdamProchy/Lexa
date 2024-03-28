@@ -46,9 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 mysqli_close($conn);
 ?>
-
-<!---------------------------------------------------->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,15 +60,11 @@ mysqli_close($conn);
 
 <body>
     <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-
-        <!--Error zpráva, která se zobrazí, pokud uživatel zadal špatné heslo-->
         <?php if ($isPasswordRight == false) : ?>
-            <p>karel</p>
             <div class="alert alert-danger text-center" role="alert">
                 Špatné heslo!
             </div>
         <?php endif; ?>
-
         <section class="vh-100 gradient-custom">
             <div class="container py-5 h-100">
                 <div class="row justify-content-center align-items-center h-100">
@@ -82,12 +75,10 @@ mysqli_close($conn);
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6 mb-4 pb-2">
-
                                             <div class="form-outline">
                                                 <input type="email" id="emailAddress" name="email" class="form-control form-control-lg" />
                                                 <label class="form-label" for="emailAddress">Email</label>
                                             </div>
-
                                         </div>
                                         <div class="col-md-6 mb-4 pb-2">
                                             <div class="form-outline">
@@ -96,15 +87,11 @@ mysqli_close($conn);
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="mt-4 pt-2">
                                         <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
-
                                     </div>
                                     <br>
                                     <a href="./register.php">Registrovat</a>
-
-
                                 </form>
                             </div>
                         </div>
@@ -116,9 +103,7 @@ mysqli_close($conn);
         </div>
     </form>
 </body>
-
 </html>
-
 <?php
 mysqli_close($conn);
 ?>

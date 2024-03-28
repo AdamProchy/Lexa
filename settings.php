@@ -272,7 +272,6 @@ $profilePicture = $_SESSION["profilePicture"];
             </div>
         </div>
     </div>
-    <!--FOOTER-->
     <footer class="p-5 bg-dark text-white text-center position-relative mt-auto">
         <div class="container">
             <p class="lead">Copyright &copy; PROCHY</p>

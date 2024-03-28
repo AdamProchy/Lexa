@@ -163,9 +163,6 @@ while ($row = mysqli_fetch_assoc($result)) {
             }, 2500);
         </script>
     <?php } ?>
-
-
-    <!--DATES IN MAIN-->
     <section id="dates" class="p-5">
         <div class="container">
             <?php
@@ -235,9 +232,6 @@ while ($row = mysqli_fetch_assoc($result)) {
             <?php } ?>
         </div>
     </section>
-
-
-    <!--FOOTER-->
     <footer class="p-5 bg-dark text-white text-center position-relative mt-auto">
         <div class="container">
             <p class="lead">Copyright &copy; PROCHY</p>

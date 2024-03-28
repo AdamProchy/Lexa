@@ -58,25 +58,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 ?>
-
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="styles/index.css">
-        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
-        <title>🖤 Chci rande! 🧡</title>
-    </head>
-
-    <body class="d-flex flex-column min-vh-100">
-    <!--NAVBAR-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+    <title>🖤 Chci rande! 🧡</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
@@ -113,21 +109,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </nav>
-
-    <!--Date was sent successfully-->
     <?php if ($dateSent) { ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Úspěch!</strong> Žádost o rande byla úspěšně odeslána.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-
         <script>
             setTimeout(function () {
                 window.location.href = "./date.php";
             }, 2500);
         </script>
     <?php } ?>
-
     <section id="dates" class="p-5 bg-dark">
         <div class="container">
             <h2 class="text-center text-white">Nabídka</h2>
@@ -161,7 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
-
                         echo '<div class="modal fade" id="exampleModal' . $i . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
                         echo '<div class="modal-dialog">';
                         echo '<div class="modal-content" id="cardbg">';
@@ -206,9 +197,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </section>
-
-
-    <!--FOOTER-->
     <footer class="p-1 bg-dark text-white text-center position-relative mt-auto">
         <div class="container">
             <p class="lead">Copyright &copy; PROCHY | SPŠE Ječná</p>
@@ -216,58 +204,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                         style="color: #ff9900;"></i></a>
         </div>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
     <script>
-        // Function to check if the selected time is valid
         function checkTimeValidity() {
-            // Get the current date
-            var today = new Date();
-            var todayDate = today.toISOString().slice(0,10); // Get YYYY-MM-DD format
+            const today = new Date();
+            const todayDate = today.toISOString().slice(0,10);
+            const selectedDateInput = document.getElementById("sender-date");
+            const selectedDate = new Date(selectedDateInput.value);
 
-            // Get the value of the selected date
-            var selectedDateInput = document.getElementById("sender-date");
-            var selectedDate = new Date(selectedDateInput.value);
+            const selectedDateFormatted = selectedDate.toISOString().slice(0,10);
 
-            // Get the formatted date string of the selected date
-            var selectedDateFormatted = selectedDate.toISOString().slice(0,10); // Get YYYY-MM-DD format
-
-            // Check if the selected date is today's date
             if (selectedDateFormatted === todayDate) {
-                // Get the current time
-                var currentTime = new Date();
+                const currentTime = new Date();
+                const currentHours = currentTime.getHours();
+                const currentMinutes = currentTime.getMinutes();
 
-                // Get hours and minutes of the current time
-                var currentHours = currentTime.getHours();
-                var currentMinutes = currentTime.getMinutes();
-
-                // Get hours and minutes of the selected time
-                var selectedTime = document.getElementById("sender-time").valueAsDate;
-                var selectedHours = selectedTime.getHours();
-                var selectedMinutes = selectedTime.getMinutes();
-
-                // Compare the selected time with the current time
+                const selectedTime = document.getElementById("sender-time").valueAsDate;
+                const selectedHours = selectedTime.getHours();
+                const selectedMinutes = selectedTime.getMinutes();
                 if (selectedHours < currentHours || (selectedHours === currentHours && selectedMinutes < currentMinutes)) {
-                    // Display an alert
                     alert("Prosím, vyberte platný čas.");
-
-                    // Clear the input field
                     document.getElementById("sender-time").value = null;
                 }
             }
         }
-
-        // Add event listener to the input field to check validity on change
         document.getElementById("sender-time").addEventListener("change", checkTimeValidity);
-
-        // Add event listener to the date input field to check if the date is today
         document.getElementById("sender-date").addEventListener("change", checkTimeValidity);
     </script>
-
-
-    </body>
+</body>
 </html>
 <?php
 mysqli_close($conn);
