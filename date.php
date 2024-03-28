@@ -6,6 +6,13 @@
  / //\ (_| |\ V / (_) | | | (_| / /\/\ \
 /____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
 */
+
+
+//show errors
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 if (!isset($_SESSION['firstName']) || !isset($_SESSION['lastName'])) {
     header("location: ./");
@@ -27,27 +34,28 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 shuffle($users);
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($users as $i => $user) {
         if (isset($_POST["send-date-$i"])) {
             $dateSent = true;
             $senderId = $_SESSION['ID'];
-            $date = filter_input(INPUT_POST, 'sender-date');
-            $time = filter_input(INPUT_POST, 'sender-time');
-            $message = filter_input(INPUT_POST, 'sender-message');
-            $place = filter_input(INPUT_POST, 'sender-place');
-            $recipientId = filter_input(INPUT_POST, 'recipientId');
+            $date = mysqli_real_escape_string($conn, $_POST['sender-date']);
+            $time = mysqli_real_escape_string($conn, $_POST['sender-time']);
+            $message = mysqli_real_escape_string($conn, $_POST['sender-message']);
+            $place = mysqli_real_escape_string($conn, $_POST['sender-place']);
+            $recipientId = mysqli_real_escape_string($conn, $_POST['recipientId']);
 
             $datetime = $date . ' ' . $time;
             $sql = "INSERT INTO dates (senderId, recipientId, dateInvitation, message, place)
-            VALUES ('$senderId', '$recipientId', '$datetime', '$message', '$place')";
+                    VALUES ('$senderId', '$recipientId', '$datetime', '$message', '$place')";
+
             $stmt = mysqli_prepare($conn, $sql);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
         }
     }
 }
+
 
 ?>
 
