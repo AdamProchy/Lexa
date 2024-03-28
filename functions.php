@@ -1,5 +1,61 @@
 <?php
-function getChatMate(mysqli $conn, string $email, int $user1_id, int $user2_id)
+function sexuality($sexuality)
+{
+    switch ($sexuality) {
+        case "S":
+            return "Heterosexuál";
+            break;
+        case "G":
+            return "Homosexuál";
+            break;
+        case "L":
+            return "Lesba";
+            break;
+        case "B":
+            return "Bisexuál";
+            break;
+        case "A":
+            return "Asexuál";
+            break;
+        case "D":
+            return "Demisexuál";
+            break;
+        case "P":
+            return "Pansexuál";
+            break;
+        case "Q":
+            return "Queer";
+            break;
+        case "?":
+            return "Nejisté";
+            break;
+        default:
+            return null;
+            break;
+    }
+}
+
+function gender($gender)
+{
+    switch ($gender) {
+        case "M":
+            return "Muž";
+            break;
+        case "F":
+            return "Žena";
+            break;
+        case "MtF":
+            return "Trans žena";
+            break;
+        case "FtM":
+            return "Trans muž";
+            break;
+        default:
+            return null;
+    }
+}
+
+function getChatMate(mysqli $conn, string $email, int $user1_id, int $user2_id): ?array
 {
     $sql = "SELECT * FROM `credentials` WHERE `ID` IN (?, ?)";
     $stmt = $conn->prepare($sql);
@@ -22,11 +78,11 @@ function getChatMate(mysqli $conn, string $email, int $user1_id, int $user2_id)
         return $user1;
     } else {
         return $user2;
-    }
+    };
 }
 
 
-function printMyMessage(string $message, string $time, string $pfp)
+function printMyMessage(string $message, string $time, string $pfp): void
 {
     // 12:00 PM | Aug 13
     echo "<div class='media mb-3 text-end'>";
@@ -40,7 +96,15 @@ function printMyMessage(string $message, string $time, string $pfp)
     echo "</div>";
 }
 
-function printReceiverMessage(string $message, string $time, string $pfp)
+/**
+ * Prints a message from the receiver. This function is used for the chat.
+ *
+ * @param string $message Message to be printed.
+ * @param string $time Timestamp of the message.
+ * @param string $pfp Profile picture of the sender. (URL)
+ * @return void
+ */
+function printReceiverMessage(string $message, string $time, string $pfp): void
 {
     echo "<div class='media mb-3'>";
     echo "<img src=" . $pfp . " alt='user' width='50' class='rounded-circle'>";

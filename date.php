@@ -16,6 +16,7 @@ $lastName = $_SESSION['lastName'];
 $sexuality = $_SESSION['sexuality'];
 $dateSent = false;
 include "config.php";
+include "functions.php";
 
 $sql = "SELECT * FROM credentials";
 $result = mysqli_query($conn, $sql);
@@ -24,57 +25,7 @@ $users = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $users[] = $row;
 }
-
-function sexuality($sexuality)
-{
-    switch ($sexuality) {
-        case "S":
-            return "Heterosexuál";
-            break;
-        case "G":
-            return "Homosexuál";
-            break;
-        case "L":
-            return "Lesba";
-            break;
-        case "B":
-            return "Bisexuál";
-            break;
-        case "A":
-            return "Asexuál";
-            break;
-        case "D":
-            return "Demisexuál";
-            break;
-        case "P":
-            return "Pansexuál";
-            break;
-        case "Q":
-            return "Queer";
-            break;
-        case "?":
-            return "Nejisté";
-            break;
-    }
-}
-
-function gender($gender)
-{
-    switch ($gender) {
-        case "M":
-            return "Muž";
-            break;
-        case "F":
-            return "Žena";
-            break;
-        case "MtF":
-            return "Trans žena";
-            break;
-        case "FtM":
-            return "Trans muž";
-            break;
-    }
-}
+shuffle($users);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     for ($i = 0; $i < count($users); $i++) {
@@ -173,7 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h2 class="text-center text-white">Nabídka</h2>
             <br>
             <div class="row g-4">
-                <?php for ($i = 0; $i < sizeof($users); $i++) {
+                <?php
+                for ($i = 0; $i < sizeof($users); $i++) {
                     if ($users[$i]['email'] != "admin@admin.com" && $users[$i]['email'] != $_SESSION['email']) {
                         $firstNameDB = $users[$i]['firstName'];
                         $lastNameDB = $users[$i]['lastName'];
@@ -216,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '</div>';
                         echo '<div class="mb-3">';
                         echo '<label for="sender-date" class="col-form-label">Datum:</label>';
-                        echo '<input type="date" class="form-control" id="sender-date" name="sender-date" required>';
+                        echo '<input type="date" class="form-control" id="sender-date" name="sender-date" required min="' . date('Y-m-d') . '">';
                         echo '</div>';
                         echo '<div class="mb-3">';
                         echo '<label for="sender-time" class="col-form-label">Čas:</label>';
@@ -258,10 +210,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
+    <script>
+        // Function to check if the selected time is valid
+        function checkTimeValidity() {
+            // Get the current date
+            var today = new Date();
+            var todayDate = today.toISOString().slice(0,10); // Get YYYY-MM-DD format
+
+            // Get the value of the selected date
+            var selectedDateInput = document.getElementById("sender-date");
+            var selectedDate = new Date(selectedDateInput.value);
+
+            // Get the formatted date string of the selected date
+            var selectedDateFormatted = selectedDate.toISOString().slice(0,10); // Get YYYY-MM-DD format
+
+            // Check if the selected date is today's date
+            if (selectedDateFormatted === todayDate) {
+                // Get the current time
+                var currentTime = new Date();
+
+                // Get hours and minutes of the current time
+                var currentHours = currentTime.getHours();
+                var currentMinutes = currentTime.getMinutes();
+
+                // Get hours and minutes of the selected time
+                var selectedTime = document.getElementById("sender-time").valueAsDate;
+                var selectedHours = selectedTime.getHours();
+                var selectedMinutes = selectedTime.getMinutes();
+
+                // Compare the selected time with the current time
+                if (selectedHours < currentHours || (selectedHours === currentHours && selectedMinutes < currentMinutes)) {
+                    // Display an alert
+                    alert("Prosím, vyberte platný čas.");
+
+                    // Clear the input field
+                    document.getElementById("sender-time").value = null;
+                }
+            }
+        }
+
+        // Add event listener to the input field to check validity on change
+        document.getElementById("sender-time").addEventListener("change", checkTimeValidity);
+
+        // Add event listener to the date input field to check if the date is today
+        document.getElementById("sender-date").addEventListener("change", checkTimeValidity);
+    </script>
+
+
     </body>
-
-    </html>
-
+</html>
 <?php
 mysqli_close($conn);
 ?>
