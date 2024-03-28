@@ -1,5 +1,8 @@
 body{
-    background-color: grey;
+    background-color: var(--color-secondary);
+    color: var(--font-color);
+    margin: 0;
+    padding: 0;
 }
 
 #image{
@@ -10,4 +13,17 @@ body{
 
 #cardbg{
     background-color: grey;
+}
+
+.theme-light {
+    --color-primary: #0060df;
+    --color-secondary: #fbfbfe;
+    --color-accent: #fd6f53;
+    --font-color: #000000;
+}
+.theme-dark {
+    --color-primary: #17ed90;
+    --color-secondary: grey;
+    --color-accent: #12cdea;
+    --font-color: #ffffff;
 }

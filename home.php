@@ -38,9 +38,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-              crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="styles/index.css">
         <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
@@ -48,7 +46,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     </head>
 
     <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-underline">
         <div class="container-fluid">
             <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
@@ -70,6 +68,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <button id="switch" class="btn nav-link" onclick="toggleTheme()">Switch</button>
                     <li class="nav-item">
                         <p class="navbar-text text-white">Přihlášen: </p>
                     </li>
@@ -107,7 +107,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $sql = "SELECT * FROM `dates` WHERE `ID` = '" . $_POST['dateID'] . "'";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
-            if ($row['ID'] == $_SESSION['ID']) {
+            if ($row['senderId'] == $_SESSION['ID']) {
                 $dateId = $row['recipientId'];
             } else {
                 $dateId = $row['senderId'];
@@ -115,33 +115,35 @@ while ($row = mysqli_fetch_assoc($result)) {
         }
         $date_id = 0;
         // Get date id
-        $sql = "SELECT ID FROM `credentials` WHERE `email` = '" . $dateId . "'";
+        $sql = "SELECT ID FROM `credentials` WHERE `ID` = '" . $dateId . "'";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $date_id = $row['ID'];
         }
-        //Get user id
-        $user_id = 0;
-        $sql = "SELECT ID FROM `credentials` WHERE `email` = '" . $_SESSION['email'] . "'";
-        $result = mysqli_query($conn, $sql);
-        while ($row = mysqli_fetch_assoc($result)) {
-            $user_id = $row['ID'];
-        }
         //Check if chat room already exists
-        $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = '" . $user_id . "' AND `user2_id` = '" . $date_id . "'";
+        $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = '" . $_SESSION['ID'] . "' AND `user2_id` = '" . $date_id . "'";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) == 0) {
-            $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = '" . $date_id . "' AND `user2_id` = '" . $user_id . "'";
+            $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = '" . $date_id . "' AND `user2_id` = '" . $_SESSION['ID'] . "'";
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result) == 0) {
                 // Create chat room
-                $sql = "INSERT INTO `chat_rooms` (`ID`, `user1_id`, `user2_id`) VALUES (NULL, '" . $user_id . "', '" . $date_id . "')";
+                $sql = "INSERT INTO `chat_rooms` (`user1_id`, `user2_id`) VALUES ('" . $_SESSION['ID'] . "', '" . $date_id . "')";
                 mysqli_query($conn, $sql);
             }
         }
+        //Get chat room id
+        $chatRoomId = 0;
+        $sql = "SELECT ID FROM `chat_rooms` WHERE `user1_id` = '" . $_SESSION['ID'] . "' AND `user2_id` = '" . $date_id . "'";
+
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $chatRoomId = $row['ID'];
+        }
         //Reroute to chat
         //TODO: Make reroute to the specific chat right away
-        header("Location: ./chat.php");
+        header("Location: chat.php?chatRoomId=" . $chatRoomId);
+
         ?>
     <?php } ?>
 
@@ -246,6 +248,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
             crossorigin="anonymous"></script>
+    <script src="./scripts/night-theme.js"></script>
     </body>
 
     </html>

@@ -159,7 +159,7 @@ if (isset($_GET['chatRoomId'])) {
                 $myID = mysqli_fetch_array($result)['ID'];
 
                 //Load chatmate ID
-                $sql = "SELECT * FROM `chat_rooms` WHERE `ID` = " . $getChatRoomId . ";";
+                $sql = "SELECT user1_id, user2_id FROM `chat_rooms` WHERE `ID` = " . $getChatRoomId . ";";
                 $result = mysqli_query($conn, $sql);
                 $chatRoom = mysqli_fetch_array($result);
                 $chatMate_ID = $chatRoom['user1_id'] == $myID ? $chatRoom['user2_id'] : $chatRoom['user1_id'];

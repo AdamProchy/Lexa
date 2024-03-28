@@ -102,7 +102,6 @@ $profilePicture = $_SESSION["profilePicture"];
     </head>
 
     <body class="d-flex flex-column min-vh-100">
-    <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
@@ -140,8 +139,7 @@ $profilePicture = $_SESSION["profilePicture"];
         </div>
     </nav>
 
-    <!--ERROR: Not an image-->
-    <?php if ($isImage == false) : ?>
+    <?php if (!$isImage) : ?>
         <div class="alert alert-danger text-center" role="alert">
             <h4 class="alert-heading">Nahraný soubor není obrázek!</h4>
             <p>Prosím, nahrajte obrázek.</p>
@@ -150,8 +148,7 @@ $profilePicture = $_SESSION["profilePicture"];
         </div>
     <?php endif; ?>
 
-    <!--ERROR: Email already exists-->
-    <?php if ($emailError == true) : ?>
+    <?php if ($emailError) : ?>
         <div class="alert alert-danger text-center" role="alert">
             <h4 class="alert-heading">Email již existuje!</h4>
             <p>Prosím, zvolte jiný email.</p>
@@ -160,8 +157,7 @@ $profilePicture = $_SESSION["profilePicture"];
         </div>
     <?php endif; ?>
 
-    <!--ERROR: Wrong password-->
-    <?php if ($wrongPassword == true) : ?>
+    <?php if ($wrongPassword) : ?>
         <div class="alert alert-danger text-center" role="alert">
             <h4 class="alert-heading">Špatné heslo!</h4>
             <p>Prosím, zadejte správné heslo.</p>
@@ -170,8 +166,7 @@ $profilePicture = $_SESSION["profilePicture"];
         </div>
     <?php endif; ?>
 
-    <!--ERROR: Old password is empty-->
-    <?php if ($oldPasswordEmpty == true) : ?>
+    <?php if ($oldPasswordEmpty) : ?>
         <div class="alert alert-danger text-center" role="alert">
             <h4 class="alert-heading">Špatné heslo!</h4>
             <p>Prosím, zadejte vaše staré heslo, pokud ho chcete změnit.</p>
@@ -180,8 +175,7 @@ $profilePicture = $_SESSION["profilePicture"];
         </div>
     <?php endif; ?>
 
-    <!--SUCCESS: Profile updated-->
-    <?php if ($updated == true) : ?>
+    <?php if ($updated) : ?>
         <div class="alert alert-success text-center" role="alert">
             <h4 class="alert-heading">Profil aktualizován!</h4>
             <p>Váš profil byl úspěšně aktualizován.</p>
