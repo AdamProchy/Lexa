@@ -25,22 +25,23 @@ $users = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $users[] = $row;
 }
+
 shuffle($users);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    for ($i = 0; $i < count($users); $i++) {
+    foreach ($users as $i => $user) {
         if (isset($_POST["send-date-$i"])) {
             $dateSent = true;
-            $senderEmail = $_SESSION['email'];
+            $senderId = $_SESSION['ID'];
             $date = filter_input(INPUT_POST, 'sender-date');
             $time = filter_input(INPUT_POST, 'sender-time');
             $message = filter_input(INPUT_POST, 'sender-message');
             $place = filter_input(INPUT_POST, 'sender-place');
-            $recipientEmail = $users[$i]['email'];
+            $recipientId = filter_input(INPUT_POST, 'recipientId');
 
             $datetime = $date . ' ' . $time;
-            $sql = "INSERT INTO dates (senderEmail, recipientEmail, dateInvitation, message, place)
-            VALUES ('$senderEmail', '$recipientEmail', '$datetime', '$message', '$place')";
+            $sql = "INSERT INTO dates (senderId, recipientId, dateInvitation, message, place)
+            VALUES ('$senderId', '$recipientId', '$datetime', '$message', '$place')";
             $stmt = mysqli_prepare($conn, $sql);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
@@ -125,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br>
             <div class="row g-4">
                 <?php
-                for ($i = 0; $i < sizeof($users); $i++) {
+                foreach ($users as $i => $user) {
                     if ($users[$i]['email'] != "admin@admin.com" && $users[$i]['email'] != $_SESSION['email']) {
                         $firstNameDB = $users[$i]['firstName'];
                         $lastNameDB = $users[$i]['lastName'];
@@ -186,6 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>';
                         echo '<button type="submit" class="btn btn-primary" name="send-date-' . $i . '">Odeslat</button>';
                         echo '</div>';
+                        echo '<input type="hidden" name="recipientId" value="' . $users[$i]['ID'] . '">';
                         echo '</form>';
                         echo '</div>';
                         echo '</div>';

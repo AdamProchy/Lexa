@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["profilePicture"] = "./profilePictures/" . mysqli_fetch_array(mysqli_query($conn, $sql))["profilePicture"];
             $_SESSION["sexuality"] = mysqli_fetch_array(mysqli_query($conn, $sql))["sexuality"];
             $_SESSION["dateSent"] = false;
+            $_SESSION["ID"] = mysqli_fetch_array(mysqli_query($conn, $sql))["ID"];
             header("location: home.php");
         } else {
             echo "        

@@ -15,14 +15,14 @@ ini_set('display_startup_errors', 1);
 session_start();
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
-$email = $_SESSION['email'];
+$Id = $_SESSION['ID'];
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
     exit();
 }
 include "config.php";
 
-$sql = "SELECT * FROM `dates` WHERE `senderEmail` = '$email' OR `recipientEmail` = '$email'";
+$sql = "SELECT * FROM `dates` WHERE `senderId` = '$Id' OR `recipientId` = '$Id'";
 $result = mysqli_query($conn, $sql);
 
 $dates = array();
@@ -103,19 +103,19 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     <?php if (isset($_POST['send_message'])) { ?>
         <?php
-        $date_email = "";
+        $dateId = "";
         $sql = "SELECT * FROM `dates` WHERE `ID` = '" . $_POST['dateID'] . "'";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
-            if ($row['senderEmail'] == $_SESSION['email']) {
-                $date_email = $row['recipientEmail'];
+            if ($row['ID'] == $_SESSION['ID']) {
+                $dateId = $row['recipientId'];
             } else {
-                $date_email = $row['senderEmail'];
+                $dateId = $row['senderId'];
             }
         }
         $date_id = 0;
         // Get date id
-        $sql = "SELECT ID FROM `credentials` WHERE `email` = '" . $date_email . "'";
+        $sql = "SELECT ID FROM `credentials` WHERE `email` = '" . $dateId . "'";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $date_id = $row['ID'];
@@ -178,11 +178,11 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <?php for ($i = 0; $i < sizeof($dates); $i++) { ?>
 
                         <?php
-                        if ($email != $dates[$i]['senderEmail']) {
-                            $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['senderEmail'] . "'";
+                        if ($Id != $dates[$i]['senderId']) {
+                            $sql = "SELECT * FROM `credentials` WHERE `ID` = '" . $dates[$i]['senderId'] . "'";
                         }
-                        if ($email != $dates[$i]['recipientEmail']) {
-                            $sql = "SELECT * FROM `credentials` WHERE `email` = '" . $dates[$i]['recipientEmail'] . "'";
+                        if ($Id != $dates[$i]['recipientId']) {
+                            $sql = "SELECT * FROM `credentials` WHERE `ID` = '" . $dates[$i]['recipientId'] . "'";
                         }
                         $result = mysqli_query($conn, $sql);
                         $row = mysqli_fetch_assoc($result);
@@ -213,12 +213,12 @@ while ($row = mysqli_fetch_assoc($result)) {
                                         Zpráva: <?php echo $dates[$i]['message']; ?></h6>
                                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                                         <input type="hidden" name="dateID" value="<?php echo $dates[$i]['ID']; ?>">
-                                        <?php if ($dates[$i]['senderEmail'] == $_SESSION["email"] || $dates[$i]['confirmed']) { ?>
+                                        <?php if ($dates[$i]['senderId'] == $_SESSION["ID"] || $dates[$i]['confirmed']) { ?>
                                             <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande
                                             </button>
                                             <button href="#" class="btn btn-info mt-3" name="send_message">Napsat zprávu
                                             </button>
-                                        <?php } else if ($dates[$i]['senderEmail'] != $_SESSION["email"]) { ?>
+                                        <?php } else if ($dates[$i]['senderId'] != $_SESSION["email"]) { ?>
                                             <button href="#" class="btn btn-success mr-2 mt-3" name="submit">Potvrdit
                                             </button>
                                             <button href="#" class="btn btn-danger mt-3" name="cancel">Odmítnout

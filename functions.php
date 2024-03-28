@@ -78,7 +78,7 @@ function getChatMate(mysqli $conn, string $email, int $user1_id, int $user2_id):
         return $user1;
     } else {
         return $user2;
-    };
+    }
 }
 
 
