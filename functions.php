@@ -115,3 +115,35 @@ function printReceiverMessage(string $message, string $time, string $pfp): void
     echo "</div>";
     echo "</div>";
 }
+
+function checkPassword(string $email, string $password)
+{
+    global $conn, $email;
+    $sql = "SELECT psw FROM credentials WHERE email = '$email'";
+    $password = mysqli_fetch_array(mysqli_query($conn, $sql))["psw"];
+    if (password_verify($_POST["oldPassword"], $password)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function checkEmail(string $newEmail)
+{
+    global $conn;
+    $sql = "SELECT email FROM credentials WHERE email = '$newEmail'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) == 0) {
+        return true; //email doesn't exist
+    } else {
+        return false; //email already exists
+    }
+}
+
+function getBirthDate()
+{
+    global $conn, $email;
+    $sql = "SELECT birthDate FROM credentials WHERE email = '$email'";
+    $birthDate = mysqli_fetch_array(mysqli_query($conn, $sql))["birthDate"];
+    return $birthDate;
+}

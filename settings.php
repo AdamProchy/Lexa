@@ -7,7 +7,8 @@
 /____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
 */
 
-include("config.php");
+include "config.php";
+include "functions.php";
 session_start();
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -44,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     if ($_POST["aboutMe"] != "") {
-        $aboutMeInput = $_POST["aboutMe"];
+        $aboutMeInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["aboutMe"]));
         $sql = "UPDATE credentials SET aboutMe = '$aboutMeInput' WHERE email = '$email'";
         mysqli_query($conn, $sql);
         $updated = true;
@@ -65,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if ($_POST["email"] != "") {
         if (checkEmail($_POST["email"])) {
-            $emailInput = $_POST["email"];
+            $emailInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["email"]));
             mysqli_query($conn, "UPDATE credentials SET email = '$emailInput' WHERE email = '$email'");
             $_SESSION["email"] = $emailInput;
             $email = $emailInput;
@@ -81,39 +82,6 @@ $aboutMe = mysqli_query($conn, $sql);
 $aboutMe = mysqli_fetch_array($aboutMe)["aboutMe"];
 
 $profilePicture = $_SESSION["profilePicture"];
-
-function checkPassword(string $email, string $password)
-{
-    global $conn, $email;
-    $sql = "SELECT psw FROM credentials WHERE email = '$email'";
-    $password = mysqli_fetch_array(mysqli_query($conn, $sql))["psw"];
-    if (password_verify($_POST["oldPassword"], $password)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function checkEmail(string $newEmail)
-{
-    global $conn;
-    $sql = "SELECT email FROM credentials WHERE email = '$newEmail'";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) == 0) {
-        return true; //email doesn't exist
-    } else {
-        return false; //email already exists
-    }
-}
-
-function getBirthDate()
-{
-    global $conn, $email;
-    $sql = "SELECT birthDate FROM credentials WHERE email = '$email'";
-    $birthDate = mysqli_fetch_array(mysqli_query($conn, $sql))["birthDate"];
-    return $birthDate;
-}
-
 ?>
 
 

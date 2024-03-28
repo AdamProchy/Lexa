@@ -41,8 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $senderId = $_SESSION['ID'];
             $date = mysqli_real_escape_string($conn, $_POST['sender-date']);
             $time = mysqli_real_escape_string($conn, $_POST['sender-time']);
-            $message = mysqli_real_escape_string($conn, $_POST['sender-message']);
-            $place = mysqli_real_escape_string($conn, $_POST['sender-place']);
+            $message = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['sender-message']));
+            $place = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['sender-place']));
             $recipientId = mysqli_real_escape_string($conn, $_POST['recipientId']);
 
             $datetime = $date . ' ' . $time;
