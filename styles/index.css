@@ -1,17 +1,17 @@
-body{
-    background-color: var(--color-secondary);
+body {
+    background-color: #212529;
     color: var(--font-color);
     margin: 0;
     padding: 0;
 }
 
-#image{
+#image {
     width: 75px;
     height: 75px;
     float: left;
 }
 
-#cardbg{
+#cardbg {
     background-color: grey;
 }
 
@@ -21,6 +21,7 @@ body{
     --color-accent: #fd6f53;
     --font-color: #000000;
 }
+
 .theme-dark {
     --color-primary: #17ed90;
     --color-secondary: grey;
