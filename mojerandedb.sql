@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 04, 2024 at 10:15 AM
+-- Generation Time: Apr 04, 2024 at 10:29 AM
 -- Server version: 8.0.36-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.14
 
@@ -39,7 +39,9 @@ CREATE TABLE `chat_rooms` (
 --
 
 INSERT INTO `chat_rooms` (`ID`, `user1_id`, `user2_id`, `last_message`) VALUES
-(5, 2, 4, '2024-03-27 11:14:47');
+(5, 2, 4, '2024-03-28 17:52:18'),
+(6, 13, 2, '2024-03-27 11:58:58'),
+(12, 2, 11, NULL);
 
 -- --------------------------------------------------------
 
@@ -94,8 +96,8 @@ INSERT INTO `credentials` (`ID`, `firstName`, `lastName`, `gender`, `sexuality`,
 
 CREATE TABLE `dates` (
   `ID` int NOT NULL,
-  `senderEmail` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_czech_ci NOT NULL COMMENT 'Email of the person that sends invitation',
-  `recipientEmail` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_czech_ci NOT NULL COMMENT 'Email of the person that receives invitation',
+  `senderId` int NOT NULL,
+  `recipientId` int NOT NULL,
   `dateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date of creating an invitation',
   `dateInvitation` datetime NOT NULL COMMENT 'Date stated in the invitation',
   `message` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_czech_ci DEFAULT NULL COMMENT 'A message from sender',
@@ -107,8 +109,8 @@ CREATE TABLE `dates` (
 -- Dumping data for table `dates`
 --
 
-INSERT INTO `dates` (`ID`, `senderEmail`, `recipientEmail`, `dateCreated`, `dateInvitation`, `message`, `place`, `confirmed`) VALUES
-(45, 'matyaszavora@outlook.com', 'ozzak@seznam.cz', '2024-03-25 13:20:07', '2024-03-25 12:00:00', 'Stav se večer, provedu tě rájem', 'U mě doma <3', 1);
+INSERT INTO `dates` (`ID`, `senderId`, `recipientId`, `dateCreated`, `dateInvitation`, `message`, `place`, `confirmed`) VALUES
+(64, 2, 11, '2024-03-28 22:19:54', '2024-03-29 10:00:00', '', 'weweqg', NULL);
 
 -- --------------------------------------------------------
 
@@ -134,7 +136,10 @@ INSERT INTO `messages` (`ID`, `sender_id`, `receiver_id`, `message`, `created_at
 (3, 2, 4, 'TEST', '2024-03-27 09:35:29'),
 (4, 2, 4, 'AHOOOJ', '2024-03-27 09:35:40'),
 (5, 4, 2, 'Seš zmrd', '2024-03-27 10:13:49'),
-(6, 4, 2, 'TEST', '2024-03-27 10:14:47');
+(6, 4, 2, 'TEST', '2024-03-27 10:14:47'),
+(7, 13, 2, 'Miluju tě', '2024-03-27 10:54:11'),
+(8, 2, 13, 'Já tebe ne :(', '2024-03-27 10:58:58'),
+(9, 2, 4, 'SMRD', '2024-03-28 16:52:18');
 
 -- --------------------------------------------------------
 
@@ -171,7 +176,9 @@ ALTER TABLE `credentials`
 -- Indexes for table `dates`
 --
 ALTER TABLE `dates`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `dates_credentials_ID_fk` (`senderId`),
+  ADD KEY `dates_credentials_ID_fk_2` (`recipientId`);
 
 --
 -- Indexes for table `messages`
@@ -197,7 +204,7 @@ ALTER TABLE `room_messages`
 -- AUTO_INCREMENT for table `chat_rooms`
 --
 ALTER TABLE `chat_rooms`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `credentials`
@@ -209,13 +216,13 @@ ALTER TABLE `credentials`
 -- AUTO_INCREMENT for table `dates`
 --
 ALTER TABLE `dates`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `room_messages`
@@ -233,6 +240,13 @@ ALTER TABLE `room_messages`
 ALTER TABLE `chat_rooms`
   ADD CONSTRAINT `chat_rooms_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `credentials` (`ID`),
   ADD CONSTRAINT `chat_rooms_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `credentials` (`ID`);
+
+--
+-- Constraints for table `dates`
+--
+ALTER TABLE `dates`
+  ADD CONSTRAINT `dates_credentials_ID_fk` FOREIGN KEY (`senderId`) REFERENCES `credentials` (`ID`),
+  ADD CONSTRAINT `dates_credentials_ID_fk_2` FOREIGN KEY (`recipientId`) REFERENCES `credentials` (`ID`);
 
 --
 -- Constraints for table `messages`
