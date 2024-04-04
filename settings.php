@@ -7,7 +7,8 @@
 /____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
 */
 
-include("config.php");
+include "config.php";
+include "functions.php";
 session_start();
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -44,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     if ($_POST["aboutMe"] != "") {
-        $aboutMeInput = $_POST["aboutMe"];
+        $aboutMeInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["aboutMe"]));
         $sql = "UPDATE credentials SET aboutMe = '$aboutMeInput' WHERE email = '$email'";
         mysqli_query($conn, $sql);
         $updated = true;
@@ -65,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if ($_POST["email"] != "") {
         if (checkEmail($_POST["email"])) {
-            $emailInput = $_POST["email"];
+            $emailInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["email"]));
             mysqli_query($conn, "UPDATE credentials SET email = '$emailInput' WHERE email = '$email'");
             $_SESSION["email"] = $emailInput;
             $email = $emailInput;
@@ -81,39 +82,6 @@ $aboutMe = mysqli_query($conn, $sql);
 $aboutMe = mysqli_fetch_array($aboutMe)["aboutMe"];
 
 $profilePicture = $_SESSION["profilePicture"];
-
-function checkPassword(string $email, string $password)
-{
-    global $conn, $email;
-    $sql = "SELECT psw FROM credentials WHERE email = '$email'";
-    $password = mysqli_fetch_array(mysqli_query($conn, $sql))["psw"];
-    if (password_verify($_POST["oldPassword"], $password)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function checkEmail(string $newEmail)
-{
-    global $conn;
-    $sql = "SELECT email FROM credentials WHERE email = '$newEmail'";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) == 0) {
-        return true; //email doesn't exist
-    } else {
-        return false; //email already exists
-    }
-}
-
-function getBirthDate()
-{
-    global $conn, $email;
-    $sql = "SELECT birthDate FROM credentials WHERE email = '$email'";
-    $birthDate = mysqli_fetch_array(mysqli_query($conn, $sql))["birthDate"];
-    return $birthDate;
-}
-
 ?>
 
 
@@ -134,7 +102,6 @@ function getBirthDate()
     </head>
 
     <body class="d-flex flex-column min-vh-100">
-    <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
@@ -172,8 +139,7 @@ function getBirthDate()
         </div>
     </nav>
 
-    <!--ERROR: Not an image-->
-    <?php if ($isImage == false) : ?>
+    <?php if (!$isImage) : ?>
         <div class="alert alert-danger text-center" role="alert">
             <h4 class="alert-heading">Nahraný soubor není obrázek!</h4>
             <p>Prosím, nahrajte obrázek.</p>
@@ -182,8 +148,7 @@ function getBirthDate()
         </div>
     <?php endif; ?>
 
-    <!--ERROR: Email already exists-->
-    <?php if ($emailError == true) : ?>
+    <?php if ($emailError) : ?>
         <div class="alert alert-danger text-center" role="alert">
             <h4 class="alert-heading">Email již existuje!</h4>
             <p>Prosím, zvolte jiný email.</p>
@@ -192,8 +157,7 @@ function getBirthDate()
         </div>
     <?php endif; ?>
 
-    <!--ERROR: Wrong password-->
-    <?php if ($wrongPassword == true) : ?>
+    <?php if ($wrongPassword) : ?>
         <div class="alert alert-danger text-center" role="alert">
             <h4 class="alert-heading">Špatné heslo!</h4>
             <p>Prosím, zadejte správné heslo.</p>
@@ -202,8 +166,7 @@ function getBirthDate()
         </div>
     <?php endif; ?>
 
-    <!--ERROR: Old password is empty-->
-    <?php if ($oldPasswordEmpty == true) : ?>
+    <?php if ($oldPasswordEmpty) : ?>
         <div class="alert alert-danger text-center" role="alert">
             <h4 class="alert-heading">Špatné heslo!</h4>
             <p>Prosím, zadejte vaše staré heslo, pokud ho chcete změnit.</p>
@@ -212,8 +175,7 @@ function getBirthDate()
         </div>
     <?php endif; ?>
 
-    <!--SUCCESS: Profile updated-->
-    <?php if ($updated == true) : ?>
+    <?php if ($updated) : ?>
         <div class="alert alert-success text-center" role="alert">
             <h4 class="alert-heading">Profil aktualizován!</h4>
             <p>Váš profil byl úspěšně aktualizován.</p>
@@ -310,7 +272,6 @@ function getBirthDate()
             </div>
         </div>
     </div>
-    <!--FOOTER-->
     <footer class="p-5 bg-dark text-white text-center position-relative mt-auto">
         <div class="container">
             <p class="lead">Copyright &copy; PROCHY</p>

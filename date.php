@@ -6,6 +6,13 @@
  / //\ (_| |\ V / (_) | | | (_| / /\/\ \
 /____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
 */
+
+
+//show errors
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 if (!isset($_SESSION['firstName']) || !isset($_SESSION['lastName'])) {
     header("location: ./");
@@ -16,6 +23,7 @@ $lastName = $_SESSION['lastName'];
 $sexuality = $_SESSION['sexuality'];
 $dateSent = false;
 include "config.php";
+include "functions.php";
 
 $sql = "SELECT * FROM credentials";
 $result = mysqli_query($conn, $sql);
@@ -25,71 +33,22 @@ while ($row = mysqli_fetch_assoc($result)) {
     $users[] = $row;
 }
 
-function sexuality($sexuality)
-{
-    switch ($sexuality) {
-        case "S":
-            return "Heterosexuál";
-            break;
-        case "G":
-            return "Homosexuál";
-            break;
-        case "L":
-            return "Lesba";
-            break;
-        case "B":
-            return "Bisexuál";
-            break;
-        case "A":
-            return "Asexuál";
-            break;
-        case "D":
-            return "Demisexuál";
-            break;
-        case "P":
-            return "Pansexuál";
-            break;
-        case "Q":
-            return "Queer";
-            break;
-        case "?":
-            return "Nejisté";
-            break;
-    }
-}
-
-function gender($gender)
-{
-    switch ($gender) {
-        case "M":
-            return "Muž";
-            break;
-        case "F":
-            return "Žena";
-            break;
-        case "MtF":
-            return "Trans žena";
-            break;
-        case "FtM":
-            return "Trans muž";
-            break;
-    }
-}
-
+shuffle($users);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    for ($i = 0; $i < count($users); $i++) {
+    foreach ($users as $i => $user) {
         if (isset($_POST["send-date-$i"])) {
             $dateSent = true;
-            $senderEmail = $_SESSION['email'];
-            $date = filter_input(INPUT_POST, 'sender-date');
-            $time = filter_input(INPUT_POST, 'sender-time');
-            $message = filter_input(INPUT_POST, 'sender-message');
-            $place = filter_input(INPUT_POST, 'sender-place');
-            $recipientEmail = $users[$i]['email'];
+            $senderId = $_SESSION['ID'];
+            $date = mysqli_real_escape_string($conn, $_POST['sender-date']);
+            $time = mysqli_real_escape_string($conn, $_POST['sender-time']);
+            $message = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['sender-message']));
+            $place = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['sender-place']));
+            $recipientId = mysqli_real_escape_string($conn, $_POST['recipientId']);
 
             $datetime = $date . ' ' . $time;
-            $sql = "INSERT INTO dates (senderEmail, recipientEmail, dateInvitation, message, place)
-            VALUES ('$senderEmail', '$recipientEmail', '$datetime', '$message', '$place')";
+            $sql = "INSERT INTO dates (senderId, recipientId, dateInvitation, message, place)
+                    VALUES ('$senderId', '$recipientId', '$datetime', '$message', '$place')";
+
             $stmt = mysqli_prepare($conn, $sql);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
@@ -97,26 +56,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+
 ?>
-
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="styles/index.css">
-        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
-        <title>🖤 Chci rande! 🧡</title>
-    </head>
-
-    <body class="d-flex flex-column min-vh-100">
-    <!--NAVBAR-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+    <title>🖤 Chci rande! 🧡</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
@@ -140,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
                 <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <p class="navbar-text text-white">Přihlášen: </p>
+                        <a class="nav-link" href="./shop.php">Obchod</a>
                     </li>
                     <li class="nav-item me-2">
                         <a class="nav-link" style="color: #ff9900;"
@@ -153,27 +109,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </nav>
-
-    <!--Date was sent successfully-->
     <?php if ($dateSent) { ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Úspěch!</strong> Žádost o rande byla úspěšně odeslána.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-
         <script>
             setTimeout(function () {
                 window.location.href = "./date.php";
             }, 2500);
         </script>
     <?php } ?>
-
     <section id="dates" class="p-5 bg-dark">
         <div class="container">
             <h2 class="text-center text-white">Nabídka</h2>
             <br>
             <div class="row g-4">
-                <?php for ($i = 0; $i < sizeof($users); $i++) {
+                <?php
+                foreach ($users as $i => $user) {
                     if ($users[$i]['email'] != "admin@admin.com" && $users[$i]['email'] != $_SESSION['email']) {
                         $firstNameDB = $users[$i]['firstName'];
                         $lastNameDB = $users[$i]['lastName'];
@@ -200,7 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
-
                         echo '<div class="modal fade" id="exampleModal' . $i . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
                         echo '<div class="modal-dialog">';
                         echo '<div class="modal-content" id="cardbg">';
@@ -216,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '</div>';
                         echo '<div class="mb-3">';
                         echo '<label for="sender-date" class="col-form-label">Datum:</label>';
-                        echo '<input type="date" class="form-control" id="sender-date" name="sender-date" required>';
+                        echo '<input type="date" class="form-control" id="sender-date" name="sender-date" required min="' . date('Y-m-d') . '">';
                         echo '</div>';
                         echo '<div class="mb-3">';
                         echo '<label for="sender-time" class="col-form-label">Čas:</label>';
@@ -234,6 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>';
                         echo '<button type="submit" class="btn btn-primary" name="send-date-' . $i . '">Odeslat</button>';
                         echo '</div>';
+                        echo '<input type="hidden" name="recipientId" value="' . $users[$i]['ID'] . '">';
                         echo '</form>';
                         echo '</div>';
                         echo '</div>';
@@ -244,9 +197,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </section>
-
-
-    <!--FOOTER-->
     <footer class="p-1 bg-dark text-white text-center position-relative mt-auto">
         <div class="container">
             <p class="lead">Copyright &copy; PROCHY | SPŠE Ječná</p>
@@ -254,14 +204,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                         style="color: #ff9900;"></i></a>
         </div>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
-    </body>
+    <script>
+        function checkTimeValidity() {
+            const today = new Date();
+            const todayDate = today.toISOString().slice(0,10);
+            const selectedDateInput = document.getElementById("sender-date");
+            const selectedDate = new Date(selectedDateInput.value);
 
-    </html>
+            const selectedDateFormatted = selectedDate.toISOString().slice(0,10);
 
+            if (selectedDateFormatted === todayDate) {
+                const currentTime = new Date();
+                const currentHours = currentTime.getHours();
+                const currentMinutes = currentTime.getMinutes();
+
+                const selectedTime = document.getElementById("sender-time").valueAsDate;
+                const selectedHours = selectedTime.getHours();
+                const selectedMinutes = selectedTime.getMinutes();
+                if (selectedHours < currentHours || (selectedHours === currentHours && selectedMinutes < currentMinutes)) {
+                    alert("Prosím, vyberte platný čas.");
+                    document.getElementById("sender-time").value = null;
+                }
+            }
+        }
+        document.getElementById("sender-time").addEventListener("change", checkTimeValidity);
+        document.getElementById("sender-date").addEventListener("change", checkTimeValidity);
+    </script>
+</body>
+</html>
 <?php
 mysqli_close($conn);
 ?>
