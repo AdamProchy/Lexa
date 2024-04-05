@@ -1,19 +1,5 @@
 <?php
-/*
- _____                                  
-/ _  / __ ___   _____  _ __ __ _  /\/\  
-\// / / _` \ \ / / _ \| '__/ _` |/    \ 
- / //\ (_| |\ V / (_) | | | (_| / /\/\ \
-/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
-*/
-
-include "config.php";
-include "functions.php";
-session_start();
-if (!isset($_SESSION['email'])) {
-    header("Location: ./");
-    exit();
-}
+include('utils.php');
 
 $email = $_SESSION["email"];
 $firstName = $_SESSION["firstName"];

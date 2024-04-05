@@ -1,28 +1,11 @@
 <?php
-/*
- _____                                  
-/ _  / __ ___   _____  _ __ __ _  /\/\  
-\// / / _` \ \ / / _ \| '__/ _` |/    \ 
- / //\ (_| |\ V / (_) | | | (_| / /\/\ \
-/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
-*/
-
-
 //show errors
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-session_start();
-if (!isset($_SESSION['firstName']) || !isset($_SESSION['lastName'])) {
-    header("location: ./");
-    exit();
-}
+include('utils.php');
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
 $sexuality = $_SESSION['sexuality'];
 $dateSent = false;
-include "config.php";
 include "functions.php";
 
 $sql = "SELECT * FROM credentials";
@@ -58,21 +41,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles/index.css">
-    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
-    <title>🖤 Chci rande! 🧡</title>
-</head>
-<body class="d-flex flex-column min-vh-100">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="styles/index.css">
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+        <title>🖤 Chci rande! 🧡</title>
+    </head>
+    <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
@@ -210,11 +193,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
         function checkTimeValidity() {
             const today = new Date();
-            const todayDate = today.toISOString().slice(0,10);
+            const todayDate = today.toISOString().slice(0, 10);
             const selectedDateInput = document.getElementById("sender-date");
             const selectedDate = new Date(selectedDateInput.value);
 
-            const selectedDateFormatted = selectedDate.toISOString().slice(0,10);
+            const selectedDateFormatted = selectedDate.toISOString().slice(0, 10);
 
             if (selectedDateFormatted === todayDate) {
                 const currentTime = new Date();
@@ -230,11 +213,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
+
         document.getElementById("sender-time").addEventListener("change", checkTimeValidity);
         document.getElementById("sender-date").addEventListener("change", checkTimeValidity);
     </script>
-</body>
-</html>
+    </body>
+    </html>
 <?php
 mysqli_close($conn);
 ?>

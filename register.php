@@ -1,18 +1,5 @@
 <?php
-/*
- _____                                  
-/ _  / __ ___   _____  _ __ __ _  /\/\  
-\// / / _` \ \ / / _ \| '__/ _` |/    \ 
- / //\ (_| |\ V / (_) | | | (_| / /\/\ \
-/____/\__,_| \_/ \___/|_|  \__,_\/    \/                                      
-*/
-session_start();
-if (isset($_SESSION["email"])) {
-    header("location: ./");
-    exit();
-}
-
-include("config.php");
+include('utils.php');
 $isAdult = true;
 $isEmailAvailable = true;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

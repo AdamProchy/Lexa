@@ -4,41 +4,7 @@
 
 Tato aplikace slouží k nalezení vhodného partnera pro uživatele. Uživatel si může vytvořit profil, kde vyplní své osobní
 údaje a následně může procházet profily ostatních uživatelů. Pokud se mu nějaký profil líbí, může tuto osobu pozvat na
-rande.
-
-## Funkční požadavky
-
-- [x] Uživatel si může vytvořit profil
-- [x] Uživatel si může prohlížet profily ostatních uživatelů
-- [x] Uživatel si může pozvat vybrané profily na rande
-- [x] Uživatel si může prohlížet své pozvánky na rande
-- [x] Uživatel si může prohlížet své přijaté pozvánky na rande
-- [x] Uživatel si může upravit profilové údaje (profilový obrázek, jméno, příjmení, popis)
-
-## Zadání projketu
-
-Lexa hledá ženu ❤️
-
-Protože je Lexa žádaný a fešný chlapík, pravidelně chodí na randíčka.
-Bohužel se v nich ztrácí a má v tom obecně velký nepořádek.
-Potřebuje proto evidovat ženy, se kterými randí.
-Vytvořte webovou aplikaci a pomozte tak Lexovi najít znovu smysl a naději na lepší zítřky plné lásky.
-
-Vaše aplikace bude obsahovat následující:
-
-- jméno a příjmení ženy, věk ženy, popis ženy
-- rande s danou ženou (popis toho, jak rande šlo, datum, kdy na rande byli, a kde).
-
-Aplikace bude také umět:
-
-přidat novou ženu a přidat nové rande
-smazat záznam o ženě a smazat záznam o randíčku
-upravit záznam o ženě a upravit záznam o randíčku.
-
-Lexa bude mít možnost si ženy seřadit v abecedním pořadí a zároveň i podle toho,
-kdy se s ženou naposledy viděl/psal si (nejstarší/nejnovější interakce).
-Samozřejmě Lexa nechce, aby měl k jeho aplikaci přístup někdo jiný,
-proto se k datům dostane pouze skrze své přihlašovací údaje.
+rande a .
 
 ## Registrovaní uživatelé a jejich údaje pro přihlášení
 
@@ -66,15 +32,15 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 <a href="https://www.php.net" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" alt="php" width="40" height="40"/> </a>
 <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a>
 <a href="https://www.nginx.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg" alt="nginx" width="40" height="40"/> </a>
+(nebo jakýkoliv jiný server, který podporuje PHP a MySQL)
 
 ### Postup:
 
 1. Stáhněte si projekt jako .zip soubor nebo pomocí příkazu `git clone`.
-2. Rozbalte .zip soubor do složky `htdocs` ve složce, kde máte nainstalovaný XAMPP.
-3. Spusťte XAMPP společně s Apache a MySQL.
-4. Otevřete si phpMyAdmin a naimportujte databázi ze souboru `mojerandedb.sql`.
-5. Otevřete si prohlížeč a zadejte do něj adresu `localhost/lexa`.
-6. Aplikace by měla být funkční.
+2. Rozbalte .zip soubor do svého webového serveru.
+3. Spusťte webový a MySQL server.
+4. Naimportujte databázi ze souboru `./mojerandedb.sql`.
+5. Otevřete si prohlížeč a zadejte do něj adresu [localhost/MojeRande-main](http://localhost/MojeRande-main).
 
 ## Použité technologie
 
@@ -87,11 +53,8 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 
 ## Autoři
 
-- Adam Procházka [GitHub](https://www.github.com/AdamProchy) [LinkedIn](https://cz.linkedin.com/in/adamprochazkacz) (
-  Frontend)
-- Matyáš
-  Závora [GitHub](https://github.com/matyas-zavora) [LinkedIn](https://cz.linkedin.com/in/matyáš-závora-8b9086269) (
-  Backend)
+- [Adam Procházka](https://cz.linkedin.com/in/adamprochazkacz) (Frontend)
+- [Matyáš Závora](https://cz.linkedin.com/in/matyáš-závora-8b9086269) (Backend)
 
 # English version
 
@@ -99,16 +62,7 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 
 This application is used to find a suitable partner for the user. The user can create a profile where he fills in his
 personal data and can then browse the profiles of other users. If he likes a profile, he can invite that person on a
-date.
-
-## Functional requirements
-
-- [x] The user can create a profile
-- [x] The user can browse the profiles of other users
-- [x] The user can invite selected profiles on a date
-- [x] The user can browse his invitations to a date
-- [x] The user can browse his accepted invitations to a date
-- [x] The user can edit profile details (profile picture, name, surname, description)
+date and chat with them afterwards.
 
 ## Installation
 
@@ -140,7 +94,3 @@ HTML, CSS, PHP, phpMyAdmin, SQL, JavaScript, jQuery, Bootstrap
 - Matyáš
   Závora [GitHub](https://github.com/matyas-zavora) [LinkedIn](https://cz.linkedin.com/in/matyáš-závora-8b9086269) (
   Backend)
-
-## Work distribution
-
-- Check commmits
