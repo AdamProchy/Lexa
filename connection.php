@@ -39,7 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['form_name'] == 'connection_f
     try {
         $conn = mysqli_connect($conn_params['host'], $conn_params['user'], $conn_params['password'], '', $conn_params['port']);
         $_SESSION['conn_params'] = $conn_params;
-        createDatabase($conn);
+        if (isset($_SESSION['delete_conn_params']) && $_SESSION['delete_conn_params']) {
+            unset($_SESSION['delete_conn_params']);
+        } else {
+            createDatabase($conn);
+        }
         // Note: Create database
         header('Location: ./index.php');
     } catch (Exception $e) {
