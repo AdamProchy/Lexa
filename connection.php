@@ -1,28 +1,4 @@
 <?php
-function createDatabase($conn)
-{
-    $sql = "DROP DATABASE IF EXISTS mojerandedb";
-    if (!mysqli_query($conn, $sql)) {
-        throw new Exception(mysqli_error($conn));
-    }
-    $sql = "CREATE DATABASE mojerandedb";
-    if (!mysqli_query($conn, $sql)) {
-        throw new Exception(mysqli_error($conn));
-    }
-    $sql = "USE mojerandedb";
-    if (!mysqli_query($conn, $sql)) {
-        throw new Exception(mysqli_error($conn));
-    }
-    //Start transaction
-    mysqli_query($conn, "START TRANSACTION");
-    $sql = file_get_contents("mojerandedb.sql");
-    if (!mysqli_multi_query($conn, $sql)) {
-        throw new Exception(mysqli_error($conn));
-    }
-    mysqli_query($conn, "COMMIT");
-    mysqli_close($conn);
-    unset($conn);
-}
 
 session_start();
 //show errors
@@ -44,8 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['form_name'] == 'connection_f
         } else {
             createDatabase($conn);
         }
-        // Note: Create database
-        header('Location: ./index.php');
+        $success = true;
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
@@ -69,7 +44,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['form_name'] == 'connection_f
     </div>
 <?php endif; ?>
 
-<form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+<?php if (isset($success) and $success) : ?>
+    <div class="alert alert-success text-center" role="alert">
+        Database created successfully! Redirecting...
+    </div>
+    <script>
+        setTimeout(function () {
+            window.location.href = "./";
+        }, 2000);
+    </script>
+<?php endif; ?>
+
+<form method="post">
     <input type="hidden" name="form_name" value="connection_form">
     <label for="host">Host:</label>
     <input type="text" name="host" id="host" required value="localhost">

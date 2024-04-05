@@ -1,6 +1,9 @@
 <?php
 include('utils.php');
 
+//show errors
+
+
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chatRoomId = $_POST['chatRoomId'];

@@ -147,3 +147,28 @@ function getBirthDate()
     $birthDate = mysqli_fetch_array(mysqli_query($conn, $sql))["birthDate"];
     return $birthDate;
 }
+
+/**
+ * @throws Exception
+ */
+function createDatabase($conn)
+{
+    $sql = "DROP DATABASE IF EXISTS mojerandedb;";
+    if (!mysqli_query($conn, $sql)) {
+        throw new Exception("DROP " . mysqli_error($conn));
+    }
+    $sql = "CREATE DATABASE mojerandedb;";
+    if (!mysqli_query($conn, $sql)) {
+        throw new Exception("CREATE " . mysqli_error($conn));
+    }
+    $sql = "USE mojerandedb;";
+    if (!mysqli_query($conn, $sql)) {
+        throw new Exception("USE " . mysqli_error($conn));
+    }
+    $sql = file_get_contents("mojerandedb.sql");
+    if (!mysqli_multi_query($conn, $sql)) {
+        throw new Exception(mysqli_error($conn));
+    }
+    mysqli_close($conn);
+    unset($conn);
+}
