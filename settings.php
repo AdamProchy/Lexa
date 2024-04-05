@@ -18,14 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $filename = uniqid();
             $extension = pathinfo($_FILES['profilePicture']['name'], PATHINFO_EXTENSION);
             $basename = $filename . "." . $extension;
-            $oldPfp = mysqli_query($conn, "SELECT profilePicture FROM credentials WHERE email = '$email'");
+            $oldPfp = mysqli_query($conn, "SELECT profilePicture FROM credentials WHERE ID = '$Id'");
             $oldPfp = mysqli_fetch_array($oldPfp)["profilePicture"];
             $sqlDeletePfp = "SELECT * FROM credentials WHERE profilePicture = '$oldPfp'";
-            $sql = "UPDATE credentials SET profilePicture = '$basename' WHERE email = '$email'";
+            $sql = "UPDATE credentials SET profilePicture = '$basename' WHERE Id = '$Id'";
             mysqli_query($conn, $sql);
             move_uploaded_file($_FILES['profilePicture']['tmp_name'], "./protected/profilePictures/$basename");
             if ($oldPfp != "default.png") unlink("./protected/profilePictures/$oldPfp");
-            $_SESSION["profilePicture"] = "./profilePictures/$basename";
+            $_SESSION["profilePicture"] = "./protected/profilePictures/$basename";
             $updated = true;
         } else {
             $isImage = false;
@@ -71,40 +71,44 @@ $aboutMe = mysqli_fetch_array($aboutMe)["aboutMe"];
 $profilePicture = $_SESSION["profilePicture"];
 $pageName = 'settings.php';
 include('./templates/head_and_navbar.php');
-if (!$isImage){ ?>
-        <div class="alert alert-danger text-center" role="alert">
-            <h4 class="alert-heading">Nahraný soubor není obrázek!</h4>
-            <p>Prosím, nahrajte obrázek.</p>
-            <hr>
-            <p class="mb-0">Zkuste to znovu.</p>
-        </div>
-    <?php } if ($emailError) { ?>
-        <div class="alert alert-danger text-center" role="alert">
-            <h4 class="alert-heading">Email již existuje!</h4>
-            <p>Prosím, zvolte jiný email.</p>
-            <hr>
-            <p class="mb-0">Zkuste to znovu.</p>
-        </div>
-    <?php }  if ($wrongPassword) { ?>
-        <div class="alert alert-danger text-center" role="alert">
-            <h4 class="alert-heading">Špatné heslo!</h4>
-            <p>Prosím, zadejte správné heslo.</p>
-            <hr>
-            <p class="mb-0">Zkuste to znovu.</p>
-        </div>
-    <?php } if ($oldPasswordEmpty) { ?>
-        <div class="alert alert-danger text-center" role="alert">
-            <h4 class="alert-heading">Špatné heslo!</h4>
-            <p>Prosím, zadejte vaše staré heslo, pokud ho chcete změnit.</p>
-            <hr>
-            <p class="mb-0">Zkuste to znovu.</p>
-        </div>
-    <?php } if ($updated) { ?>
-        <div class="alert alert-success text-center" role="alert">
-            <h4 class="alert-heading">Profil aktualizován!</h4>
-            <p>Váš profil byl úspěšně aktualizován.</p>
-        </div>
-    <?php } ?>
+if (!$isImage) { ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">Nahraný soubor není obrázek!</h4>
+        <p>Prosím, nahrajte obrázek.</p>
+        <hr>
+        <p class="mb-0">Zkuste to znovu.</p>
+    </div>
+<?php }
+if ($emailError) { ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">Email již existuje!</h4>
+        <p>Prosím, zvolte jiný email.</p>
+        <hr>
+        <p class="mb-0">Zkuste to znovu.</p>
+    </div>
+<?php }
+if ($wrongPassword) { ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">Špatné heslo!</h4>
+        <p>Prosím, zadejte správné heslo.</p>
+        <hr>
+        <p class="mb-0">Zkuste to znovu.</p>
+    </div>
+<?php }
+if ($oldPasswordEmpty) { ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">Špatné heslo!</h4>
+        <p>Prosím, zadejte vaše staré heslo, pokud ho chcete změnit.</p>
+        <hr>
+        <p class="mb-0">Zkuste to znovu.</p>
+    </div>
+<?php }
+if ($updated) { ?>
+    <div class="alert alert-success text-center" role="alert">
+        <h4 class="alert-heading">Profil aktualizován!</h4>
+        <p>Váš profil byl úspěšně aktualizován.</p>
+    </div>
+<?php } ?>
 
     <div class="container mt-5 mb-5">
         <div class="row gutters">

@@ -1,6 +1,14 @@
 Options -Indexes
 
+# Allow your application to handle requests internally
+RewriteEngine On
+RewriteRule ^insert-file.php$ - [L]
+
 <FilesMatch "\.(png|jpg|webp)$">
     Order Allow,Deny
     Allow from all
 </FilesMatch>
+
+# Block direct access to the protected folder
+RewriteCond %{REQUEST_URI} ^/protected-folder/
+RewriteRule ^ - [F]

@@ -3,11 +3,11 @@ include('utils.php');
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
 $sexuality = $_SESSION['sexuality'];
+$Id = $_SESSION['ID'];
 $dateSent = false;
 
 $sql = "SELECT * FROM credentials";
 $result = mysqli_query($conn, $sql);
-
 $users = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $users[] = $row;
@@ -39,17 +39,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $pageName = 'date.php';
 include('./templates/head_and_navbar.php');
 ?>
-    <?php if ($dateSent) { ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Úspěch!</strong> Žádost o rande byla úspěšně odeslána.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <script>
-            setTimeout(function () {
-                window.location.href = "./date.php";
-            }, 2500);
-        </script>
-    <?php } ?>
+<?php if ($dateSent) { ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Úspěch!</strong> Žádost o rande byla úspěšně odeslána.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <script>
+        setTimeout(function () {
+            window.location.href = "./date.php";
+        }, 2500);
+    </script>
+<?php } ?>
     <section id="dates" class="p-5">
         <div class="container">
             <h2 class="text-center">Nabídka</h2>
@@ -156,5 +156,3 @@ include('./templates/head_and_navbar.php');
     </script>
 <?php
 include('./templates/footer.php');
-mysqli_close($conn);
-?>

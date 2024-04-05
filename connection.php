@@ -1,5 +1,5 @@
 <?php
-
+include('functions.php');
 session_start();
 //show errors
 ini_set('display_errors', 1);

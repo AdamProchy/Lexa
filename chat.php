@@ -3,6 +3,7 @@ include('./utils.php');
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
 $email = $_SESSION['email'];
+$Id = $_SESSION['ID'];
 
 $getChatRoomId = $_GET['chatRoomId'] ?? null;
 $pageName = 'chat.php';
