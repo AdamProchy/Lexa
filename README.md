@@ -1,4 +1,4 @@
-![Logo](https://i.ibb.co/hFFRFr8/logo.png)
+<p style="text-align:center;"><img src="https://i.ibb.co/hFFRFr8/logo.png"></p>
 
 ## Popis
 
@@ -63,11 +63,9 @@ proto se k datům dostane pouze skrze své přihlašovací údaje.
 
 ### Požadavky:
 
-- XAMPP
-- PHP 7.4.9
-- phpMyAdmin 5.0.2
-- MySQL 5.7.31
-- Apache 2.4.46
+<a href="https://www.php.net" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" alt="php" width="40" height="40"/> </a>
+<a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a>
+<a href="https://www.nginx.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg" alt="nginx" width="40" height="40"/> </a>
 
 ### Postup:
 
