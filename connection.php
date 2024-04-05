@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['form_name'] == 'connection_f
     <label for="user">User:</label>
     <input type="text" name="user" id="user" required value="root">
     <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required>
+    <input type="password" name="password" id="password">
     <label for="port">Port:</label>
     <input type="number" name="port" id="port" required value="3306">
     <button type="submit">Connect</button>
