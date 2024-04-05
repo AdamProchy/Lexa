@@ -1,6 +1,4 @@
 body {
-  background-color: red;
-
   min-height: 100vh;
 }
 
@@ -36,5 +34,4 @@ body {
 
 input::placeholder {
   font-size: 0.9rem;
-  color: black;
 }
