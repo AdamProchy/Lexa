@@ -89,7 +89,7 @@ $getChatRoomId = $_GET['chatRoomId'] ?? null;
                             if ($chatRoomId == $getChatRoomId) {
                                 echo "<a class='list-group-item list-group-item-action text-dark rounded-0' href='./chat.php?chatRoomId=" . $chatRoomId . "' style='background-color: #FF9900;'>";
                             } else {
-                                echo "<a class='list-group-item list-group-item-action bg-dark text-white rounded-0' href='./chat.php?chatRoomId=" . $chatRoomId . "'>";
+                                echo "<a class='list-group-item list-group-item-action rounded-0' href='./chat.php?chatRoomId=" . $chatRoomId . "'>";
                             }
                             echo "<div class='media'><img src='" . $chatMate_Picture . "' alt='user' width='30' class='rounded-circle'>";
                             echo "<div class='media-body ml-4'>";
