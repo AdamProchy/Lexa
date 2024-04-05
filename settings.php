@@ -275,10 +275,11 @@ $profilePicture = $_SESSION["profilePicture"];
             </div>
         </div>
     </div>
-    <footer class="p-5 bg-dark text-white text-center position-relative mt-auto">
+    <footer class="bg-dark text-white text-center position-relative mt-auto">
         <div class="container">
-            <p class="lead">Copyright &copy; PROCHY</p>
-            <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"></i></a>
+            <p class="lead">Copyright &copy; PROCHY | SPŠE Ječná</p>
+            <a href="#" class="position-absolute bottom-0 end-0 p-5"><i class="bi-arrow-up-circle h1"
+                                                                        style="color: #ff9900;"></i></a>
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
