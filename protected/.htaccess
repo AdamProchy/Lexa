@@ -1,1 +1,8 @@
-deny from all
+# Zakáže procházení adresářů
+Options -Indexes
+
+# Povolí zobrazování obrázků (.png, .jpg, .webp) v adresáři /protected
+<FilesMatch "\.(png|jpg|webp)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
