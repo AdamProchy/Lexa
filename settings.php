@@ -83,14 +83,15 @@ $profilePicture = $_SESSION["profilePicture"];
               crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="styles/settings.css">
-        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="protected/img/favicon.ico">
         <title>🖤 Chci rande! 🧡</title>
     </head>
 
     <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="./index.php"><img src="./img/logo.png" width="200px" height="50px"></a>
+            <a class="navbar-brand" href="./index.php"><img src="protected/img/logo.png" width="200px"
+                                                            height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
