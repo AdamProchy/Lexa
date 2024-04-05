@@ -47,13 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="styles/index.css">
-        <link rel="icon" type="image/x-icon" href="protected/img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="./protected/img/favicon.ico">
         <title>🖤 Moje Rande 🧡</title>
     </head>
     <body class="d-flex flex-column min-vh-100" id="body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-underline">
         <div class="container-fluid">
-            <a class="navbar-brand" href="./index.php"><img src="protected/img/logo.png" width="200px"
+            <a class="navbar-brand" href="./index.php"><img src="./protected/img/logo.png" width="200px"
                                                             height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $birthDateDB = $users[$i]['birthDate'];
                         $now = date("Y-m-d");
                         $diff = date_diff(date_create($birthDateDB), date_create($now));
-                        $profilePictureDB = "./profilePictures/" . $users[$i]['profilePicture'];
+                        $profilePictureDB = "./protected/profilePictures/" . $users[$i]['profilePicture'];
                         echo '<div class="col-md-6 col-lg-3">';
                         echo '<div class="card bg-secondary text-white">';
                         echo '<img src="' . $profilePictureDB . '" class="card-img-top rounded text-center" alt="User Image" style="width: 100%; height: 200px;">';

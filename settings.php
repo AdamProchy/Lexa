@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sqlDeletePfp = "SELECT * FROM credentials WHERE profilePicture = '$oldPfp'";
             $sql = "UPDATE credentials SET profilePicture = '$basename' WHERE email = '$email'";
             mysqli_query($conn, $sql);
-            move_uploaded_file($_FILES['profilePicture']['tmp_name'], "./profilePictures/$basename");
-            if ($oldPfp != "default.png") unlink("./profilePictures/$oldPfp");
+            move_uploaded_file($_FILES['profilePicture']['tmp_name'], "./protected/profilePictures/$basename");
+            if ($oldPfp != "default.png") unlink("./protected/profilePictures/$oldPfp");
             $_SESSION["profilePicture"] = "./profilePictures/$basename";
             $updated = true;
         } else {

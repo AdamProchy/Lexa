@@ -21,14 +21,14 @@ while ($row = mysqli_fetch_assoc($result)) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="styles/index.css">
-        <link rel="icon" type="image/x-icon" href="protected/img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="./protected/img/favicon.ico">
         <title>🖤 Moje Rande 🧡</title>
     </head>
 
     <body class="d-flex flex-column min-vh-100" id="body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-underline">
         <div class="container-fluid">
-            <a class="navbar-brand" href="./index.php"><img src="protected/img/logo.png" width="200px"
+            <a class="navbar-brand" href="./index.php"><img src="./protected/img/logo.png" width="200px"
                                                             height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
@@ -183,7 +183,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                         $row = mysqli_fetch_assoc($result);
                         $firstNameDB = $row['firstName'];
                         $lastNameDB = $row['lastName'];
-                        $profilePictureDB = "./profilePictures/" . $row['profilePicture'];
+                        $profilePictureDB = "./protected/profilePictures/" . $row['profilePicture'];
                         ?>
 
                         <div class="col-md-6 col-lg-3">

@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["email"] = $email;
             $_SESSION["lastName"] = $lastName;
             $_SESSION["aboutMe"] = mysqli_fetch_array(mysqli_query($conn, $sql))["aboutMe"];
-            $_SESSION["profilePicture"] = "./profilePictures/default.png";
+            $_SESSION["profilePicture"] = "./protected/profilePictures/default.png";
             $_SESSION["sexuality"] = $sexuality;
             $_SESSION["dateSent"] = false;
             $_SESSION["ID"] = mysqli_fetch_array(mysqli_query($conn, $sql))["ID"];
@@ -62,7 +62,7 @@ function checkIfEmailAvalible($email, $conn)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="icon" type="image/x-icon" href="protected/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./protected/img/favicon.ico">
     <title>🖤 Moje Rande 🧡 - Registrace</title>
 </head>
 
