@@ -1,5 +1,15 @@
 <?php
-include('utils.php');
+session_start();
+include("functions.php");
+if (!isset($_SESSION["conn_params"])) {
+    // If database connection doesn't exist, reroute to connection form on connection.php
+    header("Location: ./connection.php");
+    exit();
+} else {
+    //Create database connection based on conn_params
+    $conn = mysqli_connect($_SESSION["conn_params"]['host'], $_SESSION["conn_params"]['user'], $_SESSION["conn_params"]['password'], '', $_SESSION["conn_params"]['port']);
+    mysqli_query($conn, "USE mojerandedb");
+}
 $isAdult = true;
 $isEmailAvailable = true;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
