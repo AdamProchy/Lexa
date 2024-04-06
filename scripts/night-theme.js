@@ -38,3 +38,16 @@ function toggleTheme() {
         document.body.classList.add('bg-light');
     }
 })();
+
+function detectColorScheme() {
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (prefersDarkMode) {
+        setTheme('theme-dark');
+        document.getElementById('switch').innerHTML = '<i class="bi bi-moon"></i>';
+    } else {
+        setTheme('theme-light');
+        document.getElementById('switch').innerHTML = '<i class="bi bi-brightness-high"></i>';
+    }
+}
+
+detectColorScheme();
