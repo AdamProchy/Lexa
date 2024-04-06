@@ -54,7 +54,7 @@ $coins = mysqli_fetch_array($result)["coins"];
             <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
 
                 <li class="nav-item">
-                    <button id="switch" class="btn nav-link" onclick="toggleTheme()"></button>
+                    <button id="switch" class="btn nav-link" onclick="cycleThemes()"></button>
                 <li class="nav-item">
                     <a class="nav-link" href="./shop.php">
                         <?php echo $coins; ?>
