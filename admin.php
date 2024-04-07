@@ -19,6 +19,7 @@ if (isset($_POST['form_name'])) {
             exit();
         case 'delete_connection':
             unset($_SESSION['conn_params']);
+            unlink('connection_params.txt');
             $_SESSION['delete_conn_params'] = true;
             header('Location: ./');
             exit();

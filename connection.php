@@ -1,20 +1,4 @@
 <?php
-if (file_exists("connection_params.txt")) {
-    $file = fopen("connection_params.txt", "r");
-    $conn_params = json_decode(fread($file, filesize("connection_params.txt")), true);
-    fclose($file);
-    try {
-        $conn = mysqli_connect($conn_params['host'], $conn_params['user'], $conn_params['password'], '', $conn_params['port']);
-        if ($conn) {
-            $_SESSION['conn_params'] = $conn_params;
-            header('Location: ./');
-            exit();
-        }
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-    }
-}
-
 include('functions.php');
 session_start();
 ini_set('display_errors', 1);
