@@ -22,10 +22,14 @@ body {
   font-size: 0.9rem;
 }
 
-.messages-box,
+.messages-box {
+  overflow-y: auto; /* Nebo overflow-y: scroll; */
+  max-height: calc(100vh - 150px); /* Nebo libovolná hodnota */
+}
+
 .chat-box {
-  height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto; /* Nebo overflow-y: scroll; */
+  max-height: calc(100vh - 150px); /* 120px je výška spodní lišty s odesílacím tlačítkem */
 }
 
 .rounded-lg {

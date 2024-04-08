@@ -131,8 +131,8 @@ if ($updated) { ?>
 
 
 
-        <div class="col-md-9 border rounded border-secondary">
-            <div class="card">
+        <div class="col-md-9">
+            <div class="card border border-secondary rounded-3">
                 <div class="card-body">
                     <form method="POST" action="" enctype="multipart/form-data">
                         <h4 class="mb-3">Změnit osobní informace</h4>
