@@ -62,7 +62,14 @@ if (isset($_POST['form_name'])) {
         }, 2000);
     </script>
 <?php endif; ?>
-
+<!--"Admin panel" on top of the screen in middle-->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center">Admin panel</h1>
+        </div>
+    </div>
+</div>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
