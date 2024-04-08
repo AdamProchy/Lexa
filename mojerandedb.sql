@@ -208,7 +208,7 @@ CREATE TABLE `money_requests`
     `verdictDate` datetime          DEFAULT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+  COLLATE = utf8mb4_czech_ci;
 
 -- --------------------------------------------------------
 
