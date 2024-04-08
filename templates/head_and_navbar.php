@@ -11,7 +11,7 @@ $coins = mysqli_fetch_array($result)["coins"];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/<?php echo $pageName === 'chat.php' ? 'chat.css' : ($pageName === 'settings.php' ? 'settings.css' : 'index.css'); ?>">
     <link rel="icon" type="image/x-icon" href="./protected/img/favicon.ico">
     <title>🖤 <?php switch ($pageName) {
             default:
@@ -50,6 +50,7 @@ $coins = mysqli_fetch_array($result)["coins"];
                     <a class="nav-link <?php echo $pageName === 'chat.php' ? 'active" style="color: #ff9900;"' : '"'; ?> href="
                        ./chat.php">Chat</a>
                 </li>
+                
             </ul>
             <ul class="navbar-nav mt-2 mb-2 mb-lg-0">
 
@@ -72,7 +73,7 @@ $coins = mysqli_fetch_array($result)["coins"];
                     </li>
                 <?php } else { ?>
                     <li class="nav-item me-2">
-                        <a class="nav-link" style="color: #ff9900;"
+                        <a class="nav-link <?php echo $pageName === 'settings.php' ? 'active" style="color: #ff9900;"' : '"'; ?>" style="color: #ff9900;" 
                            href="./settings.php"><?php echo $firstName . " " . $lastName ?></a>
                     </li>
                 <?php } ?>

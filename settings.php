@@ -110,95 +110,74 @@ if ($updated) { ?>
     </div>
 <?php } ?>
 
-    <div class="container mt-5 mb-5">
-        <div class="row gutters">
-            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="account-settings">
-                            <div class="user-profile">
-                                <div class="user-avatar">
-                                    <img src="<?php echo $profilePicture; ?>">
-                                </div>
-                                <h5 class="user-name"><?php echo $firstName . " " . $lastName ?></h5>
-                                <h6 class="user-email"><?php echo $email ?></h6>
-                            </div>
-                            <div class="about">
-                                <h5 class="mb-2">O mně:</h5>
-                                <p><?php echo $aboutMe;
-                                    $isImage = true; ?></p>
-                            </div>
-                            <div class="age">
-                                <h5 class="mb-2">Věk:</h5>
-                                <p><?php echo $diff->format('%y'); ?></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <form method="POST" action="" enctype="multipart/form-data">
-                            <div class="row gutters">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <h4 class="mb-3">Změnit osobní informace</h6>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email"
-                                               placeholder="Vložte nový email" name="email">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="text">O mně</label>
-                                        <input type="text" class="form-control" id="about_me"
-                                               placeholder="Napište něco o sobě" name="aboutMe">
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row gutters mt-3">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <h4 class="mb-3">Změnit heslo</h4>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="oldPassword">Staré heslo</label>
-                                        <input type="password" class="form-control" id="oldPassword"
-                                               placeholder="Zadejte staré heslo" name="oldPassword">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="newPassword">Nové heslo</label>
-                                        <input type="password" class="form-control" id="newPassword"
-                                               placeholder="Zadejte nové heslo" name="newPassword">
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row gutters mt-3">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <h4 class="mb-3">Změnit profilový obrázek</h6>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="file" name="profilePicture"/>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row gutters mt-3">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <button class="btn btn-primary" type="submit" name="submit">Potvrdit</button>
-                                </div>
-                            </div>
-                        </form>
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card border border-secondary rounded-3">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="<?php echo $profilePicture; ?>" class="img-fluid rounded-circle profile-picture" alt="User Picture">
+                        <h5 class="mt-3"><?php echo $firstName . " " . $lastName ?></h5>
+                        <hr>
+                        <p class="text-muted"><?php echo $email ?></p>
+                        <hr>
+                        <p class="card-text"><span class="fw-bold">Věk:</span> <?php echo $diff->format('%y'); ?></p>
+                        <hr>
+                        <p class="card-text"><span class="fw-bold">O mně:</span> <?php echo $aboutMe; ?></p>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+        <div class="col-md-9 border rounded border-secondary">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        <h4 class="mb-3">Změnit osobní informace</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Vložte nový email" name="email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="about_me">O mně</label>
+                                    <input type="text" class="form-control" id="about_me" placeholder="Napište něco o sobě" name="aboutMe">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="mb-3">Změnit heslo</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="oldPassword">Staré heslo</label>
+                                    <input type="password" class="form-control" id="oldPassword" placeholder="Zadejte staré heslo" name="oldPassword">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="newPassword">Nové heslo</label>
+                                    <input type="password" class="form-control" id="newPassword" placeholder="Zadejte nové heslo" name="newPassword">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="mb-3">Změnit profilový obrázek</h4>
+                        <div class="form-group">
+                            <input class="form-control-file" type="file" name="profilePicture" />
+                        </div>
+                        <br>
+                        <button class="btn btn-primary" type="submit" name="submit">Potvrdit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 <?php
 include('./templates/footer.php');
