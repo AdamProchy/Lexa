@@ -3,7 +3,8 @@ include('functions.php');
 session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-if (isset($_SESSION['conn_params'])) : header('Location: ./'); endif;
+if (isset($_SESSION['conn_params'])) : header('Location: ./');
+endif;
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['form_name'] == 'connection_form') {
     $conn_params = [
         'host' => $_POST['host'],
@@ -28,45 +29,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['form_name'] == 'connection_f
     }
 }
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Connection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Document</title>
 </head>
+
 <body>
 
-<?php if (isset($error)) : ?>
-    <div class="alert alert-danger text-center" role="alert">
-        MySQL Error: <?= $error ?>
-    </div>
-<?php endif; ?>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center mb-4">Database Connection</h1>
+                <?php if (isset($error)) : ?>
+                    <div class="alert alert-danger text-center" role="alert">
+                        MySQL Error: <?= $error ?>
+                    </div>
+                <?php endif; ?>
 
-<?php if (isset($success) and $success) : ?>
-    <div class="alert alert-success text-center" role="alert">
-        Database created successfully! Redirecting...
-    </div>
-    <script>
-        setTimeout(function () {
-            window.location.href = "./";
-        }, 2000);
-    </script>
-<?php endif; ?>
+                <?php if (isset($success) && $success) : ?>
+                    <div class="alert alert-success text-center" role="alert">
+                        Database created successfully! Redirecting...
+                    </div>
+                    <script>
+                        setTimeout(function() {
+                            window.location.href = "./";
+                        }, 2000);
+                    </script>
+                <?php endif; ?>
 
-<form method="post">
-    <input type="hidden" name="form_name" value="connection_form">
-    <label for="host">Host:</label>
-    <input type="text" name="host" id="host" required value="localhost">
-    <label for="user">User:</label>
-    <input type="text" name="user" id="user" required value="root">
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password">
-    <label for="port">Port:</label>
-    <input type="number" name="port" id="port" required value="3306">
-    <button type="submit">Connect</button>
+                <form method="post">
+                    <input type="hidden" name="form_name" value="connection_form">
+                    <div class="mb-3">
+                        <label for="host" class="form-label">Host:</label>
+                        <input type="text" name="host" id="host" class="form-control" required value="localhost">
+                    </div>
+                    <div class="mb-3">
+                        <label for="user" class="form-label">User:</label>
+                        <input type="text" name="user" id="user" class="form-control" required value="root">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="port" class="form-label">Port:</label>
+                        <input type="number" name="port" id="port" class="form-control" required value="3306">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Connect</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
+
 </html>

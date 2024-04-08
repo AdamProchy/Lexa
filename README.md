@@ -4,7 +4,7 @@
 
 Tato aplikace slouží k nalezení vhodného partnera pro uživatele. Uživatel si může vytvořit profil, kde vyplní své osobní
 údaje a následně může procházet profily ostatních uživatelů. Pokud se mu nějaký profil líbí, může tuto osobu pozvat na
-rande a .
+rande a psát s ní.
 
 ## Registrovaní uživatelé a jejich údaje pro přihlášení
 
