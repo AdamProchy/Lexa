@@ -1,7 +1,6 @@
 <?php
 include('functions.php');
 session_start();
-//show errors
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 if (isset($_SESSION['conn_params'])) : header('Location: ./'); endif;
@@ -15,6 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['form_name'] == 'connection_f
     try {
         $conn = mysqli_connect($conn_params['host'], $conn_params['user'], $conn_params['password'], '', $conn_params['port']);
         $_SESSION['conn_params'] = $conn_params;
+        $file = fopen("connection_params.txt", "w");
+        fwrite($file, json_encode($conn_params));
+        fclose($file);
         if (isset($_SESSION['delete_conn_params']) && $_SESSION['delete_conn_params']) {
             unset($_SESSION['delete_conn_params']);
         } else {
