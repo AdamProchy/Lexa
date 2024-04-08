@@ -58,6 +58,18 @@ include('./templates/head_and_navbar.php');
         </div>
         <div class="accordion-item text-dark" style="background-color: #ff9900;">
             <h2 class="accordion-header">
+                <button class="accordion-button bg-secondary collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                Jak mám někomu napsat?
+                </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Požádejte uživatele o rande, překlikněte se na domovskou stránku a
+                    klikněte na tlačítko "Napsat zprávu". Nyní můžete psát zprávy s uživatelem, kterému jste poslali pozvánku na rande.
+                </div>
+            </div>
+        </div> 
+        <div class="accordion-item text-dark" style="background-color: #ff9900;">
+            <h2 class="accordion-header">
                 <button class="accordion-button bg-secondary collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                     Kde si změním heslo, email, fotku nebo popisek?
                 </button>
@@ -68,22 +80,7 @@ include('./templates/head_and_navbar.php');
                 </div>
             </div>
         </div>
-        <div class="accordion-item text-dark" style="background-color: #ff9900;">
-            <h2 class="accordion-header">
-                <button class="accordion-button bg-secondary collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                    Accordion Item #3
-                </button>
-            </h2>
-            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-                    .accordion-flush class. This is the third item's accordion body. Nothing more exciting happening
-                    here in
-                    terms of content, but just filling up the space to make it look, at least at first glance, a bit
-                    more
-                    representative of how this would look in a real-world application.
-                </div>
-            </div>
-        </div>
+       
     </div>
 </section>
 <div class="p-5">

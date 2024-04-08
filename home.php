@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
                     ?>
                         <div class="col-md-6 col-lg-3">
                             <div class="card"
-                                 style="background-color: <?php echo $dates[$i]['confirmed'] ? '#00cc00' : '#ffff00'; ?>; color: black;">
+                                 style="background-color: <?php echo $dates[$i]['confirmed'] ? '#45c700' : '#ff9900'; ?>; color: black;">
                                 <div class="card-body text-center">
                                     <div id="card-top">
                                         <img src="<?php echo $profilePictureDB; ?>" class="rounded-circle" id="image"
