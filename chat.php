@@ -1,5 +1,5 @@
 <?php
-include('./utils.php');
+include_once('./utils.php');
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
 $email = $_SESSION['email'];

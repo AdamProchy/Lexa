@@ -1,65 +1,37 @@
 <?php
-session_start();
-if (file_exists("connection_params.txt")) {
-    $file = fopen("connection_params.txt", "r");
-    $conn_params = json_decode(fread($file, filesize("connection_params.txt")), true);
-    fclose($file);
-    try {
-        $conn = mysqli_connect($conn_params['host'], $conn_params['user'], $conn_params['password'], '', $conn_params['port']);
-        if (!$conn) {
-            header('Location: ./connection.php');
-        } else {
-            $_SESSION['conn_params'] = $conn_params;
-        }
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-    }
-}
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-if (!isset($_SESSION["conn_params"])) {
-    // If database connection doesn't exist, reroute to connection form on connection.php
-    header("Location: ./connection.php");
-    exit();
-} else {
-    $conn = mysqli_connect($_SESSION["conn_params"]['host'], $_SESSION["conn_params"]['user'], $_SESSION["conn_params"]['password'], '', $_SESSION["conn_params"]['port']);
-    mysqli_query($conn, "USE mojerandedb");
-}
+include_once ("database_connection_checker.php");
 if (isset($_SESSION['email'])) {
     header("Location: home.php");
     exit();
 }
-$isPasswordRight = true;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
     $psw = filter_input(INPUT_POST, "psw", FILTER_SANITIZE_SPECIAL_CHARS);
-    $sql = "select * from credentials where email = '$email'";
-    if (mysqli_num_rows(mysqli_query($conn, $sql)) == 1) {
-        $db_hash = mysqli_fetch_array(mysqli_query($conn, $sql))["psw"];
-        if (password_verify($psw, $db_hash)) {
-            $_SESSION["firstName"] = mysqli_fetch_array(mysqli_query($conn, $sql))["firstName"];
+    $stmt = $conn->prepare("SELECT * FROM credentials WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+    if ($result->num_rows == 1) {
+        $result = mysqli_fetch_array($result);
+        if (password_verify($psw, $result["psw"])) {
+            $_SESSION["firstName"] = $result["firstName"];
             $_SESSION["email"] = $email;
-            $_SESSION["lastName"] = mysqli_fetch_array(mysqli_query($conn, $sql))["lastName"];
-            $_SESSION["aboutMe"] = mysqli_fetch_array(mysqli_query($conn, $sql))["aboutMe"];
-            $_SESSION["profilePicture"] = "./protected/profilePictures/" . mysqli_fetch_array(mysqli_query($conn, $sql))["profilePicture"];
-            $_SESSION["sexuality"] = mysqli_fetch_array(mysqli_query($conn, $sql))["sexuality"];
+            $_SESSION["lastName"] = $result["lastName"];
+            $_SESSION["aboutMe"] = $result["aboutMe"];
+            $_SESSION["profilePicture"] = "./protected/profilePictures/" . $result["profilePicture"];
+            $_SESSION["sexuality"] = $result["sexuality"];
             $_SESSION["dateSent"] = false;
-            $_SESSION["ID"] = mysqli_fetch_array(mysqli_query($conn, $sql))["ID"];
-            header("location: home.php");
+            $_SESSION["ID"] = $result["ID"];
+
+            header("location: ./home.php");
         } else {
-            echo "        
-            <div class='alert alert-danger text-center' role='alert'>
-            Špatné heslo!
-            </div>";
+            $error = "Špatné heslo!";
         }
     } else {
-        echo "
-        <div class='alert alert-danger text-center' role='alert'>
-        Chyba!
-        </div>";
+        $error = "Uživatel neexistuje!";
     }
 }
-
 mysqli_close($conn);
 ?>
 <!DOCTYPE html>
@@ -76,12 +48,15 @@ mysqli_close($conn);
 </head>
 
 <body>
-    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-        <?php if ($isPasswordRight == false) : ?>
+    <form method="post">
+        <?php if (isset($error)) : ?>
             <div class="alert alert-danger text-center" role="alert">
-                Špatné heslo!
+                <?= $error ?>
             </div>
-        <?php endif; ?>
+        <script>
+            setTimeout(function() { document.querySelector(".alert").remove(); }, 2000);
+        </script>
+        <?php endif; unset($error); ?>
         <section class="vh-100 gradient-custom">
             <div class="container py-5 h-100">
                 <div class="row justify-content-center align-items-center h-100">
@@ -89,14 +64,14 @@ mysqli_close($conn);
                         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                             <div class="card-body p-md-5">
                                 <div class="d-flex justify-content-end">
-                                    <button id="switch" class="btn nav-link" onclick="cycleThemes()"></button>
+                                    <button id="switch" type="button" class="btn nav-link" onclick="cycleThemes()"></button>
                                 </div>
                                 <h1 class="mb-4 pb-2 pb-md-0 mb-md-5">Přihlášení</h1>
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6 mb-4 pb-2">
                                             <div class="form-outline">
-                                                <input type="email" id="emailAddress" name="email" class="form-control form-control-lg" />
+                                                <input type="email" id="emailAddress" name="email" class="form-control form-control-lg"  <?php if(isset($_POST['email'])) echo "value='".$_POST['email']."'"; ?> />
                                                 <label class="form-label" for="emailAddress">Email</label>
                                             </div>
                                         </div>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("functions.php");
+include_once("./utils.php");
 if (!isset($_SESSION["conn_params"])) {
     // If database connection doesn't exist, reroute to connection form on connection.php
     header("Location: ./connection.php");
@@ -222,12 +222,12 @@ function checkIfEmailAvalible($email, $conn)
             if (age < 18) {
                 // Reset the input field
                 birthdayDateInput.value = "";
-                alert("You must be at least 18 years old.");
+                alert("Musí ti být alespoň 18 let.");
                 return false;
             } else if (age > 100) {
                 // Reset the input field
                 birthdayDateInput.value = "";
-                alert("Please enter a valid birthday.");
+                alert("Zadané datum narození je nepravděpodobné. Zadejte prosím správné datum narození.");
                 return false;
             }
 

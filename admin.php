@@ -1,5 +1,5 @@
 <?php
-include('utils.php');
+include_once('utils.php');
 if (strpos($_SERVER['HTTP_REFERER'], 'admin.php') === false) {
     $_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
 }
@@ -62,7 +62,6 @@ if (isset($_POST['form_name'])) {
         }, 2000);
     </script>
 <?php endif; ?>
-<!--"Admin panel" on top of the screen in middle-->
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -85,7 +84,7 @@ if (isset($_POST['form_name'])) {
                 <input type="hidden" name="form_name" value="update_database">
                 <button type="submit" class="btn btn-info w-100">Aktualizovat databázi</button>
             </form>
-            <a href="<?php echo isset($_SESSION['referer']) ? $_SESSION['referer'] : './'; ?>" class="btn btn-primary w-100 mt-3">Zpátky</a>
+            <a href="<?php echo $_SESSION['referer'] ?? './'; ?>" class="btn btn-primary w-100 mt-3">Zpátky</a>
         </div>
     </div>
 </div>

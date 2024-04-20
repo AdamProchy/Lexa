@@ -1,10 +1,29 @@
 <?php
-include('functions.php');
+include_once('functions.php');
 session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-if (isset($_SESSION['conn_params'])) : header('Location: ./');
-endif;
+//test if connection_params.txt exists
+if (file_exists('connection_params.txt')) {
+    $file = fopen("connection_params.txt", "r");
+    $conn_params = json_decode(fread($file, filesize("connection_params.txt")), true);
+    fclose($file);
+    try {
+        $conn = mysqli_connect($conn_params['host'], $conn_params['user'], $conn_params['password'], 'mojerandedb', $conn_params['port']);
+        if ($conn) {
+            createDatabase($conn);
+            header('Location: ./');
+            exit();
+        }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
+}
+if (isset($_SESSION['conn_params'])){
+    $conn = mysqli_connect($_SESSION['conn_params']['host'], $_SESSION['conn_params']['user'], $_SESSION['conn_params']['password'], 'mojerandedb', $_SESSION['conn_params']['port']);
+    if ($conn) {
+        header('Location: ./');
+        exit();
+    }
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['form_name'] == 'connection_form') {
     $conn_params = [
         'host' => $_POST['host'],
