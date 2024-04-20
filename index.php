@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once ("database_connection_checker.php");
 if (isset($_SESSION['email'])) {
     header("Location: home.php");

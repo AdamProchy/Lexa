@@ -1,4 +1,6 @@
 <?php
+//show errors
+ini_set('display_errors', 1);
 include_once('functions.php');
 session_start();
 //test if connection_params.txt exists
@@ -18,8 +20,17 @@ if (file_exists('connection_params.txt')) {
     }
 }
 if (isset($_SESSION['conn_params'])){
-    $conn = mysqli_connect($_SESSION['conn_params']['host'], $_SESSION['conn_params']['user'], $_SESSION['conn_params']['password'], 'mojerandedb', $_SESSION['conn_params']['port']);
+    try {
+        $conn = mysqli_connect($_SESSION['conn_params']['host'], $_SESSION['conn_params']['user'], $_SESSION['conn_params']['password'], 'mojerandedb', $_SESSION['conn_params']['port']);
+    } catch (Exception $e) {
+        $conn = mysqli_connect($_SESSION['conn_params']['host'], $_SESSION['conn_params']['user'], $_SESSION['conn_params']['password'], '', $_SESSION['conn_params']['port']);
+        createDatabase($conn);
+    }
     if ($conn) {
+        //if connection is successful, write connection_params to file
+        $file = fopen("connection_params.txt", "w");
+        fwrite($file, json_encode($_SESSION['conn_params']));
+        fclose($file);
         header('Location: ./');
         exit();
     }

@@ -3,7 +3,6 @@ include_once('utils.php');
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
 $Id = $_SESSION['ID'];
-
 $sql = "SELECT * FROM `dates` WHERE `senderId` = '$Id' OR `recipientId` = '$Id'";
 $result = mysqli_query($conn, $sql);
 

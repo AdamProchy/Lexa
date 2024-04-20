@@ -1,5 +1,4 @@
 <?php
-session_start();
 //Check if __DIR__/connection_params.txt exist
 if (file_exists(__DIR__ . "/connection_params.txt")) {
     // Get data from it

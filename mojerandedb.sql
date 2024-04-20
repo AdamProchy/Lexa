@@ -328,22 +328,22 @@ ALTER TABLE `room_messages`
 -- Constraints for table `chat_rooms`
 --
 ALTER TABLE `chat_rooms`
-    ADD CONSTRAINT `chat_rooms_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `credentials` (`ID`),
-    ADD CONSTRAINT `chat_rooms_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `credentials` (`ID`);
+    ADD CONSTRAINT `chat_rooms_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `credentials` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `chat_rooms_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `credentials` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `dates`
 --
 ALTER TABLE `dates`
-    ADD CONSTRAINT `dates_credentials_ID_fk` FOREIGN KEY (`senderId`) REFERENCES `credentials` (`ID`),
-    ADD CONSTRAINT `dates_credentials_ID_fk_2` FOREIGN KEY (`recipientId`) REFERENCES `credentials` (`ID`);
+    ADD CONSTRAINT `dates_credentials_ID_fk` FOREIGN KEY (`senderId`) REFERENCES `credentials` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `dates_credentials_ID_fk_2` FOREIGN KEY (`recipientId`) REFERENCES `credentials` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `messages`
 --
 ALTER TABLE `messages`
-    ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `credentials` (`ID`),
-    ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `credentials` (`ID`);
+    ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `credentials` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `credentials` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `money_requests`
@@ -356,8 +356,8 @@ ALTER TABLE `money_requests`
 -- Constraints for table `room_messages`
 --
 ALTER TABLE `room_messages`
-    ADD CONSTRAINT `room_messages_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `chat_rooms` (`ID`),
-    ADD CONSTRAINT `room_messages_ibfk_2` FOREIGN KEY (`message_id`) REFERENCES `messages` (`ID`);
+    ADD CONSTRAINT `room_messages_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `chat_rooms` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `room_messages_ibfk_2` FOREIGN KEY (`message_id`) REFERENCES `messages` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
