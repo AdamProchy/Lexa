@@ -121,7 +121,7 @@ include('./templates/head_and_navbar.php');
             <input type="hidden" name="user1_id" value="<?php echo $myID; ?>">
             <input type="hidden" name="user2_id" value="<?php echo $chatMate_ID; ?>">
             <input type="hidden" name="chatRoomId" value="<?php echo $getChatRoomId; ?>">
-            <input type="text" placeholder="Napište zprávu" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4" name="message">
+            <input type="text" placeholder="Napište zprávu" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4" name="message" required>
             <div class="input-group-append">
                 <button id="button-addon2" type="submit" class="btn btn-link bg-primary text-white p-3 m-2">
                     Odeslat
