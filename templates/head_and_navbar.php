@@ -84,3 +84,22 @@ $coins = mysqli_fetch_array($result)["coins"];
         </div>
     </div>
 </nav>
+<?php if (isset($error)): ?>
+    <div class="alert alert-danger text-center" role="alert" id="alert">
+        <strong><?= $error ?></strong>
+    </div>
+    <script>
+        setTimeout(function () {
+            document.getElementById("alert").style.display = "none";
+        }, 2000);
+    </script>
+<?php elseif (isset($success)): ?>
+    <div class="alert alert-success text-center" role="alert" id="alert">
+        <strong><?= $success ?></strong>
+    </div>
+    <script>
+        setTimeout(function () {
+            document.getElementById("alert").style.display = "none";
+        }, 2000);
+    </script>
+<?php endif; ?>

@@ -15,23 +15,76 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 shuffle($users);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['chat'])) {
+        try {
+            $dateId = $_POST['recipientId'];
+            //Check if chat room already exists
+            $stmt = "SELECT * FROM `chat_rooms` WHERE `user1_id` = ? AND `user2_id` = ?";
+            $stmt = $conn->prepare($stmt);
+            $stmt->bind_param("ii", $_SESSION['ID'], $dateId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if (mysqli_num_rows($result) == 0) {
+                echo "not found, trying reverse";
+                $stmt = "SELECT * FROM `chat_rooms` WHERE `user1_id` = ? AND `user2_id` = ?";
+                $stmt = $conn->prepare($stmt);
+                $stmt->bind_param("ii", $dateId, $_SESSION['ID']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if (mysqli_num_rows($result) == 0) {
+                    // Create chat room
+                    $stmt = "INSERT INTO `chat_rooms` (`user1_id`, `user2_id`) VALUES (?,?)";
+                    $stmt = $conn->prepare($stmt);
+                    $stmt->bind_param("ii", $_SESSION['ID'], $dateId);
+                    $stmt->execute();
+                } else {
+                    $reverse = true;
+                }
+            }
+            //Get chat room id
+            if (isset($reverse) && $reverse) {
+                $stmt = "SELECT ID FROM `chat_rooms` WHERE `user2_id` = ? AND `user1_id` = ?";
+            } else {
+                $stmt = "SELECT ID FROM `chat_rooms` WHERE `user1_id` = ? AND `user2_id` = ?";
+            }
+            $stmt = $conn->prepare($stmt);
+            $stmt->bind_param("ii", $_SESSION['ID'], $dateId);
+            $stmt->execute();
+            $chatRoomId = $stmt->get_result()->fetch_assoc()['ID'];
+            //Reroute to chat
+            if (isset($chatRoomId)) {
+                header("Location: chat.php?chatRoomId=" . $chatRoomId);
+            } else {
+                $error = "Něco se pokazilo.". " " . $dateId . " " . $_SESSION['ID'];
+                //testing
+            }
+        } catch (Exception $e) {
+            $error = $e;
+        }
+    }
     foreach ($users as $i => $user) {
         if (isset($_POST["send-date-$i"])) {
-            $dateSent = true;
-            $senderId = $_SESSION['ID'];
-            $date = mysqli_real_escape_string($conn, $_POST['sender-date']);
-            $time = mysqli_real_escape_string($conn, $_POST['sender-time']);
-            $message = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['sender-message']));
-            $place = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['sender-place']));
-            $recipientId = mysqli_real_escape_string($conn, $_POST['recipientId']);
+            try {
+                $senderId = $_SESSION['ID'];
+                $date = mysqli_real_escape_string($conn, $_POST['sender-date']);
+                $time = mysqli_real_escape_string($conn, $_POST['sender-time']);
+                $message = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['sender-message']));
+                $place = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['sender-place']));
+                $recipientId = mysqli_real_escape_string($conn, $_POST['recipientId']);
 
-            $datetime = $date . ' ' . $time;
-            $sql = "INSERT INTO dates (senderId, recipientId, dateInvitation, message, place)
-                    VALUES ('$senderId', '$recipientId', '$datetime', '$message', '$place')";
+                $datetime = $date . ' ' . $time;
 
-            $stmt = mysqli_prepare($conn, $sql);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
+                $stmt = "INSERT INTO dates (senderId, recipientId, dateInvitation, message, place)
+                    VALUES (?, ?, ?, ?, ?)";
+                $stmt = mysqli_prepare($conn, $stmt);
+                $stmt->bind_param("iisss", $senderId, $recipientId, $datetime, $message, $place);
+                $stmt->execute();
+                $stmt->close();
+                $success = "Žádost o rande byla úspěšně odeslána.";
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            break;
         }
     }
 }
@@ -39,34 +92,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $pageName = 'date.php';
 include('./templates/head_and_navbar.php');
 ?>
-<?php if ($dateSent) { ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Úspěch!</strong> Žádost o rande byla úspěšně odeslána.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <script>
-        setTimeout(function () {
-            window.location.href = "./date.php";
-        }, 2500);
-    </script>
-<?php } ?>
 <section id="dates" class="p-5">
     <div class="container-fluid mb-0 pb-0">
         <h2 class="text-center">Nabídka</h2>
         <br>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
-            <?php
-            foreach ($users as $i => $user) {
-                if ($users[$i]['email'] != "admin@admin.com" && $users[$i]['email'] != $_SESSION['email']) {
-                    $firstNameDB = $users[$i]['firstName'];
-                    $lastNameDB = $users[$i]['lastName'];
-                    $aboutMeDB = $users[$i]['aboutMe'];
-                    $sexualityDB = $users[$i]['sexuality'];
-                    $gender = $users[$i]['gender'];
-                    $birthDateDB = $users[$i]['birthDate'];
+            <?php foreach ($users as $i => $user) {
+                if ($user['email'] != "admin@admin.com" && $user['email'] != $_SESSION['email']) {
+                    $firstNameDB = $user['firstName'];
+                    $lastNameDB = $user['lastName'];
+                    $aboutMeDB = $user['aboutMe'];
+                    $sexualityDB = $user['sexuality'];
+                    $gender = $user['gender'];
+                    $birthDateDB = $user['birthDate'];
                     $now = date("Y-m-d");
                     $diff = date_diff(date_create($birthDateDB), date_create($now));
-                    $profilePictureDB = "./protected/profilePictures/" . $users[$i]['profilePicture'];
+                    $profilePictureDB = "./protected/profilePictures/" . $user['profilePicture'];
                     echo '<div class="col">';
                     echo '<div class="card bg-secondary text-white">';
                     echo '<img src="' . $profilePictureDB . '" class="card-img-top rounded text-center" alt="User Image" style="width: 100%; height: 200px;">';
@@ -80,16 +121,26 @@ include('./templates/head_and_navbar.php');
                         echo '<h6 class="card-subtitle mb-2"><b>O mně:</b> </h6>';
                         echo '<p class="card-text">' . $aboutMeDB . '</p>';
                     }
-                    echo '<button type="button" class="btn btn-primary mr-2 mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal' . $i . '">Požádat o rande</button>';
+                    echo '<div class="row">';
+                    echo '<div class="col">';
+                    echo '<button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#exampleModal' . $i . '">Požádat o rande</button>';
+                    echo '</div>';
+                    echo '<div class="col">';
+                    echo '<form method="post">';
+                    echo '<button name="chat" type="submit" class="btn btn-info w-100">Poslat zprávu</button>';
+                    echo '<input type="hidden" name="recipientId" value="' . $user['ID'] . '">';
+                    echo '</form>';
                     echo '</div>';
                     echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+
                     echo '</div>';
                     echo '<div class="modal fade" id="exampleModal' . $i . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
                     echo '<div class="modal-dialog">';
                     echo '<div class="modal-content" id="cardbg">';
                     echo '<div class="modal-header">';
                     echo '<h5 class="modal-title" id="exampleModalLabel">Požádat o rande</h5>';
-                    echo '<a href="chat.php?recipientId=' . $users[$i]['ID'] . '" class="btn btn-primary">Odeslat zprávu</a>';
                     echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
                     echo '</div>';
                     echo '<div class="modal-body">';
@@ -118,7 +169,7 @@ include('./templates/head_and_navbar.php');
                     echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>';
                     echo '<button type="submit" class="btn btn-primary" name="send-date-' . $i . '">Odeslat</button>';
                     echo '</div>';
-                    echo '<input type="hidden" name="recipientId" value="' . $users[$i]['ID'] . '">';
+                    echo '<input type="hidden" name="recipientId" value="' . $user['ID'] . '">';
                     echo '</form>';
                     echo '</div>';
                     echo '</div>';

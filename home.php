@@ -45,10 +45,16 @@ if (isset($_POST['send_message'])) {
             $stmt = $conn->prepare($stmt);
             $stmt->bind_param("ii", $_SESSION['ID'], $dateId);
             $stmt->execute();
+        } else {
+            $reverse = true;
         }
     }
     //Get chat room id
-    $stmt = "SELECT ID FROM `chat_rooms` WHERE `user1_id` = ? AND `user2_id` = ?";
+    if (isset($reverse) && $reverse) {
+        $stmt = "SELECT ID FROM `chat_rooms` WHERE `user2_id` = ? AND `user1_id` = ?";
+    } else {
+        $stmt = "SELECT ID FROM `chat_rooms` WHERE `user1_id` = ? AND `user2_id` = ?";
+    }
     $stmt = $conn->prepare($stmt);
     $stmt->bind_param("ii", $_SESSION['ID'], $dateId);
     $stmt->execute();
@@ -81,26 +87,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 $pageName = "home.php";
 include ('./templates/head_and_navbar.php');
 ?>
-
-<?php if (isset($error)): ?>
-    <div class="alert alert-danger text-center" role="alert" id="alert">
-        <strong><?= $error ?></strong>
-    </div>
-<script>
-    setTimeout(function () {
-        document.getElementById("alert").style.display = "none";
-    }, 2000);
-</script>
-<?php elseif (isset($success)): ?>
-    <div class="alert alert-success text-center" role="alert" id="alert">
-        <strong><?= $success ?></strong>
-    </div>
-<script>
-    setTimeout(function () {
-        document.getElementById("alert").style.display = "none";
-    }, 2000);
-</script>
-<?php endif; ?>
     <section id="dates" class="p-5">
         <div class="container">
                 <?php
