@@ -39,8 +39,7 @@ rande a psát s ní.
 1. Stáhněte si projekt jako .zip soubor nebo pomocí příkazu `git clone`.
 2. Rozbalte .zip soubor do svého webového serveru.
 3. Spusťte webový a MySQL server.
-4. Naimportujte databázi ze souboru `./mojerandedb.sql`.
-5. Otevřete si prohlížeč a zadejte do něj adresu [localhost/MojeRande-main](http://localhost/MojeRande-main).
+4. Otevřete si prohlížeč a zadejte do něj adresu [localhost/MojeRande-main](http://localhost/MojeRande-main).
 
 ## Použité technologie
 

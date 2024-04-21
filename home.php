@@ -3,6 +3,74 @@ include_once('utils.php');
 $firstName = $_SESSION['firstName'];
 $lastName = $_SESSION['lastName'];
 $Id = $_SESSION['ID'];
+if (isset($_POST['cancel'])) {
+    try {
+        $stmt = $conn->prepare("DELETE FROM `dates` WHERE `ID` = ?");
+        $stmt->bind_param("i", $_POST['dateID']);
+        $stmt->execute();
+        $stmt->close();
+        $success = "Rande bylo úspěšně zrušeno.";
+    } catch (Exception $e) {
+        $error = $e;
+    }
+}
+if (isset($_POST['send_message'])) {
+    try {
+    $stmt = "SELECT * FROM `dates` WHERE `ID` = ?";
+    $stmt = $conn->prepare($stmt);
+    $stmt->bind_param("i", $_POST['dateID']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    if ($row['senderId'] == $_SESSION['ID']) {
+        $dateId = $row['recipientId'];
+    } else {
+        $dateId = $row['senderId'];
+    }
+    //Check if chat room already exists
+    $stmt = "SELECT * FROM `chat_rooms` WHERE `user1_id` = ? AND `user2_id` = ?";
+    $stmt = $conn->prepare($stmt);
+    $stmt->bind_param("ii", $_SESSION['ID'], $dateId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if (mysqli_num_rows($result) == 0) {
+        $stmt = "SELECT * FROM `chat_rooms` WHERE `user1_id` = ? AND `user2_id` = ?";
+        $stmt = $conn->prepare($stmt);
+        $stmt->bind_param("ii", $dateId, $_SESSION['ID']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if (mysqli_num_rows($result) == 0) {
+            // Create chat room
+            $stmt = "INSERT INTO `chat_rooms` (`user1_id`, `user2_id`) VALUES (?,?)";
+            $stmt = $conn->prepare($stmt);
+            $stmt->bind_param("ii", $_SESSION['ID'], $dateId);
+            $stmt->execute();
+        }
+    }
+    //Get chat room id
+    $stmt = "SELECT ID FROM `chat_rooms` WHERE `user1_id` = ? AND `user2_id` = ?";
+    $stmt = $conn->prepare($stmt);
+    $stmt->bind_param("ii", $_SESSION['ID'], $dateId);
+    $stmt->execute();
+    $chatRoomId = $stmt->get_result()->fetch_assoc()['ID'];
+    //Reroute to chat
+    header("Location: chat.php?chatRoomId=" . $chatRoomId);
+    } catch (Exception $e) {
+        $error = $e;
+    }
+}
+if (isset($_POST['submit'])) {
+    try{
+    $stmt = "UPDATE `dates` SET `confirmed` = '1' WHERE `dates`.`ID` = ?";
+    $stmt = $conn->prepare($stmt);
+    $stmt->bind_param("i", $_POST['dateID']);
+    $stmt->execute();
+    $success = "Rande bylo úspěšně potvrzeno.";
+    } catch (Exception $e) {
+        $error = $e;
+    }
+}
+
 $sql = "SELECT * FROM `dates` WHERE `senderId` = '$Id' OR `recipientId` = '$Id'";
 $result = mysqli_query($conn, $sql);
 
@@ -12,76 +80,27 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 $pageName = "home.php";
 include ('./templates/head_and_navbar.php');
-if (isset($_POST['cancel'])) {
-    $sql = "DELETE FROM `dates` WHERE `dates`.`ID` = '" . $_POST['dateID'] . "'";
-    mysqli_query($conn, $sql);
 ?>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Rande bylo úspěšně zrušeno!</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-<script>
-    setTimeout(function () {
-        window.location.href = "./home.php";
-    }, 2500);
-</script>
-<?php }
-if (isset($_POST['send_message'])) {
-    $dateId = "";
-    $sql = "SELECT * FROM `dates` WHERE `ID` = '" . $_POST['dateID'] . "'";
-    $result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-        if ($row['senderId'] == $_SESSION['ID']) {
-            $dateId = $row['recipientId'];
-        } else {
-            $dateId = $row['senderId'];
-        }
-    }
-    $date_id = 0;
-    // Get date id
-    $sql = "SELECT ID FROM `credentials` WHERE `ID` = '" . $dateId . "'";
-    $result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-        $date_id = $row['ID'];
-    }
-    //Check if chat room already exists
-    $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = '" . $_SESSION['ID'] . "' AND `user2_id` = '" . $date_id . "'";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) == 0) {
-        $sql = "SELECT * FROM `chat_rooms` WHERE `user1_id` = '" . $date_id . "' AND `user2_id` = '" . $_SESSION['ID'] . "'";
-        $result = mysqli_query($conn, $sql);
-        if (mysqli_num_rows($result) == 0) {
-            // Create chat room
-            $sql = "INSERT INTO `chat_rooms` (`user1_id`, `user2_id`) VALUES ('" . $_SESSION['ID'] . "', '" . $date_id . "')";
-            mysqli_query($conn, $sql);
-        }
-    }
-    //Get chat room id
-    $chatRoomId = 0;
-    $sql = "SELECT ID FROM `chat_rooms` WHERE `user1_id` = '" . $_SESSION['ID'] . "' AND `user2_id` = '" . $date_id . "'";
 
-    $result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-        $chatRoomId = $row['ID'];
-    }
-    //Reroute to chat
-    //TODO: Make reroute to the specific chat right away
-    header("Location: chat.php?chatRoomId=" . $chatRoomId);
-}
-if (isset($_POST['submit'])) {
-        $sql = "UPDATE `dates` SET `confirmed` = '1' WHERE `dates`.`ID` = '" . $_POST['dateID'] . "'";
-        mysqli_query($conn, $sql);
-?>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Rande bylo úspěšně potvrzeno!</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<?php if (isset($error)): ?>
+    <div class="alert alert-danger text-center" role="alert" id="alert">
+        <strong><?= $error ?></strong>
+    </div>
 <script>
     setTimeout(function () {
-        window.location.href = "./home.php";
-    }, 2500);
+        document.getElementById("alert").style.display = "none";
+    }, 2000);
 </script>
-<?php } ?>
+<?php elseif (isset($success)): ?>
+    <div class="alert alert-success text-center" role="alert" id="alert">
+        <strong><?= $success ?></strong>
+    </div>
+<script>
+    setTimeout(function () {
+        document.getElementById("alert").style.display = "none";
+    }, 2000);
+</script>
+<?php endif; ?>
     <section id="dates" class="p-5">
         <div class="container">
                 <?php
@@ -119,11 +138,9 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <br>
                                     <h6 class="card-subtitle mb-2 text-white">
-                                        Místo: <?php echo $dates[$i]['place']; ?></h6>
+                                        Místo: <?= $dates[$i]['place'] ?></h6>
                                     <h6 class="card-subtitle mb-2 text-white">
-                                        Datum: <?php echo date("d.m.Y", strtotime($dates[$i]['dateInvitation'])); ?></h6>
-                                    <h6 class="card-subtitle mb-2 text-white">
-                                        Čas: <?php echo date("h:i", strtotime($dates[$i]['dateInvitation'])); ?></h6>
+                                        Datum a čas: <?= date("d.m.Y", strtotime($dates[$i]['dateInvitation'])) ?> <?= date("h:i", strtotime($dates[$i]['dateInvitation'])) ?></h6>
                                     <h6 class="card-subtitle mb-2 text-white">
                                         Zpráva: <?php echo $dates[$i]['message']; ?></h6>
                                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -148,5 +165,47 @@ if (isset($_POST['submit'])) {
             <?php } ?>
         </div>
     </section>
+
+<div class="container">
+    <div class="row g-4">
+        <?php foreach ($dates as $date): ?>
+            <?php
+                $stmt = $conn->prepare("SELECT * FROM `credentials` WHERE `ID` = ?");
+                if ($Id != $date['senderId']) {
+                    $stmt->bind_param("i", $date['senderId']);
+                } else {
+                    $stmt->bind_param("i", $date['recipientId']);
+                }
+                $stmt->execute();
+                $row = $stmt->get_result()->fetch_assoc();
+                $firstNameDate = $row['firstName'];
+                $lastNameDate = $row['lastName'];
+                $profilePictureDate = "./protected/profilePictures/" . $row['profilePicture'];
+            ?>
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-dark"
+                     style="background-color: <?php echo $date['confirmed'] ? '#45c700' : '#ff9900'; ?>;">
+                    <div class="card-body text-center">
+                        <div id="card-top">
+                            <img src="./protected/profilePictures/<?= $row['profilePicture'] ?>" class="rounded-circle" id="image" alt="">
+                            <h3 class="card-title"><span style="font-weight: 600;"><?= $firstNameDate ?></span><br><span style="font-size: large;"><?= $lastNameDate ?></span></h3>
+                        </div>
+                        <br>
+                        <h6 class="card-subtitle mb-2"><span class="d-flex">Místo: <a class="ms-auto text-primary" href="https://www.google.com/maps/search/?api=1&query=<?=str_replace(" ", "+", $date['place'])?>"><?= $date['place']?></a></span></h6>
+                        <h6 class="card-subtitle mb-2"><span class="d-flex">Datum a čas: <span class="ms-auto"><?= date("d.m.Y", strtotime($date['dateInvitation'])) ?> <?= date("h:i", strtotime($date['dateInvitation'])) ?></span></span></h6>
+                        <?php if($date['message'] != ""): ?>
+                            <h6 class="card-subtitle mb-2"><span class="d-flex">Zpráva: <span class="ms-auto"><?= $date['message']?></span></span></h6>
+                        <?php endif; ?>
+                        <form method="post">
+                            <input type="hidden" name="dateID" value="<?= $date['ID'] ?>">
+                            <button class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
+                            <button class="btn btn-info mt-3" name="send_message">Napsat zprávu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
 <?php
 include('./templates/footer.php');
