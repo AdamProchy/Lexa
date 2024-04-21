@@ -12,55 +12,65 @@ $oldPasswordEmpty = false;
 $wrongPassword = false;
 $now = date("Y-m-d");
 $diff = date_diff(date_create(getBirthDate()), date_create($now));
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (count($_FILES) == 1 && $_FILES['profilePicture']['name'] != "") {
-        if (@is_array(getimagesize($_FILES['profilePicture']['tmp_name']))) {
-            $filename = uniqid();
-            $extension = pathinfo($_FILES['profilePicture']['name'], PATHINFO_EXTENSION);
-            $basename = $filename . "." . $extension;
-            $oldPfp = mysqli_query($conn, "SELECT profilePicture FROM credentials WHERE ID = '$Id'");
-            $oldPfp = mysqli_fetch_array($oldPfp)["profilePicture"];
-            $sqlDeletePfp = "SELECT * FROM credentials WHERE profilePicture = '$oldPfp'";
-            $sql = "UPDATE credentials SET profilePicture = '$basename' WHERE Id = '$Id'";
-            mysqli_query($conn, $sql);
-            move_uploaded_file($_FILES['profilePicture']['tmp_name'], "./protected/profilePictures/$basename");
-            if ($oldPfp != "default.png") unlink("./protected/profilePictures/$oldPfp");
-            $_SESSION["profilePicture"] = "./protected/profilePictures/$basename";
-            $updated = true;
-        } else {
-            $isImage = false;
-        }
-    }
-    if ($_POST["aboutMe"] != "") {
-        $aboutMeInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["aboutMe"]));
-        $sql = "UPDATE credentials SET aboutMe = '$aboutMeInput' WHERE email = '$email'";
-        mysqli_query($conn, $sql);
-        $updated = true;
-    }
-    if ($_POST["newPassword"] != "") {
-        if ($_POST["oldPassword"] == "") {
-            $oldPasswordEmpty = true;
-        } else {
-            if (checkPassword($email, $_POST["oldPassword"])) {
-                $password = password_hash($_POST["newPassword"], PASSWORD_DEFAULT);
-                $sql = "UPDATE credentials SET psw = '$password' WHERE email = '$email'";
+if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
+    if (isset($_POST['submit'])){
+        if (count($_FILES) == 1 && $_FILES['profilePicture']['name'] != "") {
+            if (@is_array(getimagesize($_FILES['profilePicture']['tmp_name']))) {
+                $filename = uniqid();
+                $extension = pathinfo($_FILES['profilePicture']['name'], PATHINFO_EXTENSION);
+                $basename = $filename . "." . $extension;
+                $oldPfp = mysqli_query($conn, "SELECT profilePicture FROM credentials WHERE ID = '$Id'");
+                $oldPfp = mysqli_fetch_array($oldPfp)["profilePicture"];
+                $sqlDeletePfp = "SELECT * FROM credentials WHERE profilePicture = '$oldPfp'";
+                $sql = "UPDATE credentials SET profilePicture = '$basename' WHERE Id = '$Id'";
                 mysqli_query($conn, $sql);
+                move_uploaded_file($_FILES['profilePicture']['tmp_name'], "./protected/profilePictures/$basename");
+                if ($oldPfp != "default.png") unlink("./protected/profilePictures/$oldPfp");
+                $_SESSION["profilePicture"] = "./protected/profilePictures/$basename";
                 $updated = true;
             } else {
-                $wrongPassword = true;
+                $isImage = false;
+            }
+        }
+        if ($_POST["aboutMe"] != "") {
+            $aboutMeInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["aboutMe"]));
+            $sql = "UPDATE credentials SET aboutMe = '$aboutMeInput' WHERE email = '$email'";
+            mysqli_query($conn, $sql);
+            $updated = true;
+        }
+        if ($_POST["newPassword"] != "") {
+            if ($_POST["oldPassword"] == "") {
+                $oldPasswordEmpty = true;
+            } else {
+                if (checkPassword($email, $_POST["oldPassword"])) {
+                    $password = password_hash($_POST["newPassword"], PASSWORD_DEFAULT);
+                    $sql = "UPDATE credentials SET psw = '$password' WHERE email = '$email'";
+                    mysqli_query($conn, $sql);
+                    $updated = true;
+                } else {
+                    $wrongPassword = true;
+                }
+            }
+        }
+        if ($_POST["email"] != "") {
+            if (checkEmail($_POST["email"])) {
+                $emailInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["email"]));
+                mysqli_query($conn, "UPDATE credentials SET email = '$emailInput' WHERE email = '$email'");
+                $_SESSION["email"] = $emailInput;
+                $email = $emailInput;
+                $updated = true;
+            } else {
+                $emailError = true;
             }
         }
     }
-    if ($_POST["email"] != "") {
-        if (checkEmail($_POST["email"])) {
-            $emailInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["email"]));
-            mysqli_query($conn, "UPDATE credentials SET email = '$emailInput' WHERE email = '$email'");
-            $_SESSION["email"] = $emailInput;
-            $email = $emailInput;
-            $updated = true;
-        } else {
-            $emailError = true;
-        }
+    if (isset($_POST['delete_profile'])) {
+        $profilePicture = mysqli_query($conn, "SELECT profilePicture FROM credentials WHERE ID = '$Id'");
+        $profilePicture = mysqli_fetch_array($profilePicture)["profilePicture"];
+        if ($profilePicture != "default.png") unlink("./protected/profilePictures/$profilePicture");
+        mysqli_query($conn, "DELETE FROM credentials WHERE ID = '$Id'");
+        session_destroy();
+        header("Location: index.php");
     }
 }
 
@@ -171,8 +181,28 @@ if ($updated) { ?>
                         <div class="form-group">
                             <input class="form-control-file" type="file" name="profilePicture" />
                         </div>
-                        <br>
-                        <button class="btn btn-primary" type="submit" name="submit">Potvrdit</button>
+                        <div class="mt-3">
+                            <button class="btn btn-primary" type="submit" name="submit">Potvrdit</button>
+                            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteProfileModal">Smazat profil</button>
+                            <div class="modal fade" id="deleteProfileModal" tabindex="-1" aria-labelledby="deleteProfileModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title" id="deleteProfileModalLabel">Smazat profil</h5>
+                                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Opravdu chcete smazat svůj profil?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>
+                                            <input type="hidden" name="ID" value="<?php echo $Id; ?>">
+                                            <button type="submit" name="delete_profile" class="btn btn-danger">Smazat</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
