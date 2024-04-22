@@ -1,4 +1,6 @@
 <?php
+//show errors
+ini_set('display_errors', 1);
 session_start();
 include_once("database_connection_checker.php");
 if (!isset($_SESSION["conn_params"])) {
@@ -23,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = file_get_contents("https://check-name.herokuapp.com/verify/$firstName_url%20$lastName_url");
     $response = json_decode($response, true);
     $score = $response["score"];
-    if ($score == 0){
+    if ($score == 0) {
         $error = "Jméno nebo příjmení není validní.";
     } else {
         $lastName = filter_input(INPUT_POST, "lastName", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -89,189 +91,226 @@ function checkIfEmailAvalible($email, $conn)
 </head>
 
 <body>
-    <form method="post" class="needs-validation" novalidate>
-        <?php if (isset($error)) : ?>
-            <div class="alert alert-danger text-center" role="alert" id="alert">
-                <?= $error ?>
-            </div>
-            <script>
-                setTimeout(() => {
-                    document.getElementById("alert").style.display = "none";
-                }, 2000);
-            </script>
-        <?php endif; ?>
+<form method="post" class="needs-validation" novalidate>
+    <?php if (isset($error)) : ?>
+        <div class="alert alert-danger text-center" role="alert" id="alert">
+            <?= $error ?>
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById("alert").style.display = "none";
+            }, 2000);
+        </script>
+    <?php endif; ?>
 
-        <section class="vh-100 gradient-custom">
-            <div class="container py-5 h-100">
-                <div class="row justify-content-center align-items-center h-100">
-                    <div class="col-12 col-lg-9 col-xl-7">
-                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                            <div class="card-body p-4 p-md-5">
-                                <div class="d-flex justify-content-end">
-                                    <button id="switch" class="btn nav-link" type="button" onclick="cycleThemes()"></button>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="d-flex justify-content-end">
+                                <button id="switch" class="btn nav-link" type="button" onclick="cycleThemes()"></button>
+                            </div>
+                            <h1 class="mb-4 pb-2 pb-md-0 mb-md-5">Registrace</h1>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">Jméno</label>
+                                    <input type="text"
+                                           class="form-control <?php if (isset($error) && (strpos($error, "Jméno") !== false)) echo 'is-invalid'; ?>"
+                                           id="firstName" name="firstName"
+                                           required <?php if (isset($_POST['firstName'])) echo 'value="' . $_POST['firstName'] . '"'; ?>>
+                                    <?php
+                                    if (isset($error)) {
+                                        if (strpos($error, "Jméno") !== false) {
+                                            echo '<div class="text-danger">Jméno nebo příjmení není validní.</div>';
+                                        }
+                                    } else {
+                                        echo '<div class="invalid-feedback">Vyplňte vaše křestní jméno.</div>';
+                                    }
+                                    ?>
                                 </div>
-                                <h1 class="mb-4 pb-2 pb-md-0 mb-md-5">Registrace</h1>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label for="firstName" class="form-label">Jméno</label>
-                                        <input type="text" class="form-control <?php if(isset($error) && (strpos($error, "Jméno") !== false)) echo 'is-invalid'; ?>" id="firstName" name="firstName" required <?php if(isset($_POST['firstName'])) echo 'value="' . $_POST['firstName'] . '"'; ?>>
-                                        <?php
-                                        if (isset($error)) {
-                                            if (strpos($error, "Jméno") !== false) {
-                                                echo '<div class="text-danger">Jméno nebo příjmení není validní.</div>';
-                                            }
-                                        } else {
-                                            echo '<div class="invalid-feedback">Vyplňte vaše křestní jméno.</div>';
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Přijmení</label>
+                                    <input type="text"
+                                           class="form-control <?php if (isset($error) && (strpos($error, "Jméno") !== false)) echo 'is-invalid'; ?>"
+                                           id="lastName" name="lastName"
+                                           required <?php if (isset($_POST['lastName'])) echo 'value="' . $_POST['lastName'] . '"'; ?>>
+                                    <?php
+                                    if (isset($error)) {
+                                        if (strpos($error, "Jméno") !== false) {
+                                            echo '<div class="text-danger">Jméno nebo příjmení není validní.</div>';
                                         }
-                                        ?>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="lastName" class="form-label">Přijmení</label>
-                                        <input type="text" class="form-control <?php if(isset($error) && (strpos($error, "Jméno") !== false)) echo 'is-invalid'; ?>" id="lastName" name="lastName" required <?php if(isset($_POST['lastName'])) echo 'value="' . $_POST['lastName'] . '"'; ?>>
-                                        <?php
-                                        if (isset($error)) {
-                                            if (strpos($error, "Jméno") !== false) {
-                                                echo '<div class="text-danger">Jméno nebo příjmení není validní.</div>';
-                                            }
-                                        } else {
-                                            echo '<div class="invalid-feedback">Vyplňte vaše příjmení.</div>';
-                                        }
-                                        ?>
-                                    </div>
+                                    } else {
+                                        echo '<div class="invalid-feedback">Vyplňte vaše příjmení.</div>';
+                                    }
+                                    ?>
+                                </div>
 
-                                    <div class="col-md-6">
-                                        <label for="birthdayDate" class="form-label">Datum narození</label>
-                                        <input type="date" class="form-control" id="birthdayDate" name="birthdayDate" required <?php if(isset($_POST['birthdayDate'])) echo 'value="' . $_POST['birthdayDate'] . '"'; ?>>
-                                        <div class="invalid-feedback" id="birthdayError">Vyplňte vaše datum narození.</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h6 class="mb-2 pb-1">Pohlaví: </h6>
+                                <div class="col-md-6">
+                                    <label for="birthdayDate" class="form-label">Datum narození</label>
+                                    <input type="date" class="form-control" id="birthdayDate" name="birthdayDate"
+                                           required <?php if (isset($_POST['birthdayDate'])) echo 'value="' . $_POST['birthdayDate'] . '"'; ?>>
+                                    <div class="invalid-feedback" id="birthdayError">Vyplňte vaše datum narození.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="mb-2 pb-1">Pohlaví: </h6>
                                     <div class="form-group">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="F" required <?php if(isset($_POST['inlineRadioOptions']) and $_POST['inlineRadioOptions'] == 'F') echo 'checked';?>/>
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                   id="femaleGender" value="F"
+                                                   required <?php if (isset($_POST['inlineRadioOptions']) and $_POST['inlineRadioOptions'] == 'F') echo 'checked'; ?>/>
                                             <label class="form-check-label" for="femaleGender">Žena</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender" value="M" <?php if(isset($_POST['inlineRadioOptions']) and $_POST['inlineRadioOptions'] == 'M') echo 'checked';?>/>
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                   id="maleGender"
+                                                   value="M" <?php if (isset($_POST['inlineRadioOptions']) and $_POST['inlineRadioOptions'] == 'M') echo 'checked'; ?>/>
                                             <label class="form-check-label" for="maleGender">Muž</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="FtMGender" value="FtM" <?php if(isset($_POST['inlineRadioOptions']) and $_POST['inlineRadioOptions'] == 'FtM') echo 'checked';?>/>
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                   id="FtMGender"
+                                                   value="FtM" <?php if (isset($_POST['inlineRadioOptions']) and $_POST['inlineRadioOptions'] == 'FtM') echo 'checked'; ?>/>
                                             <label class="form-check-label" for="FtMGender">Trans muž</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="MtFGender" value="MtF" <?php if(isset($_POST['inlineRadioOptions']) and $_POST['inlineRadioOptions'] == 'MtF') echo 'checked';?>/>
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                   id="MtFGender"
+                                                   value="MtF" <?php if (isset($_POST['inlineRadioOptions']) and $_POST['inlineRadioOptions'] == 'MtF') echo 'checked'; ?>/>
                                             <label class="form-check-label" for="MtFGender">Trans žena</label>
                                             <div class="invalid-feedback">Vyberte vaše pohlaví.</div>
                                         </div>
                                     </div>
 
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label" for="emailAddress">Email</label>
-                                        <input type="email" id="emailAddress" name="email" class="form-control" required <?php if(isset($_POST['email'])) echo 'value="' . $_POST['email'] . '"';?>/>
-                                        <div class="invalid-feedback">Vyplňte váš email.</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-outline">
-                                            <label class="form-label" for="psw">Heslo</label>
-                                            <input type="password" id="psw" name="psw" class="form-control" required <?php if(isset($_POST['psw'])) echo 'value="' . $_POST['psw'] . '"';?>/>
-                                            <div class="invalid-feedback">Vyplňte vaše heslo.</div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label select-label">Orientace</label> <br>
-                                        <select class="select" name="sexuality" required>
-                                            <option value="S" <?php if(isset($_POST['sexuality']) and $_POST['sexuality'] === 'S') echo 'selected';?> >Heterosexuál</option>
-                                            <option value="G" <?php if(isset($_POST['sexuality']) and $_POST['sexuality'] === 'G') echo 'selected';?> >Homosexuál</option>
-                                            <option value="L" <?php if(isset($_POST['sexuality']) and $_POST['sexuality'] === 'L') echo 'selected';?> >Lesba</option>
-                                            <option value="B" <?php if(isset($_POST['sexuality']) and $_POST['sexuality'] === 'B') echo 'selected';?> >Bisexuál</option>
-                                            <option value="A" <?php if(isset($_POST['sexuality']) and $_POST['sexuality'] === 'A') echo 'selected';?> >Asexuál</option>
-                                            <option value="P" <?php if(isset($_POST['sexuality']) and $_POST['sexuality'] === 'P') echo 'selected';?> >Pansexuál</option>
-                                            <option value="Q" <?php if(isset($_POST['sexuality']) and $_POST['sexuality'] === 'Q') echo 'selected';?> >Queer</option>
-                                            <option value="?" <?php if(isset($_POST['sexuality']) and $_POST['sexuality'] === '?') echo 'selected';?> >Nejistý</option>
-                                        </select>
-                                    </div>
-                                    <button class="btn btn-success btn-lg" type="submit">Registrovat</button>
-                                    <a href="./" class="btn btn-secondary btn-lg">Přihlásit</a>
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="emailAddress">Email</label>
+                                    <input type="email" id="emailAddress" name="email" class="form-control"
+                                           required <?php if (isset($_POST['email'])) echo 'value="' . $_POST['email'] . '"'; ?>/>
+                                    <div class="invalid-feedback">Vyplňte váš email.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="psw">Heslo</label>
+                                        <input type="password" id="psw" name="psw" class="form-control"
+                                               required <?php if (isset($_POST['psw'])) echo 'value="' . $_POST['psw'] . '"'; ?>/>
+                                        <div class="invalid-feedback">Vyplňte vaše heslo.</div>
 
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label select-label">Orientace</label> <br>
+                                    <select class="select" name="sexuality" required>
+                                        <option value="S" <?php if (isset($_POST['sexuality']) and $_POST['sexuality'] === 'S') echo 'selected'; ?> >
+                                            Heterosexuál
+                                        </option>
+                                        <option value="G" <?php if (isset($_POST['sexuality']) and $_POST['sexuality'] === 'G') echo 'selected'; ?> >
+                                            Homosexuál
+                                        </option>
+                                        <option value="L" <?php if (isset($_POST['sexuality']) and $_POST['sexuality'] === 'L') echo 'selected'; ?> >
+                                            Lesba
+                                        </option>
+                                        <option value="B" <?php if (isset($_POST['sexuality']) and $_POST['sexuality'] === 'B') echo 'selected'; ?> >
+                                            Bisexuál
+                                        </option>
+                                        <option value="A" <?php if (isset($_POST['sexuality']) and $_POST['sexuality'] === 'A') echo 'selected'; ?> >
+                                            Asexuál
+                                        </option>
+                                        <option value="P" <?php if (isset($_POST['sexuality']) and $_POST['sexuality'] === 'P') echo 'selected'; ?> >
+                                            Pansexuál
+                                        </option>
+                                        <option value="Q" <?php if (isset($_POST['sexuality']) and $_POST['sexuality'] === 'Q') echo 'selected'; ?> >
+                                            Queer
+                                        </option>
+                                        <option value="?" <?php if (isset($_POST['sexuality']) and $_POST['sexuality'] === '?') echo 'selected'; ?> >
+                                            Nejistý
+                                        </option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-success btn-lg" type="submit">Registrovat</button>
+                                <a href="./" class="btn btn-secondary btn-lg">Přihlásit</a>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </form>
+        </div>
+    </section>
+</form>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Bootstrap's validation script initialization
-        (function () {
-            'use strict'
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Bootstrap's validation script initialization
+    (function () {
+        'use strict'
 
-            var forms = document.querySelectorAll('.needs-validation')
+        var forms = document.querySelectorAll('.needs-validation')
 
-            Array.from(forms).forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
+        Array.from(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
 
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-    </script>
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script>
-        function validateBirthday() {
-            // Get the selected birthday date
-            var birthdayDateInput = document.getElementById("birthdayDate");
-            var birthdayDate = birthdayDateInput.value;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+<script>
+    function validateBirthday() {
+        // Get the selected birthday date
+        var birthdayDateInput = document.getElementById("birthdayDate");
+        var birthdayDate = birthdayDateInput.value;
 
-            // Calculate today's date
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
+        // Calculate today's date
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
 
-            // Convert birthday date and today's date to Date objects
-            var birthday = new Date(birthdayDate);
-            var currentDate = new Date(yyyy, mm, dd);
+        // Convert birthday date and today's date to Date objects
+        var birthday = new Date(birthdayDate);
+        var currentDate = new Date(yyyy, mm, dd);
 
-            // Calculate age
-            var age = yyyy - birthday.getFullYear();
-            var monthDiff = mm - (birthday.getMonth() + 1);
-            if (monthDiff < 0 || (monthDiff === 0 && dd < birthday.getDate())) {
-                age--;
-            }
-
-            // Check if age is less than 18 or more than 100
-            if (age < 18) {
-                // Reset the input field
-                birthdayDateInput.value = "";
-                alert("Musí ti být alespoň 18 let.");
-                return false;
-            } else if (age > 100) {
-                // Reset the input field
-                birthdayDateInput.value = "";
-                alert("Zadané datum narození je nepravděpodobné. Zadejte prosím správné datum narození.");
-                return false;
-            }
-
-            return true;
+        // Calculate age
+        var age = yyyy - birthday.getFullYear();
+        var monthDiff = mm - (birthday.getMonth() + 1);
+        if (monthDiff < 0 || (monthDiff === 0 && dd < birthday.getDate())) {
+            age--;
         }
 
-        // Add event listener to the form for validation
-        document.getElementById("birthdayDate").addEventListener("change", validateBirthday);
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="./scripts/night-theme.js"></script>
+        // Check if age is less than 18 or more than 100
+        if (age < 18) {
+            // Reset the input field
+            birthdayDateInput.value = "";
+            alert("Musí ti být alespoň 18 let.");
+            return false;
+        } else if (age > 100) {
+            // Reset the input field
+            birthdayDateInput.value = "";
+            alert("Zadané datum narození je nepravděpodobné. Zadejte prosím správné datum narození.");
+            return false;
+        }
+
+        return true;
+    }
+
+    // Add event listener to the form for validation
+    document.getElementById("birthdayDate").addEventListener("change", validateBirthday);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+<script src="./scripts/night-theme.js"></script>
 </body>
 
 </html>
