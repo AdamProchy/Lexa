@@ -9,7 +9,7 @@ $getChatRoomId = $_GET['chatRoomId'] ?? null;
 $pageName = 'chat.php';
 include('./templates/head_and_navbar.php');
 ?>
-<div class="container-fluid">
+<div class="container-fluid p-0">
     <div class="row overflow-hidden">
         <div class="col-3">
             <div class="messages-box">
@@ -117,10 +117,11 @@ include('./templates/head_and_navbar.php');
         ?>
     </div>
     <form action="send-message.php" class="row" method="post">
-        <div class="input-group fixed-bottom">
+        <div class="input-group fixed-bottom p-0">
             <input type="hidden" name="user1_id" value="<?php echo $myID; ?>">
             <input type="hidden" name="user2_id" value="<?php echo $chatMate_ID; ?>">
             <input type="hidden" name="chatRoomId" value="<?php echo $getChatRoomId; ?>">
+            <span id="place-counter-' . $i . '" class="text-muted m-3 align-center">0/20</span>
             <input type="text" placeholder="Napište zprávu" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4" name="message" required>
             <div class="input-group-append">
                 <button id="button-addon2" type="submit" class="btn btn-link bg-primary text-white p-3 m-2">
@@ -132,8 +133,8 @@ include('./templates/head_and_navbar.php');
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="./scripts/night-theme.js"></script>
-</body>
 
+</body>
 </html>
 
 <?php

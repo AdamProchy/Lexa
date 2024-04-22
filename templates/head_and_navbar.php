@@ -93,7 +93,8 @@ $coins = mysqli_fetch_array($result)["coins"];
             document.getElementById("alert").style.display = "none";
         }, 2000);
     </script>
-<?php elseif (isset($success)): ?>
+<?php endif; ?>
+<?php if (isset($success)): ?>
     <div class="alert alert-success text-center" role="alert" id="alert">
         <strong><?= $success ?></strong>
     </div>
