@@ -50,7 +50,7 @@ CREATE TABLE `credentials`
     `profilePicture` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_czech_ci NOT NULL DEFAULT 'default.png',
     `aboutMe`        varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_czech_ci          DEFAULT NULL,
     `reg_date`       datetime                                                    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `coins`          int                                                         NOT NULL DEFAULT '0'
+    `coins`          int                                                         NOT NULL DEFAULT '100'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_czech_ci;
@@ -59,10 +59,10 @@ CREATE TABLE `credentials`
 -- Dumping data for table `credentials`
 --
 
-INSERT INTO `credentials` (`ID`, `firstName`, `lastName`, `gender`, `sexuality`, `birthDate`, `email`, `psw`,
-                           `profilePicture`, `aboutMe`, `reg_date`, `coins`)
+INSERT INTO `credentials` (`ID`, `firstName`, `lastName`, `gender`, `sexuality`, `birthDate`, `email`, `psw`, `aboutMe`,
+                           `reg_date`, `coins`)
 VALUES (1, 'Admin', 'Admin', 'M', 'S', '2004-11-13', 'admin@admin.com',
-        '$2y$10$bJxEGMf4NsVaU9fP1RR5C.M/O55Dl3dzsjQpw0caKATKAWUPb4776', '646f244e6f9f6.png', NULL,
+        '$2y$10$bJxEGMf4NsVaU9fP1RR5C.M/O55Dl3dzsjQpw0caKATKAWUPb4776', NULL,
         '2023-04-26 16:47:53', 0);
 
 -- --------------------------------------------------------
