@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $success = "Žádost o peníze byla úspěšně odeslána.";
             unset($_SESSION['variableSymbol']);
         } catch (Exception $e) {
-            $error = "Něco se pokazilo. Zkuste to prosím znovu." . $e->getMessage();
+            $error = "Něco se pokazilo. Zkuste to prosím znovu.";
         }
     }
 }
