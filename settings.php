@@ -5,11 +5,6 @@ $email = $_SESSION["email"];
 $firstName = $_SESSION["firstName"];
 $lastName = $_SESSION["lastName"];
 $Id = $_SESSION["ID"];
-$isImage = true;
-$updated = false;
-$emailError = false;
-$oldPasswordEmpty = false;
-$wrongPassword = false;
 $now = date("Y-m-d");
 $diff = date_diff(date_create(getBirthDate()), date_create($now));
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
@@ -27,28 +22,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
                 move_uploaded_file($_FILES['profilePicture']['tmp_name'], "./protected/profilePictures/$basename");
                 if ($oldPfp != "default.png") unlink("./protected/profilePictures/$oldPfp");
                 $_SESSION["profilePicture"] = "./protected/profilePictures/$basename";
-                $updated = true;
+                $success = "Váš profil byl úspěšně aktualizován.";
             } else {
-                $isImage = false;
+                $error = "Nahraný soubor není obrázek! Zkuste to znovu prosím znovu.";
             }
         }
         if ($_POST["aboutMe"] != "") {
             $aboutMeInput = htmlspecialchars(mysqli_real_escape_string($conn, $_POST["aboutMe"]));
             $sql = "UPDATE credentials SET aboutMe = '$aboutMeInput' WHERE email = '$email'";
             mysqli_query($conn, $sql);
-            $updated = true;
+            $success = "Váš profil byl úspěšně aktualizován.";
         }
         if ($_POST["newPassword"] != "") {
             if ($_POST["oldPassword"] == "") {
-                $oldPasswordEmpty = true;
+                $error = "Zadejte vaše staré heslo, pokud ho chcete změnit.";
             } else {
                 if (checkPassword($email, $_POST["oldPassword"])) {
                     $password = password_hash($_POST["newPassword"], PASSWORD_DEFAULT);
                     $sql = "UPDATE credentials SET psw = '$password' WHERE email = '$email'";
                     mysqli_query($conn, $sql);
-                    $updated = true;
+                    $success = "Váš profil byl úspěšně aktualizován.";
                 } else {
-                    $wrongPassword = true;
+                    $error = "Špatné heslo! Zkuste to prosím znovu.";
                 }
             }
         }
@@ -58,9 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
                 mysqli_query($conn, "UPDATE credentials SET email = '$emailInput' WHERE email = '$email'");
                 $_SESSION["email"] = $emailInput;
                 $email = $emailInput;
-                $updated = true;
+                $success = "Váš profil byl úspěšně aktualizován.";
             } else {
-                $emailError = true;
+                $error = "Email již existuje! Zvolte prosím jiný email.";
             }
         }
     }
@@ -81,45 +76,7 @@ $aboutMe = mysqli_fetch_array($aboutMe)["aboutMe"];
 $profilePicture = $_SESSION["profilePicture"];
 $pageName = 'settings.php';
 include('./templates/head_and_navbar.php');
-if (!$isImage) { ?>
-    <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Nahraný soubor není obrázek!</h4>
-        <p>Prosím, nahrajte obrázek.</p>
-        <hr>
-        <p class="mb-0">Zkuste to znovu.</p>
-    </div>
-<?php }
-if ($emailError) { ?>
-    <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Email již existuje!</h4>
-        <p>Prosím, zvolte jiný email.</p>
-        <hr>
-        <p class="mb-0">Zkuste to znovu.</p>
-    </div>
-<?php }
-if ($wrongPassword) { ?>
-    <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Špatné heslo!</h4>
-        <p>Prosím, zadejte správné heslo.</p>
-        <hr>
-        <p class="mb-0">Zkuste to znovu.</p>
-    </div>
-<?php }
-if ($oldPasswordEmpty) { ?>
-    <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Špatné heslo!</h4>
-        <p>Prosím, zadejte vaše staré heslo, pokud ho chcete změnit.</p>
-        <hr>
-        <p class="mb-0">Zkuste to znovu.</p>
-    </div>
-<?php }
-if ($updated) { ?>
-    <div class="alert alert-success text-center" role="alert">
-        <h4 class="alert-heading">Profil aktualizován!</h4>
-        <p>Váš profil byl úspěšně aktualizován.</p>
-    </div>
-<?php } ?>
-
+?>
 <div class="container mt-5 mb-5">
     <div class="row">
         <div class="col-md-3">
@@ -155,8 +112,8 @@ if ($updated) { ?>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="about_me">O mně</label>
-                                    <input type="text" class="form-control" id="about_me" placeholder="Napište něco o sobě" name="aboutMe">
+                                    <label for="about_me">O mně</label> <span id="about-me-counter" class="text-muted">0/100</span></label>
+                                    <input type="text" class="form-control" id="about_me" placeholder="Napište něco o sobě" name="aboutMe" oninput="limitTextarea(this,100)">
                                 </div>
                             </div>
                         </div>
@@ -209,5 +166,17 @@ if ($updated) { ?>
         </div>
     </div>
 </div>
+<script>
+    function limitTextarea(field, maxChar){
+        const text = field.value;
+        const charCount = text.length;
+
+        if (text.length > maxChar) {
+            field.value = text.substring(0, maxChar);
+        } else {
+            document.getElementById('about-me-counter').innerText = charCount + '/' + maxChar;
+        }
+    }
+</script>
 <?php
 include('./templates/footer.php');

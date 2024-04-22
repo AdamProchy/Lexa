@@ -87,111 +87,54 @@ while ($row = mysqli_fetch_assoc($result)) {
 $pageName = "home.php";
 include ('./templates/head_and_navbar.php');
 ?>
-    <section id="dates" class="p-5">
-        <div class="container">
-                <?php
-                    if (empty($dates)) {
-                        echo "<h2 class='text-center'>Nemáte žádné domluvené schůzky.</h2>";
-                    } else {
-                ?>
+<section id="dates" class="p-5">
+    <div class="container">
+        <div class="row g-4">
+            <?php if (empty($dates)): ?>
+                <h2 class="text-center">Nemáte žádné domluvené schůzky.</h2>
+            <?php else: ?>
                 <h2 class="text-center">Domluvené schůzky:</h2>
                 <br>
-                <div class="row g-4">
+                <?php foreach ($dates as $date): ?>
                     <?php
-                    for ($i = 0; $i < sizeof($dates); $i++) {
-                        if ($Id != $dates[$i]['senderId']) {
-                            $sql = "SELECT * FROM `credentials` WHERE `ID` = '" . $dates[$i]['senderId'] . "'";
-                        }
-                        if ($Id != $dates[$i]['recipientId']) {
-                            $sql = "SELECT * FROM `credentials` WHERE `ID` = '" . $dates[$i]['recipientId'] . "'";
-                        }
-                        $result = mysqli_query($conn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                        $firstNameDB = $row['firstName'];
-                        $lastNameDB = $row['lastName'];
-                        $profilePictureDB = "./protected/profilePictures/" . $row['profilePicture'];
+                    $stmt = $conn->prepare("SELECT * FROM `credentials` WHERE `ID` = ?");
+                    if ($Id != $date['senderId']) {
+                        $stmt->bind_param("i", $date['senderId']);
+                    } else {
+                        $stmt->bind_param("i", $date['recipientId']);
+                    }
+                    $stmt->execute();
+                    $row = $stmt->get_result()->fetch_assoc();
+                    $firstNameDate = $row['firstName'];
+                    $lastNameDate = $row['lastName'];
+                    $profilePictureDate = "./protected/profilePictures/" . $row['profilePicture'];
                     ?>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="card"
-                                 style="background-color: <?php echo $dates[$i]['confirmed'] ? '#45c700' : '#ff9900'; ?>; color: black;">
-                                <div class="card-body text-center">
-                                    <div id="card-top">
-                                        <img src="<?php echo $profilePictureDB; ?>" class="rounded-circle" id="image"
-                                             alt="">
-                                        <h3 class="card-title"><span
-                                                    style="font-weight: 600;"><?php echo $firstNameDB; ?></span><br><span
-                                                    style="font-size: large;"><?php echo $lastNameDB; ?></span></h3>
-                                    </div>
-                                    <br>
-                                    <h6 class="card-subtitle mb-2 text-white">
-                                        Místo: <?= $dates[$i]['place'] ?></h6>
-                                    <h6 class="card-subtitle mb-2 text-white">
-                                        Datum a čas: <?= date("d.m.Y", strtotime($dates[$i]['dateInvitation'])) ?> <?= date("h:i", strtotime($dates[$i]['dateInvitation'])) ?></h6>
-                                    <h6 class="card-subtitle mb-2 text-white">
-                                        Zpráva: <?php echo $dates[$i]['message']; ?></h6>
-                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                                        <input type="hidden" name="dateID" value="<?php echo $dates[$i]['ID']; ?>">
-                                        <?php if ($dates[$i]['senderId'] == $_SESSION["ID"] || $dates[$i]['confirmed']) { ?>
-                                            <button href="#" class="btn btn-danger mt-3" name="cancel">Zrušit rande
-                                            </button>
-                                            <button href="#" class="btn btn-info mt-3" name="send_message">Napsat zprávu
-                                            </button>
-                                        <?php } else if ($dates[$i]['senderId'] != $_SESSION["email"]) { ?>
-                                            <button href="#" class="btn btn-success mr-2 mt-3" name="submit">Potvrdit
-                                            </button>
-                                            <button href="#" class="btn btn-danger mt-3" name="cancel">Odmítnout
-                                            </button>
-                                        <?php } ?>
-                                    </form>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card text-dark"
+                             style="background-color: <?php echo $date['confirmed'] ? '#45c700' : '#ff9900'; ?>;">
+                            <div class="card-body text-center">
+                                <div id="card-top">
+                                    <img src="./protected/profilePictures/<?= $row['profilePicture'] ?>" class="rounded-circle" id="image" alt="">
+                                    <h3 class="card-title"><span style="font-weight: 600;"><?= $firstNameDate ?></span><br><span style="font-size: large;"><?= $lastNameDate ?></span></h3>
                                 </div>
+                                <br>
+                                <h6 class="card-subtitle mb-2"><span class="d-flex">Místo: <a class="ms-auto text-primary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=<?=str_replace(" ", "+", $date['place'])?>"><?= $date['place']?></a></span></h6>
+                                <h6 class="card-subtitle mb-2"><span class="d-flex">Datum a čas: <span class="ms-auto"><?= date("d.m.Y", strtotime($date['dateInvitation'])) ?> <?= date("h:i", strtotime($date['dateInvitation'])) ?></span></span></h6>
+                                <?php if($date['message'] != ""): ?>
+                                    <h6 class="card-subtitle mb-2"><span class="d-flex">Zpráva: <span class="ms-auto"><?= $date['message']?></span></span></h6>
+                                <?php endif; ?>
+                                <form method="post">
+                                    <input type="hidden" name="dateID" value="<?= $date['ID'] ?>">
+                                    <button class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
+                                    <button class="btn btn-info mt-3" name="send_message">Napsat zprávu</button>
+                                </form>
                             </div>
                         </div>
-                    <?php } ?>
-                </div>
-            <?php } ?>
-        </div>
-    </section>
-
-<div class="container">
-    <div class="row g-4">
-        <?php foreach ($dates as $date): ?>
-            <?php
-                $stmt = $conn->prepare("SELECT * FROM `credentials` WHERE `ID` = ?");
-                if ($Id != $date['senderId']) {
-                    $stmt->bind_param("i", $date['senderId']);
-                } else {
-                    $stmt->bind_param("i", $date['recipientId']);
-                }
-                $stmt->execute();
-                $row = $stmt->get_result()->fetch_assoc();
-                $firstNameDate = $row['firstName'];
-                $lastNameDate = $row['lastName'];
-                $profilePictureDate = "./protected/profilePictures/" . $row['profilePicture'];
-            ?>
-            <div class="col-md-6 col-lg-3">
-                <div class="card text-dark"
-                     style="background-color: <?php echo $date['confirmed'] ? '#45c700' : '#ff9900'; ?>;">
-                    <div class="card-body text-center">
-                        <div id="card-top">
-                            <img src="./protected/profilePictures/<?= $row['profilePicture'] ?>" class="rounded-circle" id="image" alt="">
-                            <h3 class="card-title"><span style="font-weight: 600;"><?= $firstNameDate ?></span><br><span style="font-size: large;"><?= $lastNameDate ?></span></h3>
-                        </div>
-                        <br>
-                        <h6 class="card-subtitle mb-2"><span class="d-flex">Místo: <a class="ms-auto text-primary" href="https://www.google.com/maps/search/?api=1&query=<?=str_replace(" ", "+", $date['place'])?>"><?= $date['place']?></a></span></h6>
-                        <h6 class="card-subtitle mb-2"><span class="d-flex">Datum a čas: <span class="ms-auto"><?= date("d.m.Y", strtotime($date['dateInvitation'])) ?> <?= date("h:i", strtotime($date['dateInvitation'])) ?></span></span></h6>
-                        <?php if($date['message'] != ""): ?>
-                            <h6 class="card-subtitle mb-2"><span class="d-flex">Zpráva: <span class="ms-auto"><?= $date['message']?></span></span></h6>
-                        <?php endif; ?>
-                        <form method="post">
-                            <input type="hidden" name="dateID" value="<?= $date['ID'] ?>">
-                            <button class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
-                            <button class="btn btn-info mt-3" name="send_message">Napsat zprávu</button>
-                        </form>
                     </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     </div>
-</div>
+</section>
 <?php
 include('./templates/footer.php');

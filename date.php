@@ -6,7 +6,7 @@ $sexuality = $_SESSION['sexuality'];
 $Id = $_SESSION['ID'];
 $dateSent = false;
 
-$sql = "SELECT * FROM credentials";
+$sql = "SELECT * FROM credentials WHERE id NOT IN (1, 2)";
 $result = mysqli_query($conn, $sql);
 $users = array();
 while ($row = mysqli_fetch_assoc($result)) {
@@ -98,7 +98,6 @@ include('./templates/head_and_navbar.php');
         <br>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
             <?php foreach ($users as $i => $user) {
-                if ($user['email'] != "admin@admin.com" && $user['email'] != $_SESSION['email']) {
                     $firstNameDB = $user['firstName'];
                     $lastNameDB = $user['lastName'];
                     $aboutMeDB = $user['aboutMe'];
@@ -123,19 +122,19 @@ include('./templates/head_and_navbar.php');
                     }
                     echo '<div class="row">';
                     echo '<div class="col">';
-                    echo '<button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#exampleModal' . $i . '">Požádat o rande</button>';
+                    echo '<button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#exampleModal' . $i . '">Rande</button>';
                     echo '</div>';
                     echo '<div class="col">';
                     echo '<form method="post">';
-                    echo '<button name="chat" type="submit" class="btn btn-info w-100">Poslat zprávu</button>';
+                    echo '<button name="chat" type="submit" class="btn btn-info w-100">Chat</button>';
                     echo '<input type="hidden" name="recipientId" value="' . $user['ID'] . '">';
                     echo '</form>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
-
                     echo '</div>';
+
                     echo '<div class="modal fade" id="exampleModal' . $i . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
                     echo '<div class="modal-dialog">';
                     echo '<div class="modal-content" id="cardbg">';
@@ -151,19 +150,19 @@ include('./templates/head_and_navbar.php');
                     echo '</div>';
                     echo '<div class="mb-3">';
                     echo '<label for="sender-date" class="col-form-label">Datum:</label>';
-                    echo '<input type="date" class="form-control" id="sender-date" name="sender-date" required min="' . date('Y-m-d') . '">';
+                    echo '<input type="date" class="form-control" id="sender-date-' . $i . '" name="sender-date" required min="' . date('Y-m-d') . '">';
                     echo '</div>';
                     echo '<div class="mb-3">';
                     echo '<label for="sender-time" class="col-form-label">Čas:</label>';
-                    echo '<input type="time" class="form-control" id="sender-time" name="sender-time" required>';
+                    echo '<input type="time" class="form-control" id="sender-time-' . $i . '" name="sender-time" required>';
                     echo '</div>';
                     echo '<div class="mb-3">';
-                    echo '<label for="sender-place" class="col-form-label">Místo:</label>';
-                    echo '<input type="text" class="form-control" id="sender-place" name="sender-place" required>';
+                    echo '<label for="sender-place" class="col-form-label">Místo: <span id="place-counter-' . $i . '" class="text-muted">0/20</span></label>';
+                    echo '<input type="text" class="form-control" id="sender-place" name="sender-place" required oninput="limitTextarea(this,20,' . $i . ');">';
                     echo '</div>';
                     echo '<div class="mb-3">';
-                    echo '<label for="sender-message" class="col-form-label">Zpráva:</label>';
-                    echo '<textarea class="form-control" id="sender-message" name="sender-message"></textarea>';
+                    echo '<label for="sender-message" class="col-form-label">Zpráva: <span id="place-message-' . $i . '" class="text-muted">0/150</span></label></label>';
+                    echo '<textarea rows="4" class="form-control" id="sender-message" name="sender-message" oninput="limitTextarea(this,150,'.$i.');"></textarea>';
                     echo '</div>';
                     echo '<div class="modal-footer">';
                     echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>';
@@ -175,20 +174,58 @@ include('./templates/head_and_navbar.php');
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
-                }
             } ?>
         </div>
     </div>
 </section>
 
+<?php
+foreach ($users as $i => $user) {
+        echo '<div class="modal fade" id="timeErrorModal' . $i . '" tabindex="-1" aria-labelledby="timeErrorModalLabel' . $i . '" aria-hidden="true">';
+        echo '<div class="modal-dialog">';
+        echo '<div class="modal-content">';
+        echo '<div class="modal-header bg-danger text-white">';
+        echo '<h5 class="modal-title" id="timeErrorModalLabel' . $i . '">Neplatný čas</h5>';
+        echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+        echo '</div>';
+        echo '<div class="modal-body">';
+        echo 'Prosím, vyberte platný čas.';
+        echo '</div>';
+        echo '<div class="modal-footer">';
+        echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+}
+?>
 
 <script>
-    function checkTimeValidity() {
+    function limitTextarea(field, maxChar, id){
+        const text = field.value;
+        if (field.id === 'sender-place') {
+            const charCount = text.length;
+
+            if (text.length > maxChar) {
+                field.value = text.substring(0, maxChar);
+            } else {
+                document.getElementById('place-counter-' + id).innerText = charCount + '/' + maxChar;
+            }
+        } else if (field.id === 'sender-message') {
+            const charCount = text.length;
+
+            if (text.length > maxChar) {
+                field.value = text.substring(0, maxChar);
+            } else {
+                document.getElementById('place-message-' + id).innerText = charCount + '/' + maxChar;
+            }
+        }
+    }
+    function checkTimeValidity(id) {
         const today = new Date();
         const todayDate = today.toISOString().slice(0, 10);
-        const selectedDateInput = document.getElementById("sender-date");
+        const selectedDateInput = document.getElementById("sender-date-" + id);
         const selectedDate = new Date(selectedDateInput.value);
-
         const selectedDateFormatted = selectedDate.toISOString().slice(0, 10);
 
         if (selectedDateFormatted === todayDate) {
@@ -196,18 +233,35 @@ include('./templates/head_and_navbar.php');
             const currentHours = currentTime.getHours();
             const currentMinutes = currentTime.getMinutes();
 
-            const selectedTime = document.getElementById("sender-time").valueAsDate;
+            const selectedTime = document.getElementById("sender-time-" + id).valueAsDate;
             const selectedHours = selectedTime.getHours();
             const selectedMinutes = selectedTime.getMinutes();
+
             if (selectedHours < currentHours || (selectedHours === currentHours && selectedMinutes < currentMinutes)) {
-                alert("Prosím, vyberte platný čas.");
-                document.getElementById("sender-time").value = null;
+                const modal = new bootstrap.Modal(document.getElementById('timeErrorModal' + id));
+                modal.show();
+
+                document.getElementById("sender-time-" + id).value = null;
             }
         }
     }
 
-    document.getElementById("sender-time").addEventListener("change", checkTimeValidity);
-    document.getElementById("sender-date").addEventListener("change", checkTimeValidity);
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    dateInputs.forEach(input => {
+        const id = input.id.split('-')[2];
+        console.log(id)
+        input.addEventListener('change', function() {
+            checkTimeValidity(id);
+        });
+    });
+
+    const timeInputs = document.querySelectorAll('input[type="time"]');
+    timeInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const id = input.id.split('-')[2];
+            checkTimeValidity(id);
+        });
+    });
 </script>
 <?php
 include('./templates/footer.php');
