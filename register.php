@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "INSERT INTO credentials (firstName, lastName, gender, sexuality, birthDate, email, psw)
                 VALUES ('$firstName', '$lastName', '$gender', '$sexuality', '$birthdayDate', '$email', '$psw')";
 
-            if (mysqli_query($conn, $sql)) {
+            try{
                 $sql = "select ID, aboutMe from credentials where email = '$email'";
                 $result = mysqli_query($conn, $sql);
                 $_SESSION["firstName"] = $firstName;
@@ -56,9 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["ID"] = mysqli_fetch_array(mysqli_query($conn, $sql))["ID"];
                 header("location: home.php");
                 exit();
-            } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            } catch (Exception $e) {
+                $error = "Nastala chyba v databázi: " . $e->getMessage();
             }
+        } else {
+            $error = "Email je již použitý.";
         }
     }
 }
