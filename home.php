@@ -127,6 +127,9 @@ include ('./templates/head_and_navbar.php');
                                     <input type="hidden" name="dateID" value="<?= $date['ID'] ?>">
                                     <button class="btn btn-danger mt-3" name="cancel">Zrušit rande</button>
                                     <button class="btn btn-info mt-3" name="send_message">Napsat zprávu</button>
+                                    <?php if ($date['senderId'] != $Id): ?>
+                                        <button class="btn btn-success mt-3" name="submit">Potvrdit rande</button>
+                                    <?php endif; ?>
                                 </form>
                             </div>
                         </div>
