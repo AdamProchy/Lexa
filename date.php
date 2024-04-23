@@ -6,7 +6,7 @@ $sexuality = $_SESSION['sexuality'];
 $Id = $_SESSION['ID'];
 $dateSent = false;
 
-$sql = "SELECT * FROM credentials WHERE id NOT IN (1, 2)";
+$sql = "SELECT * FROM credentials WHERE id NOT IN (1, '$Id')";
 $result = mysqli_query($conn, $sql);
 $users = array();
 while ($row = mysqli_fetch_assoc($result)) {
@@ -80,6 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param("iisss", $senderId, $recipientId, $datetime, $message, $place);
                 $stmt->execute();
                 $stmt->close();
+
+                //Remove coins from user
+                $stmt = "UPDATE credentials SET coins = coins - 1 WHERE ID = ?";
+                $stmt = mysqli_prepare($conn, $stmt);
+                $stmt->bind_param("i", $Id);
+                $stmt->execute();
+                $stmt->close();
+
                 $success = "Žádost o rande byla úspěšně odeslána.";
             } catch (Exception $e) {
                 $error = $e->getMessage();

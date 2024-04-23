@@ -1,7 +1,10 @@
 <?php
-$sql = "SELECT coins FROM credentials WHERE ID = '$Id'";
-$result = mysqli_query($conn, $sql);
-$coins = mysqli_fetch_array($result)["coins"];
+ini_set('display_errors', 1);
+$stmt = $conn->prepare("SELECT coins FROM credentials WHERE ID = ?");
+$stmt->bind_param("i", $_SESSION['ID']);
+$stmt->execute();
+$result = $stmt->get_result();
+$coins = $result->fetch_assoc()['coins'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

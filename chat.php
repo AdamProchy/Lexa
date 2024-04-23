@@ -121,8 +121,8 @@ include('./templates/head_and_navbar.php');
             <input type="hidden" name="user1_id" value="<?php echo $myID; ?>">
             <input type="hidden" name="user2_id" value="<?php echo $chatMate_ID; ?>">
             <input type="hidden" name="chatRoomId" value="<?php echo $getChatRoomId; ?>">
-            <span id="place-counter-' . $i . '" class="text-muted mb-2 ms-2 me-2 mt-4 align-center">0/200</span>
-            <input type="text" placeholder="Napište zprávu" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4" name="message" required>
+            <span id="message-counter" class="text-muted mb-2 ms-2 me-2 mt-4 align-center">0/160</span>
+            <input type="text" placeholder="Napište zprávu" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4" name="message" oninput="limitTextarea(this,160)" required>
             <div class="input-group-append">
                 <button id="button-addon2" type="submit" class="btn btn-link bg-primary text-white p-3 m-2">
                     Odeslat
@@ -133,6 +133,18 @@ include('./templates/head_and_navbar.php');
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="./scripts/night-theme.js"></script>
+<script>
+    function limitTextarea(field, maxChar){
+        const text = field.value;
+            const charCount = text.length;
+
+            if (text.length > maxChar) {
+                field.value = text.substring(0, maxChar);
+            } else {
+                document.getElementById('message-counter').innerText = charCount + '/' + maxChar;
+            }
+    }
+</script>
 
 </body>
 </html>

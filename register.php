@@ -40,10 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $diff = date_diff(date_create($birthdayDate), date_create($now));
 
         if (checkIfEmailAvalible($email, $conn)) {
-            $sql = "INSERT INTO credentials (firstName, lastName, gender, sexuality, birthDate, email, psw)
-                VALUES ('$firstName', '$lastName', '$gender', '$sexuality', '$birthdayDate', '$email', '$psw')";
-
             try{
+                $stmt = $conn->prepare("INSERT INTO credentials (firstName, lastName, email, gender, sexuality, psw, birthDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssssss", $firstName, $lastName, $email, $gender, $sexuality, $psw, $birthdayDate);
+                $stmt->execute();
+                $stmt->close();
+
                 $sql = "select ID, aboutMe from credentials where email = '$email'";
                 $result = mysqli_query($conn, $sql);
                 $_SESSION["firstName"] = $firstName;
@@ -54,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["sexuality"] = $sexuality;
                 $_SESSION["dateSent"] = false;
                 $_SESSION["ID"] = mysqli_fetch_array(mysqli_query($conn, $sql))["ID"];
+
                 header("location: home.php");
                 exit();
             } catch (Exception $e) {

@@ -24,6 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $stmt->close();
 
+    // Remove one coin from user
+    $sql = "UPDATE `credentials` SET `coins` = `coins` - 1 WHERE `ID` = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user1_id);
+    $stmt->execute();
+    $stmt->close();
+
     $conn->close();
     header("Location: chat.php?chatRoomId=" . $chatRoomId);
     exit();

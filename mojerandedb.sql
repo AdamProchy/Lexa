@@ -198,6 +198,7 @@ ALTER TABLE `room_messages`
 --
 ALTER TABLE `chat_rooms`
     MODIFY `ID` int NOT NULL AUTO_INCREMENT,
+    AUTO_INCREMENT = 1;
 
 --
 -- AUTO_INCREMENT for table `credentials`
@@ -211,24 +212,29 @@ ALTER TABLE `credentials`
 --
 ALTER TABLE `dates`
     MODIFY `ID` int NOT NULL AUTO_INCREMENT,
+    AUTO_INCREMENT = 1;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
     MODIFY `ID` int NOT NULL AUTO_INCREMENT,
+    AUTO_INCREMENT = 1;
 
 --
 -- AUTO_INCREMENT for table `money_requests`
 --
 ALTER TABLE `money_requests`
     MODIFY `ID` int NOT NULL AUTO_INCREMENT,
+    AUTO_INCREMENT = 1;
 
 --
 -- AUTO_INCREMENT for table `room_messages`
 --
 ALTER TABLE `room_messages`
-    MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+    MODIFY `ID` int NOT NULL AUTO_INCREMENT,
+    AUTO_INCREMENT = 1;
+
 
 --
 -- Constraints for dumped tables
