@@ -22,10 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName_url = urlencode($firstName);
     $lastName_url = urlencode($lastName);
     // Get the response from the api
-    $response = file_get_contents("https://check-name.herokuapp.com/verify/$firstName_url%20$lastName_url");
+    try {
+        $response = file_get_contents("https://check-name.herokuapp.com/verify/$firstName_url%20$lastName_url");
+    } catch (Exception $e) {
+    }
     $response = json_decode($response, true);
     $score = $response["score"];
-    if ($score == 0) {
+    if (isset($score) and $score == 0) {
         $error = "Jméno nebo příjmení není validní.";
     } else {
         $lastName = filter_input(INPUT_POST, "lastName", FILTER_SANITIZE_SPECIAL_CHARS);
